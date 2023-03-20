@@ -1,16 +1,18 @@
-# SolarisUI
-A UI framework to create HTML pages with just JavaScript.
 
-## Development Roadmap
+# SolarisUI Framework
 
-- [ ] Basic Entity, Attributes, Children System
-- [ ] Layout System (works with only pixels)
-- [ ] Dynamic Layout System (can change as per the display size)
-- [ ] Save and Load System for Intermidiate Files (Json files)
-- [ ] Building The Layout
+SolarisUI is a front-end framework based on a component system, which provides a simple and flexible way to create user interfaces for web applications. The framework consists of a set of reusable components for different parts of the HTML document, including the page, head, body, links, and more. So no need to use html or css anymore!
+
+The framework allows developers to build UIs in a more organized and maintainable way, by breaking down the UI into smaller, self-contained components. These components can then be combined to create more complex UIs, allowing for easier development and maintenance of web applications.
+
+## WIP
+The framework is still work in progress. You can contribute to the framework.
 
 
-### Entity, Attributes, Children System
+## Abstract Systems 
+All the systems implimeted or will be implimenting.
+
+### Component, Attributes, Children System
 A collection of SubClasses of Entity that can create/represent the the entire Html page structure.
 
 This collection can be used to create UI components quickly and hook them into their respective backend. These components will have functionality like `onCreate`, `onClick`, `onScroll` and so forth.
