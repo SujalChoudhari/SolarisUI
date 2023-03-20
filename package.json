@@ -8,9 +8,9 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "ts-node-dev src/index.ts",
-    "dev": "tsc & node .\\dist\\index.js",
-    "test": "jest"
+    "dev": "ts-node-dev src/index.ts",
+    "prebuild": "jest",
+    "build": "tsc"
   },
   "dependencies": {
     "ts-node": "^10.9.1",
