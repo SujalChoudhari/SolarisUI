@@ -6,12 +6,12 @@ import Link from "../src/basic/link";
 describe("Navbar", () => {
     it("should create the hirarchy as required",()=>{
         let navbar = new Navbar(
-            new Link("link1"),
-            new Link("link2"),
+            new Link("link1","urls"),
+            new Link("link2","urls"),
             new Dropdown("dropdown1","",[
-                new Link("dropdownLink1"),
-                new Link("dropdownLink2"),
-                new Link("dropdownLink3"),
+                new Link("dropdownLink1","urls"),
+                new Link("dropdownLink2","urls"),
+                new Link("dropdownLink3","urls"),
             ]),
             );
 

@@ -59,6 +59,33 @@ export default class Component {
         delete this.attributes[name];
     }
 
+
+    public addClass(className: string): void {
+        let classes = this.getAttribute("class");
+        if (classes !== undefined) {
+            let classArray = [... new Set(classes.split(','))]
+            classArray.push(className);
+            classes = classArray.join(" ");
+            this.setAttribute("class", classes);
+        }
+        else {
+            this.setAttribute("class", className);
+        }
+    }
+
+    public addClasses(...classNames: string[]): void {
+        let classes = this.getAttribute("class");
+        if (classes !== undefined) {
+            let classArray = [... new Set(classes.split(','))]
+            classArray = [...classArray, ...classNames];
+            classes = classArray.join(" ");
+            this.setAttribute("class", classes);
+        }
+        else {
+            this.setAttribute("class", classNames.join(" "));
+        }
+    }
+
     public toString(): string {
         const attrs = Object.entries(this.attributes)
             .map(([key, value]) => ` ${key}="${value}"`)
@@ -71,30 +98,6 @@ export default class Component {
         return `<${this.tag} id="${this.mId}"${attrs}>${content}</${this.tag}>\n`;
     }
 
-    public addClass(className: string): void {
-        let classes = this.getAttribute("class");
-        if (classes !== undefined) {
-            let classArray = [... new Set(classes.split(','))]
-            classArray.push(className);
-            classes = classArray.join(" ");
-            this.setAttribute("class", classes);
-        }
-        else {
-            this.setAttribute("class",className);
-        }
-    }
 
-    public addClasses(...classNames: string[]): void {
-        let classes = this.getAttribute("class");
-        if (classes !== undefined) {
-            let classArray = [... new Set(classes.split(','))]
-            classArray  = [...classArray,...classNames];
-            classes = classArray.join(" ");
-            this.setAttribute("class", classes);
-        }
-        else {
-            this.setAttribute("class",classNames.join(" "));
-        }
-    }
-}
+};
 
