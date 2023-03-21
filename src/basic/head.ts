@@ -2,19 +2,20 @@ import Component from './component'
 import String from './string';
 
 export default class Head extends Component {
-    constructor(title: string = "", author: string = "", description: string = "",keywords: string = "") {
+    constructor(title: string = "", author: string = "", description: string = "", keywords: string = "") {
         super("head");
         this.setTitle(title);
         this.setAuthor(author);
         this.setDescription(description);
         this.setKeywords(keywords);
         
+
     }
 
     public setTitle(title: string): void {
-        const titleEl = this.children.find(child => child.tag === 'title');
+        const titleEl = this.pmChildren.find(child => child.getTag() === 'title');
         if (titleEl) {
-            titleEl.children = [new String(title)]
+            titleEl.addChild(new String(title))
         } else {
             const newTitle = new Component('title', {}, [new String(title)]);
             this.addChildren(newTitle);
@@ -22,9 +23,9 @@ export default class Head extends Component {
     }
 
     public setDescription(description: string): void {
-        const descEl = this.children.find(child => child.attributes?.name === 'description');
+        const descEl = this.pmChildren.find(child => child.getAttribute("name") === 'description');
         if (descEl) {
-            descEl.attributes.content = description;
+            descEl.setAttribute("content", description);
         } else {
             const newDesc = new Component('meta', { name: 'description', content: description });
             this.addChildren(newDesc);
@@ -32,9 +33,9 @@ export default class Head extends Component {
     }
 
     public setKeywords(keywords: string): void {
-        const keywordsEl = this.children.find(child => child.attributes?.name === 'keywords');
+        const keywordsEl = this.pmChildren.find(child => child.getAttribute("name") === 'keywords');
         if (keywordsEl) {
-            keywordsEl.attributes.content = keywords;
+            keywordsEl.setAttribute("content", keywords);
         } else {
             const newKeywords = new Component('meta', { name: 'keywords', content: keywords });
             this.addChildren(newKeywords);
@@ -42,9 +43,9 @@ export default class Head extends Component {
     }
 
     public setAuthor(author: string): void {
-        const authorEl = this.children.find(child => child.attributes?.name === 'author');
+        const authorEl = this.pmChildren.find(child => child.getAttribute("name") === 'author');
         if (authorEl) {
-            authorEl.attributes.content = author;
+            authorEl.setAttribute("content", author);
         } else {
             const newAuthor = new Component('meta', { name: 'author', content: author });
             this.addChildren(newAuthor);
@@ -52,5 +53,3 @@ export default class Head extends Component {
     }
 
 };
-
-module.exports = Head;

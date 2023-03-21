@@ -5,12 +5,24 @@ export default class FileManager {
     public basePath: string;
     constructor() {
         this.basePath = path.resolve(process.cwd());
-        console.log('basePath: ' + this.basePath);
     }
 
     public getAbsolutePath(relativePath: string): string {
         return path.join(this.basePath, relativePath);
     }
+
+    public readFile(relativePath: string): string | null {
+        const absolutePath = this.getAbsolutePath(relativePath);
+        if (!fs.existsSync(absolutePath)) return null;
+
+        try {
+            return fs.readFileSync(absolutePath, 'utf8');
+        } catch (err) {
+            console.error(`Error reading file: ${err}`);
+            return null;
+        }
+    }
+
 
     public createDirectory(directoryPath: string): void {
         const absolutePath = this.getAbsolutePath(directoryPath);
@@ -51,7 +63,18 @@ export default class FileManager {
         fs.renameSync(srcAbsolutePath, destAbsolutePath);
     }
 
+    public copyFile(srcPath: string, destPath: string): void {
+        let contents = this.readFile(srcPath);
+        
+        if (contents !== null)
+        this.createFile(destPath, contents);
+        else {
+            throw new Error("Failed to read file");
+        }
+    }
+    
     public createFile(filePath: string, contents: string): void {
+        console.log(filePath);
         const absolutePath = this.getAbsolutePath(filePath);
         fs.writeFileSync(absolutePath, contents);
     }

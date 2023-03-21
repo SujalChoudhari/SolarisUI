@@ -11,5 +11,3 @@ export default class Link extends Component {
         this.addChild(new String(content));
     }
 };
-
-module.exports = Link;

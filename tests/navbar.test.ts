@@ -15,7 +15,7 @@ describe("Navbar", () => {
             ]),
             );
 
-        expect(navbar.children.length).toBe(3);
-        expect(navbar.children[2].children.length).toBe(2);
+        expect(navbar.getChildren().length).toBe(2);
+        expect(navbar.getChildren()[1].getChildren().length).toBe(3);
     });
 });

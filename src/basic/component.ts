@@ -1,62 +1,71 @@
+import FileManager from "../filemanager";
+
+export interface ThemeComponent {
+    Tag: string,
+    Attributes: Record<string, string>,
+    Children: ThemeComponent[]
+}
+
 export default class Component {
-    public tag: string;
-    public attributes: { [key: string]: string };
-    public children: Component[];
-    private mId: string;
+    protected pmTag: string;
+    protected pmAttributes: { [key: string]: string };
+    protected pmChildren: Component[];
+    protected pmId: string;
+    protected pmCss: string = "";
 
     constructor(
         tag: string,
         attributes: { [key: string]: string } = {},
         children: Component[] = []
     ) {
-        this.tag = tag;
-        this.attributes = attributes;
-        this.children = children;
-        this.mId = "__" + tag + Math.floor(100000 + Math.random() * 900000);
+        this.pmTag = tag;
+        this.pmAttributes = attributes;
+        this.pmChildren = children;
+        this.pmId = "__" + tag + Math.floor(100000 + Math.random() * 900000);
     }
 
     public getId(): string {
-        return this.mId;
+        return this.pmId;
     }
 
     public getTag(): string {
-        return this.tag;
+        return this.pmTag;
     }
 
     public getAttributes(): { [key: string]: string } {
-        return this.attributes;
+        return this.pmAttributes;
     }
 
     public getChildren(): Component[] {
-        return this.children;
+        return this.pmChildren;
     }
 
     public addChild(child: Component): void {
 
-        this.children.push(child);
+        this.pmChildren.push(child);
     }
 
     public addChildren(...childrenToAdd: Component[]): void {
-        this.children.push(...childrenToAdd);
+        this.pmChildren.push(...childrenToAdd);
     }
 
     public removeChild(child: Component): void {
-        const index = this.children.indexOf(child);
+        const index = this.pmChildren.indexOf(child);
         if (index !== -1) {
-            this.children.splice(index, 1);
+            this.pmChildren.splice(index, 1);
         }
     }
 
     public setAttribute(name: string, value: string): void {
-        this.attributes[name] = value;
+        this.pmAttributes[name] = value;
     }
 
     public getAttribute(name: string): string | undefined {
-        return this.attributes[name];
+        return this.pmAttributes[name];
     }
 
     public removeAttribute(name: string): void {
-        delete this.attributes[name];
+        delete this.pmAttributes[name];
     }
 
 
@@ -86,18 +95,26 @@ export default class Component {
         }
     }
 
+
     public toString(): string {
-        const attrs = Object.entries(this.attributes)
+        const attrs = Object.entries(this.pmAttributes)
             .map(([key, value]) => ` ${key}="${value}"`)
             .join("");
 
-        const content = this.children
+        const content = this.pmChildren
             .map((child) => (child instanceof Component ? child.toString() : child))
             .join("");
 
-        return `<${this.tag} id="${this.mId}"${attrs}>${content}</${this.tag}>\n`;
+        return `<${this.pmTag} id="${this.pmId}"${attrs}>${content}</${this.pmTag}>\n`;
     }
 
+    public customCss(): string {
+        const css = this.pmChildren
+            .map((child) => (child instanceof Component ? child.customCss() : child))
+            .join("");
+
+        return this.pmCss + css;
+    }
 
 };
 

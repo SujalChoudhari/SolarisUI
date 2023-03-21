@@ -15,6 +15,7 @@ export default class SolarisUI {
     public lang: string = "en";
     public encoding: string = "utf8";
     public htmlSource: { [key: string]: string } = {};
+    public cssSource: { [key: string]: string } = {};
     public pages: Page[] = [];
 
     constructor(name: string, lang: string = "en", encoding: string = "utf-8") {
@@ -23,24 +24,39 @@ export default class SolarisUI {
         this.encoding = encoding;
     }
 
+
     public build(...root: Page[]): void {
         const fileManager = new FileManager();
         this.pages = root;
+
         this.compileHtmlSource();
+        this.compileCssSource();
 
         //Output
         fileManager.createDirectory(`./public/builds/${this.name}`);
+        fileManager.createDirectory(`./public/builds/${this.name}/style`);
 
         Object.keys(this.htmlSource).forEach(key => {
-            if (!key.endsWith(".html")) key += ".html";
-            fileManager.createFile(`./public/builds/${this.name}/${key}`, this.htmlSource[key]);
+            key = key.split('.')[0];
+            fileManager.createFile(`./public/builds/${this.name}/${key}.html`, this.htmlSource[key]);
         });
+
+        Object.keys(this.cssSource).forEach(key => {
+            key = key.split(".")[0];
+            fileManager.createFile(`./public/builds/${this.name}/style/${key}.css`, this.cssSource[key]);
+        });
+
     }
 
     private compileHtmlSource(): void {
         this.pages.forEach(element => {
-            this.htmlSource[element.url] = element.toString();
+            this.htmlSource[element.url.split(".")[0]] = element.toString();
+        });
+    }
+
+    private compileCssSource(): void {
+        this.pages.forEach(element => {
+            this.cssSource[element.url.split(".")[0]] = element.customCss();
         });
     }
 }
-

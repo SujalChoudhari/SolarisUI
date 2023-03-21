@@ -5,13 +5,13 @@ describe("Component", () => {
     it("should give an component a id", () => {
         let component = new Component("div", { "class": "mx-5" });
         let id = component.getId()
-        expect(id).toContain("__" + component.tag);
+        expect(id).toContain("__" + component.getTag());
     });
 
     it("should create an Component with the correct tag and attributes", () => {
         let component = new Component("div", { "class": "mx-5" });
-        expect(component.tag).toBe("div");
-        expect(component.attributes).toEqual({ "class": "mx-5" });
+        expect(component.getTag()).toBe("div");
+        expect(component.getAttributes()).toEqual({ "class": "mx-5" });
     });
 
     it("should return correct attributes", () => {
@@ -34,3 +34,4 @@ describe("Component", () => {
         
     });
 });
+
