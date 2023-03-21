@@ -1,5 +1,5 @@
-import Component from "../basic/component";
-import String from "../basic/string";
+import Component from "./component";
+import String from "./string";
 
 
 export default class Heading extends Component {
