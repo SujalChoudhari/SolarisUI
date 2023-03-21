@@ -4,9 +4,6 @@ import Head from "./basic/head";
 import String from "./basic/string";
 import Link from "./basic/link";
 
-import Navbar from "./structural/navbar";
-import Dropdown from "./structural/dropdown";
-
 import FileManager from "./filemanager";
 
 
@@ -28,9 +25,11 @@ export default class SolarisUI {
     public build(...root: Page[]): void {
         const fileManager = new FileManager();
         this.pages = root;
+        this.pages.forEach(page => {
+            page.setAttribute("lang", this.lang);
+        });
 
         this.compileHtmlSource();
-        this.compileCssSource();
 
         //Output
         fileManager.createDirectory(`./public/builds/${this.name}`);
@@ -41,11 +40,6 @@ export default class SolarisUI {
             fileManager.createFile(`./public/builds/${this.name}/${key}.html`, this.htmlSource[key]);
         });
 
-        Object.keys(this.cssSource).forEach(key => {
-            key = key.split(".")[0];
-            fileManager.createFile(`./public/builds/${this.name}/style/${key}.css`, this.cssSource[key]);
-        });
-
     }
 
     private compileHtmlSource(): void {
@@ -54,9 +48,4 @@ export default class SolarisUI {
         });
     }
 
-    private compileCssSource(): void {
-        this.pages.forEach(element => {
-            this.cssSource[element.url.split(".")[0]] = element.customCss();
-        });
-    }
 }

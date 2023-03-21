@@ -1,11 +1,5 @@
 import FileManager from "../filemanager";
 
-export interface ThemeComponent {
-    Tag: string,
-    Attributes: Record<string, string>,
-    Children: ThemeComponent[]
-}
-
 export default class Component {
     protected pmTag: string;
     protected pmAttributes: { [key: string]: string };
@@ -96,6 +90,31 @@ export default class Component {
     }
 
 
+    public setStyles(properties: { [key: string]: string }): void {
+        const styles = this.getAttribute("style") || "";
+        const updatedStyles = Object.keys(properties).reduce((result, key) => {
+            return result + key + ": " + properties[key] + "; ";
+        }, styles);
+        this.setAttribute("style", updatedStyles.trim());
+    }
+
+    public deleteStyles(...properties: string[]): void {
+        const styleAttribute = this.getAttribute("style");
+        if (styleAttribute !== undefined) {
+            let styles = styleAttribute.trim();
+            properties.forEach(property => {
+                const regex = new RegExp(`(^|\\s)${property}:[^;]+;?`, "g");
+                styles = styles.replace(regex, "");
+            });
+            styles = styles.replace(/\s+/g, " ").trim();
+            if (styles === "") {
+                this.removeAttribute("style");
+            } else {
+                this.setAttribute("style", styles);
+            }
+        }
+    }
+
     public toString(): string {
         const attrs = Object.entries(this.pmAttributes)
             .map(([key, value]) => ` ${key}="${value}"`)
@@ -108,13 +127,7 @@ export default class Component {
         return `<${this.pmTag} id="${this.pmId}"${attrs}>${content}</${this.pmTag}>\n`;
     }
 
-    public customCss(): string {
-        const css = this.pmChildren
-            .map((child) => (child instanceof Component ? child.customCss() : child))
-            .join("");
 
-        return this.pmCss + css;
-    }
 
 };
 

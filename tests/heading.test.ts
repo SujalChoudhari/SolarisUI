@@ -1,4 +1,4 @@
-import Heading from "../src/structural/heading"
+import Heading from "../src/basic/heading"
 
 
 describe("Heading",()=>{
