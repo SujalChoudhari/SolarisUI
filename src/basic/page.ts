@@ -8,5 +8,3 @@ export default class Page extends Component {
         this.url = url;
     }
 };
-
-module.exports = Page;

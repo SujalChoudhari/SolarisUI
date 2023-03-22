@@ -1,4 +1,4 @@
-import Container from "./Container";
+import Container from "./container";
 import Component from "../basic/component";
 export default class GridContainer extends Container {
 

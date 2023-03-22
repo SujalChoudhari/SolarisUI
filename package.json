@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
     "prebuild": "jest",
-    "build": "tsc"
+    "build": "tsc",
+    "docs": "typedoc --out docs src/index.ts"
   },
   "dependencies": {
     "ts-node": "^10.9.1",
@@ -25,7 +26,8 @@
     "@types/node": "^18.15.3",
     "babel-jest": "^29.5.0",
     "jest": "^29.5.0",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "typedoc": "^0.23.28"
   },
   "jest": {
     "testMatch": [

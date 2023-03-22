@@ -1,11 +1,43 @@
 import FileManager from "../filemanager";
 
+/**
+ * Component
+ * -----
+ * Represents the entire hirarchy of HTML elements
+ * Each and every html element can be expressed as a single 
+ * Component or A hirarchy of components. 
+ * 
+ * @remarks
+ * This class hirarchy is then compiled into normal HTML code.
+ * This Component can be inherited to create newer more complex components.
+ */
 export default class Component {
+
+    /**
+     * The html tag it is supposed to represent.
+     */
     protected pmTag: string;
+
+    /**
+     * HTMl attributes in the form of key value pairs.
+     */
     protected pmAttributes: { [key: string]: string };
+
+    /**
+     * An array of `Component` which would be rendered as
+     * child elements of the current element
+     */
     protected pmChildren: Component[];
+
+
     protected pmCss: string = "";
 
+    /**
+     * Create a new Component instance
+     * @param tag  The tag the Component belongs to. For example div,p,a,strong,etc.
+     * @param attributes The html attributes in the form of key value pairs
+     * @param children The children of the Component
+     */
     constructor(
         tag: string,
         attributes: { [key: string]: string } = {},
@@ -17,28 +49,51 @@ export default class Component {
     }
 
 
-
+    /**
+     * Get the tag name
+     * @returns the tag of the component
+     */
     public getTag(): string {
         return this.pmTag;
     }
 
+    /**
+     * Get the attributes of the component
+     * @returns Object containing all the attributes of the component
+     */
     public getAttributes(): { [key: string]: string } {
         return this.pmAttributes;
     }
 
+    /**
+     * Get the children of the component
+     * @returns List of all the Childrens of the component
+     */
     public getChildren(): Component[] {
         return this.pmChildren;
     }
 
+    /**
+     * Add a new child to the component
+     * @param child Add a child to the component. Child can be of any level of inheritance of component.
+     */
     public addChild(child: Component): void {
-
         this.pmChildren.push(child);
     }
 
+    /**
+     * Add multiple children to the component
+     * @param childrenToAdd  A destructured list of components to add as children 
+     */
     public addChildren(...childrenToAdd: Component[]): void {
         this.pmChildren.push(...childrenToAdd);
     }
 
+    /**
+     * Remove the child from the parent.
+     * Note if the child is not refrenced anywhere but only by the parent, then remove it will delete it.
+     * @param child The children component to remove as a child
+     */
     public removeChild(child: Component): void {
         const index = this.pmChildren.indexOf(child);
         if (index !== -1) {
@@ -46,19 +101,36 @@ export default class Component {
         }
     }
 
+    /**
+     * Sets or Creates a new attribute on the component
+     * @param name nmae of the attribute to set
+     * @param value the value of the attribute to set
+     */
     public setAttribute(name: string, value: string): void {
         this.pmAttributes[name] = value;
     }
 
+    /**
+     * Get the value of the attribute at the specified name
+     * @param name the value of the attribute to get
+     * @returns the value of the attribute
+     */
     public getAttribute(name: string): string | undefined {
         return this.pmAttributes[name];
     }
 
+    /**
+     * Remove the attribute at the specified name
+     * @param name Attribute to remove from the component
+     */
     public removeAttribute(name: string): void {
         delete this.pmAttributes[name];
     }
 
-
+    /**
+     * Add new class to the `class` attribute
+     * @param className add a new class to the attributes
+     */
     public addClass(className: string): void {
         let classes = this.getAttribute("class");
         if (classes !== undefined) {
@@ -72,6 +144,10 @@ export default class Component {
         }
     }
 
+    /**
+     * Add multiple classes to the list of classes
+     * @param classNames the destructured string array of class names to add to the component
+     */
     public addClasses(...classNames: string[]): void {
         let classes = this.getAttribute("class");
         if (classes !== undefined) {
@@ -85,7 +161,10 @@ export default class Component {
         }
     }
 
-
+    /**
+     * Set styles for the Component
+     * @param properties style properties to set
+     */
     public setStyles(properties: { [key: string]: string }): void {
         const styles = this.getAttribute("style") || "";
         const updatedStyles = Object.keys(properties).reduce((result, key) => {
@@ -93,6 +172,7 @@ export default class Component {
         }, styles);
         this.setAttribute("style", updatedStyles.trim());
     }
+
 
     public deleteStyles(...properties: string[]): void {
         const styleAttribute = this.getAttribute("style");
@@ -111,7 +191,11 @@ export default class Component {
         }
     }
 
-
+    /**
+     * Convert this object into a string representation.
+     * This includes the children as well.
+     * @returns converted string representation
+     */
     public toString(): string {
         const attrs = Object.entries(this.pmAttributes)
             .map(([key, value]) => ` ${key}="${value}"`)
@@ -124,6 +208,11 @@ export default class Component {
         return `<${this.pmTag} ${attrs}>${content}</${this.pmTag}>\n`;
     }
 
+
+    /**
+     * Fills the component in the specified direction.
+     * @param direction - The direction to fill. Can be "vertical", "horizontal", or "both".
+     */
     public fill(direction: "vertical" | "horizontal" | "both"): void {
         let newWidth = direction === "horizontal" || direction === "both" ? "100%" : "";
         let newHeight = direction === "vertical" || direction === "both" ? "100%" : "";
@@ -140,6 +229,11 @@ export default class Component {
         }
     }
 
+    /**
+     * Aligns the component vertically and horizontally.
+     * @param vertical - The vertical alignment. Can be "top", "bottom", or "middle".
+     * @param horizontal - The horizontal alignment. Can be "left", "right", or "center".
+     */
     public align(vertical: "top" | "bottom" | "middle", horizontal: "left" | "right" | "center"): void {
         let align = "";
         let justify = "";
@@ -171,14 +265,5 @@ export default class Component {
             "justify-content": justify,
         });
     }
-
-    public copy():Component{
-        let newComponent = new Component(this.pmTag,this.pmAttributes);
-        this.pmChildren.forEach(child => {
-            newComponent.addChild(child.copy());
-        });
-        return newComponent;
-    }
-
 };
 

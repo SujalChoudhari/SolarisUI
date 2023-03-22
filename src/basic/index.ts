@@ -6,4 +6,4 @@ import Style from "./styles";
 import Link from "./link";
 import Body from "./body";
 
-export { Component, Page, Head, String,Style, Link, Body };
+export { Component, Page, Head, String,Style, Link, Body }; 
