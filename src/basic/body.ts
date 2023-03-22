@@ -36,6 +36,9 @@ export default class Body extends Component {
         }
         else {
             const newscript = new Component('script', {}, [new String(script.script)]);
+            Object.keys(script.params).forEach(key => {
+                newscript.setAttribute(key, script.params[key]);
+            });
             this.addChildren(newscript);
         }
     }
