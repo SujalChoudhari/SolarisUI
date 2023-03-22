@@ -15,7 +15,7 @@ export default class Component {
         this.pmTag = tag;
         this.pmAttributes = attributes;
         this.pmChildren = children;
-        this.pmId = "__" + tag + Math.floor(100000 + Math.random() * 900000);
+        this.pmId = "__" + tag;
     }
 
     public getId(): string {
@@ -103,7 +103,7 @@ export default class Component {
         if (styleAttribute !== undefined) {
             let styles = styleAttribute.trim();
             properties.forEach(property => {
-                const regex = new RegExp(`(^|\\s)${property}:[^;]+;?`, "g");
+                const regex = new RegExp(`(^|\\s)${property}:\\s*[^;]+;?`, "g");
                 styles = styles.replace(regex, "");
             });
             styles = styles.replace(/\s+/g, " ").trim();
@@ -115,6 +115,7 @@ export default class Component {
         }
     }
 
+
     public toString(): string {
         const attrs = Object.entries(this.pmAttributes)
             .map(([key, value]) => ` ${key}="${value}"`)
@@ -124,9 +125,56 @@ export default class Component {
             .map((child) => (child instanceof Component ? child.toString() : child))
             .join("");
 
-        return `<${this.pmTag} id="${this.pmId}"${attrs}>${content}</${this.pmTag}>\n`;
+        return `<${this.pmTag} id="${this.pmId}${Math.floor(100000 + Math.random() * 900000)}"${attrs}>${content}</${this.pmTag}>\n`;
     }
 
+    public fill(direction: "vertical" | "horizontal" | "both"): void {
+        let newWidth = direction === "horizontal" || direction === "both" ? "100%" : "";
+        let newHeight = direction === "vertical" || direction === "both" ? "100%" : "";
+        this.setStyles({
+            height: newHeight,
+            width: newWidth,
+            "flex-grow": "1",
+        });
+        if (newWidth == "") {
+            this.deleteStyles("width");
+        }
+        if (newHeight == "") {
+            this.deleteStyles("height");
+        }
+    }
+
+    public align(vertical: "top" | "bottom" | "middle", horizontal: "left" | "right" | "center"): void {
+        let align = "";
+        let justify = "";
+        switch (vertical) {
+            case "top":
+                align = "flex-start";
+                break;
+            case "middle":
+                align = "center";
+                break;
+            case "bottom":
+                align = "flex-end";
+                break;
+        }
+        switch (horizontal) {
+            case "left":
+                justify = "flex-start";
+                break;
+            case "center":
+                justify = "center";
+                break;
+            case "right":
+                justify = "flex-end";
+                break;
+        }
+        this.setStyles({
+            display: "flex",
+            "align-items": align,
+            "justify-content": justify,
+        });
+    }
 
 
 };
