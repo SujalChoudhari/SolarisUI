@@ -26,11 +26,20 @@ describe("Component", () => {
     });
 
     it("should set and remove attributes", () => {
-        let component = new Component("a", { "href": "https://example.com"}, [new String("Hello World!")]);
+        let component = new Component("a", { "href": "https://example.com" }, [new String("Hello World!")]);
         component.setAttribute("href", "https://google.com");
         expect(component.getAttribute("href")).toBe("https://google.com");
         component.setAttribute("src", "https://example.com");
         expect(component.getAttribute("src")).toBe("https://example.com");
+
+    });
+
+    it("should copy with unique tags", () => {
+        let component = new Component("div");
+        let newer = component.copy();
+        expect(component.getId()).not.toEqual(newer.getId());
+        console.log(component.getTag());
+        console.log(newer.getTag());
         
     });
 });

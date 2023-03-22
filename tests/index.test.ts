@@ -6,6 +6,7 @@ import String from "../src/basic/string";
 import Container from "../src/container/container";
 import Heading from "../src/basic/heading";
 import Component from "../src/basic/component";
+import ModalContainer from "../src/container/modalcontainer";
 
 describe("Solaris", () => {
     it("should successfully create the given data source", () => {
@@ -26,14 +27,13 @@ describe("Solaris", () => {
         let title = new Heading(1, "My Demo Store");
         title.align("middle", "center");
         title.setStyles({ "font-size": "60px" });
-        let textContainer = new Container();
+        let textContainer = new ModalContainer();
         textContainer.addChild(new Component("p", {}, [new String("NOT Welcome to my demo store")]));
         textContainer.addChild(new Component("p", {}, [new String("Welcome to my demo store")]));
         textContainer.addChild(new Component("p", {}, [new String("Welcome to my demo store")]));
         textContainer.addChild(new Component("p", {}, [new String("Welcome to my demo store")]));
         textContainer.getChildren()[0].align("middle", "right");
         textContainer.getChildren()[0].fill("vertical");
-        textContainer.setStyles({ "color": "white", "background-color": "green" });
 
         let textContainer2 = new Container();
         textContainer2.addChild(new Component("p", {}, [new String("Part 2?")]));

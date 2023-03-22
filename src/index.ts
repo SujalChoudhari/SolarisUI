@@ -45,5 +45,4 @@ export default class SolarisUI {
             this.htmlSource[element.url.split(".")[0]] = element.toString();
         });
     }
-
 }
