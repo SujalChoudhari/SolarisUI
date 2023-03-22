@@ -15,7 +15,7 @@ export default class Component {
         this.pmTag = tag;
         this.pmAttributes = attributes;
         this.pmChildren = children;
-        this.pmId = "__" + tag;
+        this.pmId = "__" + tag + Math.floor(100000 + Math.random() * 900000);
     }
 
     public getId(): string {
@@ -125,7 +125,7 @@ export default class Component {
             .map((child) => (child instanceof Component ? child.toString() : child))
             .join("");
 
-        return `<${this.pmTag} id="${this.pmId}${Math.floor(100000 + Math.random() * 900000)}"${attrs}>${content}</${this.pmTag}>\n`;
+        return `<${this.pmTag} id="${this.pmId}"${attrs}>${content}</${this.pmTag}>\n`;
     }
 
     public fill(direction: "vertical" | "horizontal" | "both"): void {
@@ -176,6 +176,13 @@ export default class Component {
         });
     }
 
+    public copy():Component{
+        let newComponent = new Component(this.pmTag,this.pmAttributes);
+        this.pmChildren.forEach(child => {
+            newComponent.addChild(child.copy());
+        });
+        return newComponent;
+    }
 
 };
 
