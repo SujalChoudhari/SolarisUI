@@ -2,11 +2,6 @@ import Component from "../src/basic/component";
 import String from '../src/basic/string';
 
 describe("Component", () => {
-    it("should give an component a id", () => {
-        let component = new Component("div", { "class": "mx-5" });
-        let id = component.getId()
-        expect(id).toContain("__" + component.getTag());
-    });
 
     it("should create an Component with the correct tag and attributes", () => {
         let component = new Component("div", { "class": "mx-5" });

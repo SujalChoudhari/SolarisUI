@@ -4,7 +4,6 @@ export default class Component {
     protected pmTag: string;
     protected pmAttributes: { [key: string]: string };
     protected pmChildren: Component[];
-    protected pmId: string;
     protected pmCss: string = "";
 
     constructor(
@@ -15,12 +14,9 @@ export default class Component {
         this.pmTag = tag;
         this.pmAttributes = attributes;
         this.pmChildren = children;
-        this.pmId = "__" + tag + Math.floor(100000 + Math.random() * 900000);
     }
 
-    public getId(): string {
-        return this.pmId;
-    }
+
 
     public getTag(): string {
         return this.pmTag;
@@ -125,7 +121,7 @@ export default class Component {
             .map((child) => (child instanceof Component ? child.toString() : child))
             .join("");
 
-        return `<${this.pmTag} id="${this.pmId}"${attrs}>${content}</${this.pmTag}>\n`;
+        return `<${this.pmTag} ${attrs}>${content}</${this.pmTag}>\n`;
     }
 
     public fill(direction: "vertical" | "horizontal" | "both"): void {
