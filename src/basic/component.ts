@@ -103,7 +103,7 @@ export default class Component {
         if (styleAttribute !== undefined) {
             let styles = styleAttribute.trim();
             properties.forEach(property => {
-                const regex = new RegExp(`(^|\\s)${property}:\\s*[^;]+;?`, "g");
+                const regex = new RegExp(`(^|\\s)${property}:[^;]+;?`, "g");
                 styles = styles.replace(regex, "");
             });
             styles = styles.replace(/\s+/g, " ").trim();
@@ -114,7 +114,6 @@ export default class Component {
             }
         }
     }
-
 
     public toString(): string {
         const attrs = Object.entries(this.pmAttributes)
@@ -128,61 +127,7 @@ export default class Component {
         return `<${this.pmTag} id="${this.pmId}"${attrs}>${content}</${this.pmTag}>\n`;
     }
 
-    public fill(direction: "vertical" | "horizontal" | "both"): void {
-        let newWidth = direction === "horizontal" || direction === "both" ? "100%" : "";
-        let newHeight = direction === "vertical" || direction === "both" ? "100%" : "";
-        this.setStyles({
-            height: newHeight,
-            width: newWidth,
-            "flex-grow": "1",
-        });
-        if (newWidth == "") {
-            this.deleteStyles("width");
-        }
-        if (newHeight == "") {
-            this.deleteStyles("height");
-        }
-    }
 
-    public align(vertical: "top" | "bottom" | "middle", horizontal: "left" | "right" | "center"): void {
-        let align = "";
-        let justify = "";
-        switch (vertical) {
-            case "top":
-                align = "flex-start";
-                break;
-            case "middle":
-                align = "center";
-                break;
-            case "bottom":
-                align = "flex-end";
-                break;
-        }
-        switch (horizontal) {
-            case "left":
-                justify = "flex-start";
-                break;
-            case "center":
-                justify = "center";
-                break;
-            case "right":
-                justify = "flex-end";
-                break;
-        }
-        this.setStyles({
-            display: "flex",
-            "align-items": align,
-            "justify-content": justify,
-        });
-    }
-
-    public copy():Component{
-        let newComponent = new Component(this.pmTag,this.pmAttributes);
-        this.pmChildren.forEach(child => {
-            newComponent.addChild(child.copy());
-        });
-        return newComponent;
-    }
 
 };
 
