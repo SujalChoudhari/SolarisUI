@@ -21,6 +21,7 @@ export default class Container extends Component {
             "justify-content": "flex-start",
 
         });
+        this.addClass("container");
     }
 
     public setPadding(

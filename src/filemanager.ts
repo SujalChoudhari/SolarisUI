@@ -52,6 +52,29 @@ export default class FileManager {
         }
     }
 
+    public getAllFilesInDirectory(directoryPath: string): string[] {
+        const absolutePath = this.getAbsolutePath(directoryPath);
+        if (!fs.existsSync(absolutePath)) {
+            throw new Error(`Directory ${directoryPath} does not exist.`);
+        }
+
+        const entries = fs.readdirSync(absolutePath, { withFileTypes: true });
+        const files: string[] = [];
+
+        for (const entry of entries) {
+            
+            if (entry.isDirectory()) {
+                const entryPath = path.join(directoryPath, entry.name);
+                files.push(...this.getAllFilesInDirectory(entryPath));
+            } else {
+                const entryPath = path.join(absolutePath, entry.name);
+                files.push(entryPath);
+            }
+        }
+
+        return files;
+    }
+
     public moveFile(srcPath: string, destPath: string): void {
         const srcAbsolutePath = this.getAbsolutePath(srcPath);
         const destAbsolutePath = this.getAbsolutePath(destPath);

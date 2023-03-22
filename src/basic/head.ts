@@ -53,14 +53,19 @@ export default class Head extends Component {
             this.addChildren(newAuthor);
         }
     }
-
+    private addedDefaultStyles: boolean = false;
     public addStylesheet(style: Style): void {
         var manager = new FileManager();
 
+        if(!this.addedDefaultStyles) {
+            this.addDefaultStyles();
+            console.log("Added default styles")
+            this.addedDefaultStyles = true;
+        }
+
         let styleUrl = style.url.startsWith("http") ?  style.url : manager.getAbsolutePath(style.url);
-        console.log(styleUrl);
         if(style.type === "external" && style.url !== "") {
-            const styleSheet = this.pmChildren.find(child => child.getTag() === 'link' && child.getAttribute('rel') === 'stylesheet');
+            const styleSheet = this.pmChildren.find(child => child.getTag() === 'link' && child.getAttribute('rel') === 'stylesheet' && child.getAttribute('href') === styleUrl);
             if (styleSheet) {
                 styleSheet.setAttribute('href', styleUrl);
             }
@@ -91,5 +96,15 @@ export default class Head extends Component {
             this.addChildren(newStyle);
         }
     }
+    private addDefaultStyles(): void {
+        const manager = new FileManager();
+        const allFiles =manager.getAllFilesInDirectory("/public/styles");
+
+        allFiles.forEach(file => {
+            const newStyle = new Component('link', { rel: 'stylesheet', href: file });
+            this.addChildren(newStyle);
+        })
+    }
+
 
 };
