@@ -1,4 +1,5 @@
-import Component from "../src/basic/component";
+import { Component, Head, Style } from "../src/basic";
+
 
 
 describe('Styles', () => {
@@ -14,12 +15,12 @@ describe('Styles', () => {
     });
 
     it("should create add styles as an attribute", () => {
-        dummy.setStyles({"padding":"30px"});
+        dummy.setStyles({ "padding": "30px" });
         expect(dummy.toString()).toBeTruthy();
     });
 
     it("should reset the style", () => {
-        dummy.setStyles({"color":"red"});
+        dummy.setStyles({ "color": "red" });
         expect(dummy.getAttribute("style")).toContain("color: red;");
     });
 
@@ -28,4 +29,17 @@ describe('Styles', () => {
         dummy.deleteStyles("color", "margin-top");
         expect(dummy.getAttribute("style")).toEqual("background-color: red;");
     });
+});
+
+
+describe("Stylesheets", () => {
+    it("must add a link tag to the corresponding head", () => {
+        let head = new Head("Test Head");
+        head.addStylesheet(new Style(
+            "external", "https://example.com/stylesheets"
+        ));
+        expect(head.getChildren().at(-1)?.getTag()).toBe("link");
+        expect(head.getChildren().at(-1)?.getAttribute("href")).toBe("https://example.com/stylesheets");
+    });
+
 });

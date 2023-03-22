@@ -16,7 +16,7 @@ describe("Solaris", () => {
         var head = new Head("Test Page");
         var body = new Body();
         var container = new Container();
-        var text = new Heading(3,"Test Page");
+        var text = new Heading(3, "Test Page");
         // text.fill("vertical");
         // text.align("center","middle");
         container.addChild(text);

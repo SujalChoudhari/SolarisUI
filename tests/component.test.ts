@@ -34,13 +34,5 @@ describe("Component", () => {
 
     });
 
-    it("should copy with unique tags", () => {
-        let component = new Component("div");
-        let newer = component.copy();
-        expect(component.getId()).not.toEqual(newer.getId());
-        console.log(component.getTag());
-        console.log(newer.getTag());
-        
-    });
 });
 

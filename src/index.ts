@@ -28,7 +28,6 @@ export default class SolarisUI {
 
         //Output
         fileManager.createDirectory(`./public/builds/${this.name}`);
-        fileManager.createDirectory(`./public/builds/${this.name}/style`);
 
         Object.keys(this.htmlSource).forEach(key => {
             key = key.split('.')[0];

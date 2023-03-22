@@ -103,7 +103,7 @@ export default class Component {
         if (styleAttribute !== undefined) {
             let styles = styleAttribute.trim();
             properties.forEach(property => {
-                const regex = new RegExp(`(^|\\s)${property}:\\s*[^;]+;?`, "g");
+                const regex = new RegExp(`(^|\\s)${property}:[^;]+;?`, "g");
                 styles = styles.replace(regex, "");
             });
             styles = styles.replace(/\s+/g, " ").trim();
