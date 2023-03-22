@@ -1,5 +1,7 @@
 import Component from './component'
 import String from './string';
+import Style from './styles';
+import FileManager from '../filemanager';
 
 export default class Head extends Component {
     constructor(title: string = "", author: string = "", description: string = "", keywords: string = "") {
@@ -49,6 +51,44 @@ export default class Head extends Component {
         } else {
             const newAuthor = new Component('meta', { name: 'author', content: author });
             this.addChildren(newAuthor);
+        }
+    }
+
+    public addStylesheet(style: Style): void {
+        var manager = new FileManager();
+
+        let styleUrl = style.url.startsWith("http") ?  style.url : manager.getAbsolutePath(style.url);
+        console.log(styleUrl);
+        if(style.type === "external" && style.url !== "") {
+            const styleSheet = this.pmChildren.find(child => child.getTag() === 'link' && child.getAttribute('rel') === 'stylesheet');
+            if (styleSheet) {
+                styleSheet.setAttribute('href', styleUrl);
+            }
+            else {
+                const newStyle = new Component('link', { rel: 'stylesheet', href: styleUrl });
+                this.addChildren(newStyle);
+            }
+        }
+        else if(style.type === "external" && style.url === "") {
+            throw new Error("Style url is not defined");
+        }
+        else if(style.type === "infile" && Object.keys(style.properties[0]).length === 0) {
+            throw new Error("Style properties are not defined");
+        }
+        else {
+            let properties = "";
+            style.properties.forEach(property => {
+                Object.keys(property).forEach(selector => {
+                    // selector
+                    properties += `\n${selector} { \n`;
+                    Object.keys(property[selector]).forEach(key => {
+                        properties += `${key}: ${property[selector][key]};\n`;
+                    });
+                    properties += ` } \n`;
+                });
+            });
+            const newStyle = new Component('style', {}, [new String(properties)]);
+            this.addChildren(newStyle);
         }
     }
 
