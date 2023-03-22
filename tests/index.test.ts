@@ -5,32 +5,46 @@ import Body from "../src/basic/body";
 import String from "../src/basic/string";
 import Container from "../src/container/container";
 import Heading from "../src/basic/heading";
+import Component from "../src/basic/component";
 
 describe("Solaris", () => {
     it("should successfully create the given data source", () => {
 
-        
-        var project = new SolarisUI("My Test Project");
-        var head = new Head("Head Common for all pages");
-        // pages
-        var indexPage = new Page("index.html");
-        var aboutPage = new Page("about.html");
-        var contactPage = new Page("contact.html");
-        
-        var indexBody = new Body();
-        var headingHolder = new Container();
-        var pageNameH3 = new Heading(3,"Test Page");
-                indexPage.addChildren(head, indexBody);
-                aboutPage.addChildren(head);
-                contactPage.addChildren(head);
+        // Demo example
+        var solaris = new SolarisUI("my-test-project", "en", "utf-8");
 
-        headingHolder.fill("vertical");
-        pageNameH3.align("bottom","right");
-        pageNameH3.fill("vertical");
-        headingHolder.addChild(pageNameH3);
-        indexBody.addChildren(headingHolder,headingHolder);
-        project.build(indexPage,aboutPage,contactPage);
-        
+        // Creating Landing Page
+        var indexPage = new Page("index");
+        let pageHead = new Head("My Demo Store",
+            "developer",
+            "description",
+            "shop,store,products");
+        let pageBody = new Body()
+        indexPage.addChild(pageHead);
+        indexPage.addChild(pageBody);
+
+        let title = new Heading(1, "My Demo Store");
+        title.align("middle", "center");
+        title.setStyles({ "font-size": "60px" });
+        let textContainer = new Container();
+        textContainer.addChild(new Component("p", {}, [new String("NOT Welcome to my demo store")]));
+        textContainer.addChild(new Component("p", {}, [new String("Welcome to my demo store")]));
+        textContainer.addChild(new Component("p", {}, [new String("Welcome to my demo store")]));
+        textContainer.addChild(new Component("p", {}, [new String("Welcome to my demo store")]));
+        textContainer.getChildren()[0].align("middle", "right");
+        textContainer.getChildren()[0].fill("vertical");
+        textContainer.setStyles({ "color": "white", "background-color": "green" });
+
+        let textContainer2 = new Container();
+        textContainer2.addChild(new Component("p", {}, [new String("Part 2?")]));
+        textContainer2.fill("both");
+        textContainer2.getChildren()[0].align("middle", "center");
+        textContainer2.getChildren()[0].fill("vertical");
+        pageBody.addChildren(title, textContainer, textContainer2);
+
+
+        solaris.build(indexPage);
+
     });
 });
 

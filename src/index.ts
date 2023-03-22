@@ -33,13 +33,11 @@ export default class SolarisUI {
 
         //Output
         fileManager.createDirectory(`./public/builds/${this.name}`);
-        fileManager.createDirectory(`./public/builds/${this.name}/style`);
 
         Object.keys(this.htmlSource).forEach(key => {
             key = key.split('.')[0];
             fileManager.createFile(`./public/builds/${this.name}/${key}.html`, this.htmlSource[key]);
         });
-
     }
 
     private compileHtmlSource(): void {

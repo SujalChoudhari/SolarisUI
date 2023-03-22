@@ -17,7 +17,6 @@ export default class Container extends Component {
 
         this.setStyles({
             "display": "flex",
-            "flex-direction": "column",
             "align-items": "stretch",
             "justify-content": "flex-start",
 
@@ -43,8 +42,6 @@ export default class Container extends Component {
             "margin": `${top} ${right} ${bottom} ${left}`
         })
     }
-
-    
 
 
 };
