@@ -6,6 +6,7 @@ import {
     Link,
     Style
 } from "./basic";
+import Script from "./basic/scripts";
 
 import {
     CardContainer,
@@ -16,6 +17,11 @@ import {
     VerticalAlignContainer
 } from "./container";
 import FileManager from "./filemanager";
+
+type SolarisUIConfig = {
+    bootstrapSupport: boolean,  
+    tailwindSupport: boolean
+}
 
 /**
  * @class Sloaris
@@ -55,15 +61,24 @@ class SolarisUI {
     public pages: Page[] = [];
 
     /**
+     * The configuration of the SolarisUI instance.
+     * @property bootstrapSupport - Whether or not to include Bootstrap support. Defaults to `false`.
+     * @property tailwindSupport - Whether or not to include Tailwind support. Defaults to `false`.
+     */
+    public config: SolarisUIConfig = { bootstrapSupport: false, tailwindSupport: false };
+
+    /**
      * Creates a new instance of the `SolarisUI` class.
      * @param name - The name of the SolarisUI instance.
      * @param lang - The language of the SolarisUI instance. Defaults to "en".
      * @param encoding - The character encoding of the SolarisUI instance. Defaults to "utf-8".
+     * @param config - The configuration of the SolarisUI instance.
      */
-    constructor(name: string, lang: string = "en", encoding: string = "utf-8") {
+    constructor(name: string, lang: string = "en", encoding: string = "utf-8", config: SolarisUIConfig = { bootstrapSupport: false, tailwindSupport: false }) {
         this.name = name;
         this.lang = lang;
         this.encoding = encoding;
+        this.config = config;
     }
 
     /**
@@ -93,10 +108,23 @@ class SolarisUI {
      */
     private compileHtmlSource(): void {
         this.pages.forEach(element => {
+            if(this.config.bootstrapSupport) {
+                element.getChildren().forEach((child: any) => {
+                    child.getTag() === "head" && child.addStylesheet(new Style("external", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"));
+                    child.getTag() === "body" && child.addScript(new Script("external", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"));
+                });
+            }
+            if(this.config.tailwindSupport) {
+                element.getChildren().forEach((child: any) => {
+                    child.getTag() === "head" && child.addStylesheet(new Style("external", "https://unpkg.com/tailwindcss@2/dist/tailwind.min.css"));
+                    // child.getTag() === "body" && child.addScript(new Script("external", "https://unpkg.com/tailwindcss@2/dist/tailwind.min.js"));
+                });
+            }
             this.htmlSource[element.url.split(".")[0]] = element.toString();
         });
     }
 }
+export default SolarisUI;
 
 export {
     SolarisUI,
