@@ -14,10 +14,10 @@ export default class GridContainer extends Container {
         super(padding, margin, attributes, children);
 
         this.setStyles({
-            "display": "grid",
             "grid-template-columns": columns ?? "1fr",
-            "grid-template-rows": rows ?? "auto",
-            "grid-gap": "0"
+            "grid-template-rows": rows ?? "auto"
         });
+
+        this.addClass("grid-container")
     }
 };

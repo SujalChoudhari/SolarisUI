@@ -7,17 +7,6 @@ export default class ModalContainer extends Container {
             "role": "dialog",
             "aria-modal": "true"
         }, children);
-        this.setStyles({
-            "position": "fixed",
-            "top": "0",
-            "left": "0",
-            "width": "100%",
-            "height": "100%",
-            "background-color": "rgba(0,0,0,0.5)",
-            "z-index": "9999",
-            "display": "flex",
-            "justify-content": "center",
-            "align-items": "center"
-        });
+        this.addClass("modal-container");
     }
 }

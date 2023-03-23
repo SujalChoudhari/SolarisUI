@@ -15,12 +15,6 @@ export default class Container extends Component {
         if (margin)
             this.setMargin(margin[0], margin[1], margin[2], margin[3]);
 
-        this.setStyles({
-            "display": "flex",
-            "align-items": "stretch",
-            "justify-content": "flex-start",
-
-        });
         this.addClass("container");
     }
 

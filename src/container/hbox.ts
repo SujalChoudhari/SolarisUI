@@ -11,8 +11,6 @@ export default class HorizontalAlignContainer extends Container {
 
         super(padding, margin, attributes, children);
 
-        this.setStyles({
-            "flex-direction": "row"
-        });
+        this.addClass("horizontal-container");
     }
 };

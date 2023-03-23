@@ -11,8 +11,6 @@ export default class VerticalAlignContainer extends Container {
 
         super(padding, margin, attributes, children);
 
-        this.setStyles({
-            "flex-direction": "column"
-        });
+        this.addClass("vertical-container");
     }
 };

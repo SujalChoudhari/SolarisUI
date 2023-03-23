@@ -10,8 +10,6 @@ export default class Head extends Component {
         this.setAuthor(author);
         this.setDescription(description);
         this.setKeywords(keywords);
-        
-
     }
 
     public setTitle(title: string): void {
@@ -53,19 +51,16 @@ export default class Head extends Component {
             this.addChildren(newAuthor);
         }
     }
-    private addedDefaultStyles: boolean = false;
+
+
     public addStylesheet(style: Style): void {
         var manager = new FileManager();
-
-        if(!this.addedDefaultStyles) {
-            this.addDefaultStyles();
-            console.log("Added default styles")
-            this.addedDefaultStyles = true;
-        }
-
-        let styleUrl = style.url.startsWith("http") ?  style.url : manager.getAbsolutePath(style.url);
-        if(style.type === "external" && style.url !== "") {
-            const styleSheet = this.pmChildren.find(child => child.getTag() === 'link' && child.getAttribute('rel') === 'stylesheet' && child.getAttribute('href') === styleUrl);
+        let styleUrl = style.url.startsWith("http") ? style.url : manager.getAbsolutePath(style.url);
+        if (style.type === "external" && style.url !== "") {
+            const styleSheet = this.pmChildren.find(
+                child => child.getTag() === 'link'
+                && child.getAttribute('rel') === 'stylesheet'
+                && child.getAttribute('href') === styleUrl);
             if (styleSheet) {
                 styleSheet.setAttribute('href', styleUrl);
             }
@@ -74,10 +69,10 @@ export default class Head extends Component {
                 this.addChildren(newStyle);
             }
         }
-        else if(style.type === "external" && style.url === "") {
+        else if (style.type === "external" && style.url === "") {
             throw new Error("Style url is not defined");
         }
-        else if(style.type === "infile" && Object.keys(style.properties[0]).length === 0) {
+        else if (style.type === "infile" && Object.keys(style.properties[0]).length === 0) {
             throw new Error("Style properties are not defined");
         }
         else {
@@ -95,15 +90,6 @@ export default class Head extends Component {
             const newStyle = new Component('style', {}, [new String(properties)]);
             this.addChildren(newStyle);
         }
-    }
-    private addDefaultStyles(): void {
-        const manager = new FileManager();
-        const allFiles =manager.getAllFilesInDirectory("/public/styles");
-
-        allFiles.forEach(file => {
-            const newStyle = new Component('link', { rel: 'stylesheet', href: file });
-            this.addChildren(newStyle);
-        })
     }
 
 

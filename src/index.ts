@@ -1,26 +1,18 @@
-import {
-    Component,
-    Page,
-    Head,
-    String,
-    Link,
-    Style
-} from "./basic";
-import Script from "./basic/scripts";
+import { Component, Page, Head, String, Script, Link, Style } from "./basic";
+
 
 import {
-    CardContainer,
-    Container,
-    GridContainer,
-    HorizontalAlignContainer,
-    ModalContainer,
-    VerticalAlignContainer
+    CardContainer, Container, GridContainer, HorizontalAlignContainer,
+    ModalContainer, VerticalAlignContainer
 } from "./container";
+
 import FileManager from "./filemanager";
 
 type SolarisUIConfig = {
-    bootstrapSupport: boolean,  
-    tailwindSupport: boolean
+    defaultCss: boolean,
+    bootstrapSupport: boolean,
+    tailwindSupport: boolean,
+
 }
 
 /**
@@ -65,7 +57,7 @@ class SolarisUI {
      * @property bootstrapSupport - Whether or not to include Bootstrap support. Defaults to `false`.
      * @property tailwindSupport - Whether or not to include Tailwind support. Defaults to `false`.
      */
-    public config: SolarisUIConfig = { bootstrapSupport: false, tailwindSupport: false };
+    public config: SolarisUIConfig = { defaultCss: true, bootstrapSupport: false, tailwindSupport: false };
 
     /**
      * Creates a new instance of the `SolarisUI` class.
@@ -74,7 +66,7 @@ class SolarisUI {
      * @param encoding - The character encoding of the SolarisUI instance. Defaults to "utf-8".
      * @param config - The configuration of the SolarisUI instance.
      */
-    constructor(name: string, lang: string = "en", encoding: string = "utf-8", config: SolarisUIConfig = { bootstrapSupport: false, tailwindSupport: false }) {
+    constructor(name: string, lang: string = "en", encoding: string = "utf-8", config: SolarisUIConfig = { defaultCss: true, bootstrapSupport: false, tailwindSupport: false }) {
         this.name = name;
         this.lang = lang;
         this.encoding = encoding;
@@ -91,11 +83,14 @@ class SolarisUI {
         this.pages.forEach(page => {
             page.setAttribute("lang", this.lang);
         });
-
+        this.addDefaultStyles();
         this.compileHtmlSource();
 
         //Output
         fileManager.createDirectory(`./public/builds/${this.name}`);
+        fileManager.createDirectory(`./public/builds/${this.name}/style`);
+
+        fileManager.copyDirectory(`./public/styles`, `./public/builds/${this.name}/style`);
 
         Object.keys(this.htmlSource).forEach(key => {
             key = key.split('.')[0];
@@ -108,13 +103,13 @@ class SolarisUI {
      */
     private compileHtmlSource(): void {
         this.pages.forEach(element => {
-            if(this.config.bootstrapSupport) {
+            if (this.config.bootstrapSupport) {
                 element.getChildren().forEach((child: any) => {
                     child.getTag() === "head" && child.addStylesheet(new Style("external", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"));
                     child.getTag() === "body" && child.addScript(new Script("external", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"));
                 });
             }
-            if(this.config.tailwindSupport) {
+            if (this.config.tailwindSupport) {
                 element.getChildren().forEach((child: any) => {
                     child.getTag() === "head" && child.addStylesheet(new Style("external", "https://unpkg.com/tailwindcss@2/dist/tailwind.min.css"));
                     // child.getTag() === "body" && child.addScript(new Script("external", "https://unpkg.com/tailwindcss@2/dist/tailwind.min.js"));
@@ -123,12 +118,36 @@ class SolarisUI {
             this.htmlSource[element.url.split(".")[0]] = element.toString();
         });
     }
+
+    private addDefaultStyles(): void {
+        if (this.config.defaultCss === false) return;
+        const manager = new FileManager();
+        const allFiles = manager.getAllFilesInDirectory("./public/styles");
+
+        let newFile:string|undefined;
+        allFiles.forEach(file => {
+
+            newFile = file.split("\\").at(-1);
+            if (newFile)
+                newFile = newFile.split(".").at(0);
+        });
+
+        this.pages.forEach(page => {
+            allFiles.forEach(file => {
+                const newStyle = new Component('link', { rel: 'stylesheet', href: `./style/${newFile}.css` });
+                if (page.head)
+                    page.head.addChildren(newStyle);
+            })
+        });
+    }
+
+
 }
 export default SolarisUI;
 
 export {
     SolarisUI,
-    
+
     Component,
     Page,
     Head,
