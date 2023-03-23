@@ -1,17 +1,49 @@
+
+
+/**
+ * Script
+ * -----
+ * Script is an representation of Javascript scripts in html
+ * @author Ansh Sharma 
+ */
 export default class Script {
-    protected pmScript: string = ``;
-    protected pmUrl: string = "";
-    protected pmType: string = "";
-    protected pmParams: { [key: string]: string } = {};
+    /**
+     * The actual string of script
+     */
+    public script: string = ``;
+
+    /** 
+     * The URL of the Script.
+     * only used when external is selected as type of script 
+     */
+    public url: string = "";
+
+    /**
+     * The Type of the script
+     */
+    public type: string = "";
+
+    /**
+     * The Parameters of the script
+     */
+    public params: { [key: string]: string } = {};
+
+    /**
+     * Create a new instance of Script 
+     * @param type the type of the script either external or infile
+     * @param url the url of an external source script
+     * @param script the actual script when url is specified
+     * @param params the parameters of the script
+     */
     constructor(
-        public type: "infile" | "external",
-        public url = "",
-        public script: string = ``,
-        public params: { [key: string]: string } = {}
+        type: "infile" | "external",
+        url = "",
+        script: string = ``,
+        params: { [key: string]: string } = {}
     ) {
-        this.pmScript = script;
-        this.pmUrl = url;
-        this.pmType = type;
-        this.pmParams = params;
+        this.script = script;
+        this.url = url;
+        this.type = type;
+        this.params = params;
     }
 }

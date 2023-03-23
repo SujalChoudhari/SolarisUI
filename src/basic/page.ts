@@ -3,8 +3,18 @@ import Component from './component'
 import Head from './head';
 
 export default class Page extends Component {
+    /**
+     * Url at which the page will be rendered.
+     */
     public url: string;
+    /**
+     * The Head of the page.
+     */
     public head: Head | undefined = undefined;
+
+    /**
+     * The Body of the page.
+     */
     public body: Body | undefined = undefined;
     constructor(url: string = "./page.html") {
         super("html");

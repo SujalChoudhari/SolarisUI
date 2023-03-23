@@ -6,18 +6,23 @@ Solaris enables you to make websites without actually writing any html or javasc
 ## Installation
 
 [Clone the repository](https://github.com/SujalChoudhari/SolarisUI)
+
 ```bash
 git clone https://github.com/SujalChoudhari/SolarisUI.git
-````
+```
 
 Or download the code from the repository.
 
 ## Usage
 
+To create a new project, you can use the following code:
+
 ```typescript
-// Create a new Project
 var project = new SolarisUI("Test");
-// New Page
+You can then add a new page using the following code:
+```
+
+```ts
 var page = new Page("index.html");
 var head = new Head("Test Page");
 var body = new Body();
@@ -29,7 +34,10 @@ container.addChild(text);
 container.fill("vertical");
 body.addChild(container);
 page.addChildren(head, body);
-//Build the project.
+```
+Finally, you can build the project using the following code:
+k
+```typescript
 project.build(page);
 ```
 

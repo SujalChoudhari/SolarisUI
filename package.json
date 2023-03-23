@@ -11,7 +11,7 @@
     "dev": "ts-node-dev src/index.ts",
     "prebuild": "jest",
     "build": "tsc",
-    "docs": "typedoc --out docs src/index.ts"
+    "docs": "typedoc"
   },
   "dependencies": {
     "ts-node": "^10.9.1",

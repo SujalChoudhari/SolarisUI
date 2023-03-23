@@ -1,15 +1,43 @@
+
+
+/**
+ * Style
+ * -----
+ * A representation of Style tag.
+ * 
+ * @author Ansh Sharma
+ */
 export default class Style {
-    protected pmProperties: [{ [key: string]: { [key: string]: string } }];
-    protected pmUrl: string = "";
-    protected pmType: string = "";
+    /**
+     * The actual css style properties.
+     */
+    public properties: [{ [key: string]: { [key: string]: string } }];
+    
+    /**
+     * Url to an external source file. 
+     */
+    public url: string = "";
+
+    /**
+     * Type of the css attachment. Either inline or external.
+     * Note: inline attachments are supported under Attributes, and Style functions under Component.
+     */
+    public type: string = "";
+
+    /**
+     * Create a new instance of Style
+     * @param type The type of the css attachment. Either inline or external.
+     * @param url Url to an external source file. Optional.
+     * @param properties Actual Css properties
+     */
     constructor(
-        public type: "infile" | "external",
-        public url = "",
-        public properties: [{ [key: string]: { [key: string]: string } }] = [{}],
+        type: "infile" | "external",
+        url = "",
+        properties: [{ [key: string]: { [key: string]: string } }] = [{}],
     ) {
-        this.pmProperties = properties;
-        this.pmUrl = url;
-        this.pmType = type;
+        this.properties = properties;
+        this.url = url;
+        this.type = type;
     }
 
 

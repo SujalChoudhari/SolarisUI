@@ -1,4 +1,3 @@
-import { config } from "process";
 import { Component, Head, Style, ModalContainer, SolarisUI, Page } from "../src/index";
 
 

@@ -10,6 +10,15 @@ import FileManager from "../filemanager";
  * @remarks
  * This class hirarchy is then compiled into normal HTML code.
  * This Component can be inherited to create newer more complex components.
+ * 
+ * @example
+ * Creating A component
+ * ```js
+ *  
+ * var myComponent = new Component("div",{"id":"my-component"});
+ * ```
+ * 
+ * @author Sujal Choudhari <sjlchoudhari@gmail.com>
  */
 export default class Component {
 
@@ -52,6 +61,12 @@ export default class Component {
     /**
      * Get the tag name
      * @returns the tag of the component
+     * 
+     * @example
+     * ```js
+     * var tag = myComponent.getTag(); // a div component
+     * console.log(tag); // div
+     * ```
      */
     public getTag(): string {
         return this.pmTag;
@@ -60,6 +75,15 @@ export default class Component {
     /**
      * Get the attributes of the component
      * @returns Object containing all the attributes of the component
+     * 
+     * @example
+     * ```js
+     * var myComponent = new Component("div",{"id":"my-component"});
+
+     * var attributes = myComponent.getAttributes(); // a div component
+     * console.log(attributes); // {"id":"my-component"}; 
+     * 
+     * ```
      */
     public getAttributes(): { [key: string]: string } {
         return this.pmAttributes;
@@ -76,6 +100,14 @@ export default class Component {
     /**
      * Add a new child to the component
      * @param child Add a child to the component. Child can be of any level of inheritance of component.
+     * 
+     * @example
+     * ```js
+     *  var component1 = new Component("div"); // parent component
+     *  var component2 = new Component("p"); // child component
+     *  component1.addChild(component2);
+     * 
+     * ```
      */
     public addChild(child: Component): void {
         this.pmChildren.push(child);
@@ -105,6 +137,15 @@ export default class Component {
      * Sets or Creates a new attribute on the component
      * @param name nmae of the attribute to set
      * @param value the value of the attribute to set
+     * 
+     * @example
+     * ```js
+     * 
+     * var myComponent = new Component("p");
+     * myComponent.setAttribute("class", "my-component para lg:mx-5 sm:mx-1");
+     * myComponent.setAttribute("id","my-unique-id");
+     * 
+     * ```
      */
     public setAttribute(name: string, value: string): void {
         this.pmAttributes[name] = value;
@@ -130,6 +171,14 @@ export default class Component {
     /**
      * Add new class to the `class` attribute
      * @param className add a new class to the attributes
+     * 
+     * @example
+     * ```
+     * var myComponent = new Component("div");
+     * myComponent.addClass("mx-5"); // class = "mx-5"
+     * myComponent.addClass("my-1"); // class = "my-1" "mx-5"
+     * 
+     * ```
      */
     public addClass(className: string): void {
         let classes = this.getAttribute("class");
@@ -173,7 +222,10 @@ export default class Component {
         this.setAttribute("style", updatedStyles.trim());
     }
 
-
+    /**
+     * Delete the specified css properties
+     * @param properties Destructured list of properties to delete
+     */
     public deleteStyles(...properties: string[]): void {
         const styleAttribute = this.getAttribute("style");
         if (styleAttribute !== undefined) {

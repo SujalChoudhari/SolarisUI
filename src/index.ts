@@ -1,18 +1,46 @@
-import { Component, Page, Head, String, Script, Link, Style } from "./basic";
+import {
+    Body,
+    Button,
+    Component,
+    Head,
+    Heading,
+    Link,
+    Page,
+    Script,
+    String,
+    Style
+} from "./basic";
 
 
 import {
-    CardContainer, Container, GridContainer, HorizontalAlignContainer,
-    ModalContainer, VerticalAlignContainer
+    CardContainer,
+    Container,
+    GridContainer,
+    HorizontalAlignContainer,
+    ModalContainer,
+    VerticalAlignContainer
 } from "./container";
 
 import FileManager from "./filemanager";
 
-type SolarisUIConfig = {
-    defaultCss: boolean,
-    bootstrapSupport: boolean,
-    tailwindSupport: boolean,
 
+/**
+ * Configuration options for the Solaris UI library.
+ * @author Ansh Sharma
+ */
+type SolarisUIConfig = {
+    /**
+     * Whether to use the default CSS provided by the library.
+     */
+    defaultCss: boolean;
+    /**
+     * Whether to enable support for the Bootstrap CSS framework.
+     */
+    bootstrapSupport: boolean;
+    /**
+     * Whether to enable support for the Tailwind CSS framework.
+     */
+    tailwindSupport: boolean;
 }
 
 /**
@@ -20,6 +48,7 @@ type SolarisUIConfig = {
  * A UI framework to create HTML pages with just JavaScript.
  * This component is responsible for building the entire UI framework.
  * @license MIT license
+ * @author Sujal Choudhari <sujalchoudari@gmail.com>
  */
 class SolarisUI {
     /**
@@ -100,6 +129,7 @@ class SolarisUI {
 
     /**
      * Compiles the HTML source code for each page in the SolarisUI instance.
+     * @private
      */
     private compileHtmlSource(): void {
         this.pages.forEach(element => {
@@ -119,12 +149,16 @@ class SolarisUI {
         });
     }
 
+    /**
+     * Add default styles to all the pages in the project
+     * @private
+     */
     private addDefaultStyles(): void {
         if (this.config.defaultCss === false) return;
         const manager = new FileManager();
         const allFiles = manager.getAllFilesInDirectory("./public/styles");
 
-        let newFile:string|undefined;
+        let newFile: string | undefined;
         allFiles.forEach(file => {
 
             newFile = file.split("\\").at(-1);
@@ -140,19 +174,23 @@ class SolarisUI {
             })
         });
     }
-
-
 }
-export default SolarisUI;
+
 
 export {
     SolarisUI,
+    SolarisUIConfig,
+    FileManager,
 
+    Body,
+    Button,
     Component,
-    Page,
     Head,
-    String,
+    Heading,
     Link,
+    Page,
+    Script,
+    String,
     Style,
 
     CardContainer,
@@ -161,7 +199,5 @@ export {
     HorizontalAlignContainer,
     ModalContainer,
     VerticalAlignContainer,
-
-    FileManager,
 
 }

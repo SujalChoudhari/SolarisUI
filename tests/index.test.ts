@@ -1,12 +1,5 @@
-import SolarisUI from "../src/index";
-import Page from "../src/basic/page";
-import Head from "../src/basic/head";
-import Body from "../src/basic/body";
-import String from "../src/basic/string";
-import Container from "../src/container/container";
-import Heading from "../src/basic/heading";
-import Component from "../src/basic/component";
-import ModalContainer from "../src/container/modalcontainer";
+import {SolarisUI,Page,Head,Body,String,Container,Heading,Component,ModalContainer} from "../src/index";
+
 
 describe("Solaris", () => {
     it("should successfully create the given data source", () => {
