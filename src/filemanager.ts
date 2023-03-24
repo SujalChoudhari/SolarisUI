@@ -104,7 +104,7 @@ export default class FileManager {
         const files: string[] = [];
 
         for (const entry of entries) {
-            
+
             if (entry.isDirectory()) {
                 const entryPath = path.join(directoryPath, entry.name);
                 files.push(...this.getAllFilesInDirectory(entryPath));
@@ -140,14 +140,14 @@ export default class FileManager {
      */
     public copyFile(srcPath: string, destPath: string): void {
         let contents = this.readFile(srcPath);
-        
+
         if (contents !== null)
-        this.createFile(destPath, contents);
+            this.createFile(destPath, contents);
         else {
             throw new Error("Failed to read file");
         }
     }
-    
+
     /**
      * Create a new file at the specified path
      * @param filePath New File Path, the name of file should be included in the path.
@@ -157,5 +157,34 @@ export default class FileManager {
         console.log(filePath);
         const absolutePath = this.getAbsolutePath(filePath);
         fs.writeFileSync(absolutePath, contents);
+    }
+
+    /**
+     * Copy the contents of the folder into another folder including subdirectories. 
+     * @param srcPath Source file path
+     * @param destPath Destination path
+     */
+    public copyTree(srcPath: string, destPath: string): void {
+        if (!fs.existsSync(srcPath)) {
+            console.error("It is recomemded to have a ./public/ folder in root folder.");
+            return;
+        }
+
+        if (!fs.existsSync(destPath)) {
+            fs.mkdirSync(destPath);
+        }
+
+        const files = fs.readdirSync(srcPath);
+        for (const file of files) {
+            const srcFile = path.join(srcPath, file);
+            const destFile = path.join(destPath, file);
+
+            const stat = fs.statSync(srcFile);
+            if (stat.isDirectory()) {
+                this.copyTree(srcFile, destFile);
+            } else {
+                fs.copyFileSync(srcFile, destFile);
+            }
+        }
     }
 }
