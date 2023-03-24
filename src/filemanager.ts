@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import Logger from './logger';
 
 /**
  * FileManager
@@ -39,12 +40,15 @@ export default class FileManager {
      */
     public readFile(relativePath: string): string | null {
         const absolutePath = this.getAbsolutePath(relativePath);
-        if (!fs.existsSync(absolutePath)) return null;
+        if (!fs.existsSync(absolutePath)) {
+            Logger.warn(__filename, `Given file: ${absolutePath} does not exist`);
+            return null;
+        }
 
         try {
             return fs.readFileSync(absolutePath, 'utf8');
         } catch (err) {
-            console.error(`Error reading file: ${err}`);
+            Logger.warn(__filename, `Error reading file: ${err}`);
             return null;
         }
     }
@@ -69,7 +73,8 @@ export default class FileManager {
         const destAbsolutePath = this.getAbsolutePath(destPath);
 
         if (!fs.existsSync(srcAbsolutePath)) {
-            throw new Error(`Source directory ${srcPath} does not exist.`);
+            Logger.warn(__filename, `Source directory ${srcPath} does not exist.`);
+            return;
         }
 
         fs.mkdirSync(destAbsolutePath, { recursive: true });
@@ -87,7 +92,7 @@ export default class FileManager {
         }
     }
 
-    /**
+     /**
      * Get a list of names of files and in the directory and its subdirectories.
      * @param directoryPath The path to the directory to get the names from
      * @returns A List of the names (absolute paths)
@@ -97,7 +102,8 @@ export default class FileManager {
     public getAllFilesInDirectory(directoryPath: string): string[] {
         const absolutePath = this.getAbsolutePath(directoryPath);
         if (!fs.existsSync(absolutePath)) {
-            throw new Error(`Directory ${directoryPath} does not exist.`);
+            Logger.warn(__filename, `Directory ${directoryPath} does not exist.`);
+            return [];
         }
 
         const entries = fs.readdirSync(absolutePath, { withFileTypes: true });
@@ -127,7 +133,8 @@ export default class FileManager {
         const destAbsolutePath = this.getAbsolutePath(destPath);
 
         if (!fs.existsSync(srcAbsolutePath)) {
-            throw new Error(`Source file ${srcPath} does not exist.`);
+            Logger.warn(__filename, `Source file ${srcPath} does not exist.`);
+            return;
         }
 
         fs.renameSync(srcAbsolutePath, destAbsolutePath);
@@ -144,7 +151,8 @@ export default class FileManager {
         if (contents !== null)
             this.createFile(destPath, contents);
         else {
-            throw new Error("Failed to read file");
+            Logger.warn(__filename, "Failed to read file");
+            return;
         }
     }
 
@@ -166,7 +174,7 @@ export default class FileManager {
      */
     public copyTree(srcPath: string, destPath: string): void {
         if (!fs.existsSync(srcPath)) {
-            console.error("It is recomemded to have a ./public/ folder in root folder.");
+            Logger.warn("It is recomemded to have a ./public/ folder in root folder.");
             return;
         }
 

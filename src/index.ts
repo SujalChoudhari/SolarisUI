@@ -40,6 +40,7 @@ import {
 } from "./container";
 
 import FileManager from "./filemanager";
+import Logger,{LogLevel} from "./logger";
 
 
 /**
@@ -205,7 +206,10 @@ export default SolarisUI;
 export {
     SolarisUI,
     SolarisUIConfig,
+    
     FileManager,
+    Logger,
+    LogLevel,
 
     Body,
     Button,
