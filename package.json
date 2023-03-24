@@ -1,6 +1,6 @@
 {
   "name": "solaris-ui",
-  "version": "1.0.0",
+  "version": "1.0.1-alpha.0",
   "description": "A UI framework to create HTML pages with just JavaScript.",
   "main": "dist/index.js",
   "types": "index.d.ts",
@@ -10,7 +10,7 @@
   "private": false,
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
-    "prebuild": "jest", 
+    "prebuild": "jest",
     "build": "tsc",
     "docs": "typedoc",
     "prepublish": "tsc"
