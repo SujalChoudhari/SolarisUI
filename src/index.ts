@@ -50,7 +50,7 @@ type SolarisUIConfig = {
     /**
      * Whether to use the default CSS provided by the library.
      */
-    defaultCss: boolean;
+    globalCss: boolean;
     /**
      * Whether to enable support for the Bootstrap CSS framework.
      */
@@ -104,7 +104,7 @@ class SolarisUI {
      * @property bootstrapSupport - Whether or not to include Bootstrap support. Defaults to `false`.
      * @property tailwindSupport - Whether or not to include Tailwind support. Defaults to `false`.
      */
-    public config: SolarisUIConfig = { defaultCss: true, bootstrapSupport: false, tailwindSupport: false };
+    public config: SolarisUIConfig = { globalCss: true, bootstrapSupport: false, tailwindSupport: false };
 
     /**
      * Creates a new instance of the `SolarisUI` class.
@@ -113,7 +113,7 @@ class SolarisUI {
      * @param encoding - The character encoding of the SolarisUI instance. Defaults to "utf-8".
      * @param config - The configuration of the SolarisUI instance.
      */
-    constructor(name: string, lang: string = "en", encoding: string = "utf-8", config: SolarisUIConfig = { defaultCss: true, bootstrapSupport: false, tailwindSupport: false }) {
+    constructor(name: string, lang: string = "en", encoding: string = "utf-8", config: SolarisUIConfig = { globalCss: true, bootstrapSupport: false, tailwindSupport: false }) {
         this.name = name;
         this.lang = lang;
         this.encoding = encoding;
@@ -130,18 +130,18 @@ class SolarisUI {
         this.pages.forEach(page => {
             page.setAttribute("lang", this.lang);
         });
-        this.addDefaultStyles();
+        this.useGlobalStyles();
         this.compileHtmlSource();
 
         //Output
-        fileManager.createDirectory(`./public/builds/${this.name}`);
-        fileManager.createDirectory(`./public/builds/${this.name}/style`);
+        fileManager.createDirectory(`./builds/${this.name}`);
+        fileManager.createDirectory(`./builds/${this.name}/style`);
 
-        fileManager.copyDirectory(`./public/styles`, `./public/builds/${this.name}/style`);
+        fileManager.copyTree(`./public/`, `./builds/${this.name}/`);
 
         Object.keys(this.htmlSource).forEach(key => {
             key = key.split('.')[0];
-            fileManager.createFile(`./public/builds/${this.name}/${key}.html`, this.htmlSource[key]);
+            fileManager.createFile(`./builds/${this.name}/${key}.html`, this.htmlSource[key]);
         });
     }
 
@@ -171,12 +171,18 @@ class SolarisUI {
      * Add default styles to all the pages in the project
      * @private
      */
-    private addDefaultStyles(): void {
-        if (this.config.defaultCss === false) return;
+    private useGlobalStyles(): void {
+        if (this.config.globalCss === false) return;
         const manager = new FileManager();
-        const allFiles = manager.getAllFilesInDirectory("./public/styles");
-
+        var allFiles: string[];
         let newFile: string | undefined;
+        try {
+            allFiles = manager.getAllFilesInDirectory("./public/style");
+        } catch (error:any) {
+            allFiles = [];
+            console.error(`There are no css files under public/style`);
+        }
+
         allFiles.forEach(file => {
 
             newFile = file.split("\\").at(-1);

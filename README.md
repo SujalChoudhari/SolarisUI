@@ -11,7 +11,16 @@ Solaris enables you to make websites without actually writing any html or javasc
 git clone https://github.com/SujalChoudhari/SolarisUI.git
 ```
 
-Or download the code from the repository.
+OR `NPM`
+```bash
+npm i @sujalchoudhari/solaris-ui
+```
+
+OR `YARN`
+```bash
+yarn add @sujalchoudhari/solaris-ui
+```
+OR `download the code from the repository.`
 
 ## Usage
 
@@ -47,9 +56,9 @@ project.build(page);
 - [x] Save and Load System for Intermidiate Files (Json files) 
 - [x] Integraged CSS (inline) 
 - [x] Collection of Containers (Hbox,Vbox and Grid)
+- [x] Integrated Javascript (for animations and event listners)
 - [ ] Layout System (works with only pixels) (WIP)
 - [ ] Dynamic Layout System (can change as per the display size)
-- [ ] Integrated Javascript (for animations and event listners)
 - [ ] Higher Level Layout System (Navbars, Carousel, Footer,etc)
 
 
