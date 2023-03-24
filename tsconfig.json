@@ -2,19 +2,20 @@
   "include": [
     "src/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ],
+  "exclude": ["node_modules", "**/*.spec.ts"],
   "compilerOptions": {
     "target": "es5",
     "lib": [
-      "es2017"
+      "es2017","DOM"
     ],
     "module": "commonjs",
     "sourceMap": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true
   }
 }
