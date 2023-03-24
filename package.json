@@ -1,13 +1,15 @@
 {
-  "name": "solaris-ui",
+  "name": "@sujalchoudhari/solaris-ui",
   "version": "1.0.1-alpha.0",
   "description": "A UI framework to create HTML pages with just JavaScript.",
   "main": "dist/index.js",
   "types": "index.d.ts",
   "repository": "https://github.com/SujalChoudhari/SolarisUI.git",
+  "keywords": [
+    "Ui", "solaris", "websites"
+  ],
   "author": "Sujal Choudhari <sjlchoudhari@gmail.com>",
   "license": "MIT",
-  "private": false,
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
     "prebuild": "jest",
