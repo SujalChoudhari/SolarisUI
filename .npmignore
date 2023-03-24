@@ -1,0 +1,21 @@
+# .npmignore
+
+# Configuration files
+*.config.js
+.eslintrc
+.prettierrc
+
+# Test files
+test/
+__tests__/
+*.spec.js
+*.test.js
+
+# Documentation
+docs/
+public/
+# Miscellaneous
+*.log
+*.lock
+yarn.lock
+package-lock.json

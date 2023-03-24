@@ -1,0 +1,28 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "entryPoints": [
+        "./src/index.ts",
+    ],
+    "out": "docs",
+    "name": "SolarisUI",
+    "includeVersion": true,
+    "tsconfig": "./tsconfig.json",
+    "hideGenerator": true,
+    "navigationLinks": {
+        "Github": "https://github.com/SujalChoudhari/SolarisUI",
+        "LICENSE": "https://github.com/SujalChoudhari/SolarisUI/blob/main/LICENSE"
+    },
+    "sidebarLinks": {
+    },
+    "visibilityFilters": {
+        "protected": false,
+        "private": false,
+        "inherited": true,
+        "external": false,
+    },
+    "sort": [
+        "source-order",
+        "visibility",
+        "alphabetical",
+    ],
+}

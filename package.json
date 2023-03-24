@@ -1,0 +1,41 @@
+{
+  "name": "@sujalchoudhari/solaris-ui",
+  "version": "1.0.1-alpha.0",
+  "description": "A UI framework to create HTML pages with just JavaScript.",
+  "main": "dist/index.js",
+  "types": "index.d.ts",
+  "repository": "https://github.com/SujalChoudhari/SolarisUI.git",
+  "keywords": [
+    "Ui", "solaris", "websites"
+  ],
+  "author": "Sujal Choudhari <sjlchoudhari@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev src/index.ts",
+    "prebuild": "jest",
+    "build": "tsc",
+    "docs": "typedoc",
+    "prepublish": "tsc"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.3",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.21.0",
+    "@types/babel-core": "^6.25.7",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.15.3",
+    "babel-jest": "^29.5.0",
+    "jest": "^29.5.0",
+    "ts-node-dev": "^2.0.0",
+    "typedoc": "^0.23.28"
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/tests/**/*.test.ts"
+    ]
+  }
+}

@@ -1,28 +1,64 @@
+# SolarisUI
 
-# SolarisUI Framework
+Solaris is a UI framework written in Typescript. 
+Solaris enables you to make websites without actually writing any html or javascript code.
 
-SolarisUI is a front-end framework based on a component system, which provides a simple and flexible way to create user interfaces for web applications. The framework consists of a set of reusable components for different parts of the HTML document, including the page, head, body, links, and more. So no need to use html or css anymore!
+## Installation
 
-The framework allows developers to build UIs in a more organized and maintainable way, by breaking down the UI into smaller, self-contained components. These components can then be combined to create more complex UIs, allowing for easier development and maintenance of web applications.
+[Clone the repository](https://github.com/SujalChoudhari/SolarisUI)
 
-## WIP
-The framework is still work in progress. You can contribute to the framework.
+```bash
+git clone https://github.com/SujalChoudhari/SolarisUI.git
+```
+
+Or download the code from the repository.
+
+## Usage
+
+To create a new project, you can use the following code:
+
+```typescript
+var project = new SolarisUI("Test");
+You can then add a new page using the following code:
+```
+
+```ts
+var page = new Page("index.html");
+var head = new Head("Test Page");
+var body = new Body();
+var container = new Container();
+var text = new Heading(3, "Test Page");
+text.fill("vertical");
+text.align("center","middle");
+container.addChild(text);
+container.fill("vertical");
+body.addChild(container);
+page.addChildren(head, body);
+```
+Finally, you can build the project using the following code:
+k
+```typescript
+project.build(page);
+```
+
+## Development Roadmap
+- [x] Basic Entity, Attributes, Children System
+- [x] Building The Layout
+- [x] Save and Load System for Intermidiate Files (Json files) 
+- [x] Integraged CSS (inline) 
+- [x] Collection of Containers (Hbox,Vbox and Grid)
+- [ ] Layout System (works with only pixels) (WIP)
+- [ ] Dynamic Layout System (can change as per the display size)
+- [ ] Integrated Javascript (for animations and event listners)
+- [ ] Higher Level Layout System (Navbars, Carousel, Footer,etc)
 
 
-## Abstract Systems 
-All the systems implimeted or will be implimenting.
+## Contributing
 
-### Component, Attributes, Children System
-A collection of SubClasses of Entity that can create/represent the the entire Html page structure.
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
+Please make sure to update tests as appropriate.
+To add new features, it is suggested to create a new branch `feature-[name]`.
+## License
 
-This collection can be used to create UI components quickly and hook them into their respective backend. These components will have functionality like `onCreate`, `onClick`, `onScroll` and so forth.
-
-### Layout System
-A rather complex system of functions that can be used to align or resize the children elements of a parent element. A dynamic layout system which can resize the parent as well as the child elements to fit the specified size. Functions such as `verticalAlign` and `horizontalAlign`.
-
-### Save and Load System
-A simpler Json Loader and Save System to save intermidiate data generated during the creation process. This can be expanded to build the entire project with. 
-
-### Building The Layout
-Finally, The source code for each component and each page will be generated.
-`toString` functios for each part of the code will chain together to create the final html file along with the css and javascript components.
+[MIT](https://github.com/SujalChoudhari/SolarisUI/blob/main/LICENSE)
