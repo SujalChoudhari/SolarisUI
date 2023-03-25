@@ -13,6 +13,7 @@
  * It allows you to create and manage UI components for your static website.
  * 
  * @license MIT license
+ * [[include:Example.md]]
  */
 
 
@@ -40,6 +41,7 @@ import {
 } from "./container";
 
 import FileManager from "./filemanager";
+import Logger,{LogLevel} from "./logger";
 
 
 /**
@@ -205,7 +207,10 @@ export default SolarisUI;
 export {
     SolarisUI,
     SolarisUIConfig,
+    
     FileManager,
+    Logger,
+    LogLevel,
 
     Body,
     Button,

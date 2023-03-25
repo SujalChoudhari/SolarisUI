@@ -1,22 +1,46 @@
-import {SolarisUI,Page,Head,Body,String,Container,Heading,Component,ModalContainer} from "../src/index";
+import { Component } from "../src/basic";
+import * as sui from "../src/index";
 
+import Logger, { LogLevel } from "../src/logger";
 
 describe("Solaris", () => {
     it("should successfully create the given data source", () => {
 
-        var project = new SolarisUI("Test");
-        var page = new Page("index.html");
-        var head = new Head("Test Page");
-        var body = new Body();
-        var container = new Container();
-        var text = new Heading(3, "Test Page");
-        // text.fill("vertical");
-        // text.align("center","middle");
-        container.addChild(text);
+        const project = new sui.SolarisUI("Test");
+
+        const head = new sui.Head("Head");
+
+        // creating index page
+        const indexPage = new sui.Page("index.html");
+        indexPage.addChild(head);
+        indexPage.addChild(new sui.Body());
+
+        for (let i = 1; i <= 6; i++) {
+            const heading =new sui.Heading(i, "Heading");
+            heading.setStyles({
+                color:`#f${i}${i}${i}cc`,
+                "background-color": `#${i}f${i}0${i}f`
+            })
+            indexPage.body?.addChild(heading);
+        }
+
+        // Hero 
+        const hero = new sui.HorizontalAlignContainer(["20px"]);
+        hero.align("middle", "center");
+        hero.addChild(new sui.Heading(1, "Hero Test"));
+        hero.addChild(new sui.Button("Click me!"));
+
+        
+        // Full height Container
+        const container = new sui.VerticalAlignContainer(["20px"]);
+        container.align("middle", "center");
         container.fill("vertical");
-        body.addChild(container);
-        page.addChildren(head, body);
-        project.build(page);
+        for (let i = 0; i < 10; i++) {
+            container.addChild(new sui.String(`Hello ${i}`) );
+        }
+
+        indexPage.body?.addChildren(hero,container);
+        project.build(indexPage);
     });
 });
 

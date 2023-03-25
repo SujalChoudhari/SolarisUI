@@ -24,4 +24,5 @@
         "visibility",
         "alphabetical",
     ],
+    "includes": "./static/"
 }

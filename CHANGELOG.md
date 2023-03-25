@@ -6,7 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [1.0.1-alpha.1] - 24-03-2023
+
+# [1.0.1-alpha.2] - 25-03-2023
+### Added
+- Logger Class, detailed output will be provided in future versions
+
+### Changed
+- FileManager now uses Logger.warn instead of `throw Error`.
+
+# [1.0.1-alpha.1] - 24-03-2023
+## [Unreleased]
 ### Added
 - `copyTree` function added in `FileManager`.
 - `SolarisUI.build` now copies the contents of public folder and dumps it into Build folder.
@@ -21,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Errors generated when building the project with `defaultCss:true`
 
 
-## [1.0.1-alpha.0] - 24-03-2023
+# [1.0.1-alpha.0] - 24-03-2023
 This is the first release. Mostly the code added, no deletion are made.
 ### Added
 - Basic classes for low level components
