@@ -1,6 +1,6 @@
 # Example
 
-As of version `1.0.1-alpha.1`,
+As of version `1.0.1-alpha.2`,
 This is an example of of implimentation of the SolarisUI framework.
 
 ```ts
