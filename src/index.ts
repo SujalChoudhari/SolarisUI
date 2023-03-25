@@ -13,6 +13,7 @@
  * It allows you to create and manage UI components for your static website.
  * 
  * @license MIT license
+ * [[include:Example.md]]
  */
 
 
