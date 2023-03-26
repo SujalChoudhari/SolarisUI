@@ -2,7 +2,7 @@ import Component from "../src/basic/component";
 import String from '../src/basic/string';
 
 describe("Component", () => {
-
+    
     it("should create an Component with the correct tag and attributes", () => {
         let component = new Component("div", { "class": "mx-5" });
         expect(component.getTag()).toBe("div");

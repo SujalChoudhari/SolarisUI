@@ -11,6 +11,6 @@ export default class VerticalAlignContainer extends Container {
 
         super(padding, margin, attributes, children);
 
-        this.addClass("vertical-container");
+        this.addClasses("vertical-container");
     }
 };

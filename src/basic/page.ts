@@ -10,15 +10,16 @@ export default class Page extends Component {
     /**
      * The Head of the page.
      */
-    public head: Head | undefined = undefined;
+    public head: Head|undefined;
 
     /**
      * The Body of the page.
      */
-    public body: Body | undefined = undefined;
+    public body: Body = new Body();
     constructor(url: string = "./page.html") {
         super("html");
         this.url = url;
+        // this.head = new Head("url");
     }
 
 

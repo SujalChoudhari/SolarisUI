@@ -18,6 +18,6 @@ export default class GridContainer extends Container {
             "grid-template-rows": rows ?? "auto"
         });
 
-        this.addClass("grid-container")
+        this.addClasses("grid-container")
     }
 };

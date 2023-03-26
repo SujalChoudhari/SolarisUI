@@ -7,6 +7,6 @@ export default class ModalContainer extends Container {
             "role": "dialog",
             "aria-modal": "true"
         }, children);
-        this.addClass("modal-container");
+        this.addClasses("modal-container");
     }
 }

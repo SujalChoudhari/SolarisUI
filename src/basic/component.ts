@@ -1,4 +1,5 @@
 import FileManager from "../filemanager";
+import Logger from "../logger";
 
 /**
  * Component
@@ -55,6 +56,7 @@ export default class Component {
         this.pmTag = tag;
         this.pmAttributes = attributes;
         this.pmChildren = children;
+        Logger.info(__filename, "Created an new Component", this.pmTag);
     }
 
 
@@ -108,17 +110,29 @@ export default class Component {
      *  component1.addChild(component2);
      * 
      * ```
+     * @deprecated Use `addChildren` instead
      */
     public addChild(child: Component): void {
         this.pmChildren.push(child);
+        Logger.info(__filename, "Adding " + child.getTag() + " to component ", this.pmTag);
+        Logger.warn(__filename, "addChild is deprecated");
     }
 
     /**
      * Add multiple children to the component
      * @param childrenToAdd  A destructured list of components to add as children 
+     * 
+     * @example
+     * ```js
+     *  var component1 = new Component("div"); // parent component
+     *  var component2 = new Component("p"); // child component
+     *  component1.addChildren(component2);
+     * 
+     * ```
      */
     public addChildren(...childrenToAdd: Component[]): void {
         this.pmChildren.push(...childrenToAdd);
+        Logger.info(__filename, "Adding " + childrenToAdd.length + " children to component ", this.pmTag);
     }
 
     /**
@@ -179,8 +193,13 @@ export default class Component {
      * myComponent.addClass("my-1"); // class = "my-1" "mx-5"
      * 
      * ```
+     * 
+     * @deprecated
+     * Use `addClasses` instead.
      */
     public addClass(className: string): void {
+        Logger.warn(__filename, "addClass is deprecated");
+
         let classes = this.getAttribute("class");
         if (classes !== undefined) {
             let classArray = [... new Set(classes.split(','))]
@@ -196,6 +215,13 @@ export default class Component {
     /**
      * Add multiple classes to the list of classes
      * @param classNames the destructured string array of class names to add to the component
+     * 
+     * @example
+     * ```js
+     *  var myComponent = new Component("div");
+     *  myComponent.addClasses("mx-5"); // class = "mx-5"
+     *  myComponent.addClasses("my-1"); // class = "my-1" "mx-5"
+     * ```
      */
     public addClasses(...classNames: string[]): void {
         let classes = this.getAttribute("class");
@@ -249,6 +275,10 @@ export default class Component {
      * @returns converted string representation
      */
     public toString(): string {
+        return this.compileHtml();
+    }
+
+    public compileHtml(): string {
         const attrs = Object.entries(this.pmAttributes)
             .map(([key, value]) => ` ${key}="${value}"`)
             .join("");
@@ -260,17 +290,16 @@ export default class Component {
         return `<${this.pmTag} ${attrs}>${content}</${this.pmTag}>\n`;
     }
 
-
     /**
      * Fills the component in the specified direction.
      * @param direction - The direction to fill. Can be "vertical", "horizontal", or "both".
      */
     public fill(direction: "vertical" | "horizontal" | "both"): void {
-        let newWidth = direction === "horizontal" || direction === "both" ? "100%" : "";
-        let newHeight = direction === "vertical" || direction === "both" ? "100%" : "";
+        let newWidth = direction === "horizontal" || direction === "both" ? "0" : "1";
+        let newHeight = direction === "vertical" || direction === "both" ? "0" : "1";
         this.setStyles({
-            height: newHeight,
-            width: newWidth,
+            "min-height": newHeight,
+            "min-width": newWidth,
             "flex-grow": "1",
         });
         if (newWidth == "") {

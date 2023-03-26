@@ -30,7 +30,7 @@ export default class Logger {
     }
 
 
-    private static write(...message: string[]): void {
-        console.log(message.join(" "));
+    private static write(type:string,filename:string,...message: string[]): void {
+        console.log(type +`: (${filename})\n\t` + message.join(" "));
     }
 }

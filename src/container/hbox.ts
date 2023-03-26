@@ -11,6 +11,6 @@ export default class HorizontalAlignContainer extends Container {
 
         super(padding, margin, attributes, children);
 
-        this.addClass("horizontal-container");
+        this.addClasses("horizontal-container");
     }
 };

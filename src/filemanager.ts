@@ -174,7 +174,7 @@ export default class FileManager {
      */
     public copyTree(srcPath: string, destPath: string): void {
         if (!fs.existsSync(srcPath)) {
-            Logger.warn("It is recomemded to have a ./public/ folder in root folder.");
+            Logger.warn(__filename,srcPath," does not exist");
             return;
         }
 
@@ -194,5 +194,16 @@ export default class FileManager {
                 fs.copyFileSync(srcFile, destFile);
             }
         }
+    }
+    /**
+     * Delete the specified folder
+     * @param path Path of the directory to remove
+     * @param force Remove the directory forefully. Even if the directory is not empty.
+     */
+    public removeDirectory(path:string,force:boolean=false):void {
+        fs.rmSync(path,{
+            force:force,
+            recursive:true
+        });
     }
 }

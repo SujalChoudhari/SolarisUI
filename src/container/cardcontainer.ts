@@ -3,6 +3,6 @@ import Container from "./container";
 export default class CardContainer extends Container {
     constructor(cards: Component[]) {
         super(["0px"], ["0px"], {}, cards);
-        this.addClass("card-container");
+        this.addClasses("card-container");
     }
 };
