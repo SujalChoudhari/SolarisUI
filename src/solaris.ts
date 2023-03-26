@@ -160,7 +160,9 @@ class SolarisUI {
 
         this.pages.forEach(page => {
             allFiles.forEach(file => {
-                const newStyle = new Component('link', { rel: 'stylesheet', href: `./style/${newFile}.css` });
+                let name = file.split("\\").at(-1);
+                name = name?.split(".")[0];
+                const newStyle = new Component('link', { rel: 'stylesheet', href: `./style/${name}.css` });
                 if (page.head)
                     page.head.addChildren(newStyle);
             })
