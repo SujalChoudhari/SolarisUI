@@ -44,7 +44,7 @@ describe("Stylesheets", () => {
 
     it("should successfully add classes and use the external css", () => {
         let project = new SolarisUI("My Test Project", undefined, undefined,
-            { defaultCss: true, bootstrapSupport: false, tailwindSupport: false });
+            { globalCss: true, bootstrapSupport: false, tailwindSupport: false });
         let page = new Page("index")
         let head = new Head("Test Head",);
         let modal = new ModalContainer();

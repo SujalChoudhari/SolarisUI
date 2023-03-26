@@ -2,7 +2,7 @@ import Body from "./body";
 import Button from "./button";
 import Component from "./component";
 import Head from "./head";
-import Heading from "./heading";
+import Text from "./text";
 import Link from "./link";
 import Page from "./page";
 import Script from "./scripts";
@@ -14,7 +14,7 @@ export {
     Button,
     Component,
     Head,
-    Heading,
+    Text,
     Link,
     Page,
     Script,

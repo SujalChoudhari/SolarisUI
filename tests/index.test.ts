@@ -15,8 +15,8 @@ describe("Solaris", () => {
         indexPage.addChild(head);
         indexPage.addChild(new sui.Body());
 
-        for (let i = 1; i <= 6; i++) {
-            const heading =new sui.Heading(i, "Heading");
+        for (let i = 1; i <= 7; i++) {
+            const heading =new sui.Text(`h${i}`, "Heading " + i);
             heading.setStyles({
                 color:`#f${i}${i}${i}cc`,
                 "background-color": `#${i}f${i}0${i}f`
@@ -27,7 +27,7 @@ describe("Solaris", () => {
         // Hero 
         const hero = new sui.HorizontalAlignContainer(["20px"]);
         hero.align("middle", "center");
-        hero.addChild(new sui.Heading(1, "Hero Test"));
+        hero.addChild(new sui.Text(`h${1}`, "Hero Test"));
         hero.addChild(new sui.Button("Button"));
         hero.addChild(new sui.Button("", new sui.Link("","https://google.com"), new sui.Link("","https://google.com")));
         

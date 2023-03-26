@@ -16,18 +16,18 @@ indexPage.addChild(head);
 indexPage.addChild(new sui.Body());
 
 for (let i = 1; i <= 6; i++) {
-    const heading =new sui.Heading(i, "Heading");
-    heading.setStyles({
+    const text =new sui.Text(`h${i}`, "Heading");
+    text.setStyles({
         color:`#f${i}${i}${i}cc`,
         "background-color": `#${i}f${i}0${i}f`
     })
-    indexPage.body?.addChild(heading);
+    indexPage.body?.addChild(text);
 }
 
 // Hero 
 const hero = new sui.HorizontalAlignContainer(["20px"]);
 hero.align("middle", "center");
-hero.addChild(new sui.Heading(1, "Hero Test"));
+hero.addChild(new sui.Text("h1", "Hero Test"));
 hero.addChild(new sui.Button("Click me!"));
 
 
