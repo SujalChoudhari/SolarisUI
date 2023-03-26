@@ -28,8 +28,8 @@ describe("Solaris", () => {
         const hero = new sui.HorizontalAlignContainer(["20px"]);
         hero.align("middle", "center");
         hero.addChild(new sui.Heading(1, "Hero Test"));
-        hero.addChild(new sui.Button("Click me!"));
-
+        hero.addChild(new sui.Button("Button"));
+        hero.addChild(new sui.Button("", new sui.Link("","https://google.com"), new sui.Link("","https://google.com")));
         
         // Full height Container
         const container = new sui.VerticalAlignContainer(["20px"]);
