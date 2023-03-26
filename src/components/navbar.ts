@@ -6,6 +6,7 @@ export default class Navbar extends Component {
         {
         super("div", {id: "myTopnav"});
         this.addClasses("topnav");
+        console.log(this.getParent())
 
         links.forEach((link, i) => link.setAttribute("onClick", "document.getElementById('myTopnav').children[" + i + "].classList.add('active'); document.getElementById('myTopnav').children[" + this.activeLinkIndex + "].classList.remove('active');" + this.activeLinkIndex + " = " + i + ";"));
 

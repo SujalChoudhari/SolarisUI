@@ -44,6 +44,8 @@ describe("Solaris", () => {
         }
 
         indexPage.body?.addChildren(hero,container);
+
+        console.log(hero.getParent())
         project.build(indexPage);
     });
 });

@@ -39,6 +39,7 @@ export default class Component {
    */
   public children: Component[];
 
+  private parent: Component | null;
   /**
    * A refrence of the css class.
    */
@@ -53,11 +54,13 @@ export default class Component {
   constructor(
     tag: string,
     attributes: { [key: string]: string } = {},
-    children: Component[] = []
+    children: Component[] = [],
+    parent: Component | null = null
   ) {
     this.tag = tag;
     this.attribute = attributes;
     this.children = children;
+    this.parent = parent;
     Logger.info(__filename, "Created an new Component", this.tag);
   }
 
@@ -99,7 +102,10 @@ export default class Component {
   public getChildren(): Component[] {
     return this.children;
   }
-
+  
+  public getParent(): Component | null {
+    return this.parent;
+  }
   /**
    * Sets or Creates a new attribute on the component
    * @param name nmae of the attribute to set
@@ -149,6 +155,7 @@ export default class Component {
    * @deprecated Use `addChildren` instead
    */
   public addChild(child: Component): void {
+    child.parent = this;
     this.children.push(child);
     Logger.info(
       __filename,
@@ -171,6 +178,9 @@ export default class Component {
    * ```
    */
   public addChildren(...childrenToAdd: Component[]): void {
+    childrenToAdd.forEach((child) => {
+      child.parent = this;
+    });
     this.children.push(...childrenToAdd);
     Logger.info(
       __filename,
