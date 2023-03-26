@@ -13,7 +13,7 @@ export default class Head extends Component {
     }
 
     public setTitle(title: string): void {
-        const titleEl = this.pmChildren.find(child => child.getTag() === 'title');
+        const titleEl = this.children.find(child => child.getTag() === 'title');
         if (titleEl) {
             titleEl.addChild(new String(title))
         } else {
@@ -23,7 +23,7 @@ export default class Head extends Component {
     }
 
     public setDescription(description: string): void {
-        const descEl = this.pmChildren.find(child => child.getAttribute("name") === 'description');
+        const descEl = this.children.find(child => child.getAttribute("name") === 'description');
         if (descEl) {
             descEl.setAttribute("content", description);
         } else {
@@ -33,7 +33,7 @@ export default class Head extends Component {
     }
 
     public setKeywords(keywords: string): void {
-        const keywordsEl = this.pmChildren.find(child => child.getAttribute("name") === 'keywords');
+        const keywordsEl = this.children.find(child => child.getAttribute("name") === 'keywords');
         if (keywordsEl) {
             keywordsEl.setAttribute("content", keywords);
         } else {
@@ -43,7 +43,7 @@ export default class Head extends Component {
     }
 
     public setAuthor(author: string): void {
-        const authorEl = this.pmChildren.find(child => child.getAttribute("name") === 'author');
+        const authorEl = this.children.find(child => child.getAttribute("name") === 'author');
         if (authorEl) {
             authorEl.setAttribute("content", author);
         } else {
@@ -57,7 +57,7 @@ export default class Head extends Component {
         var manager = new FileManager();
         let styleUrl = style.url.startsWith("http") ? style.url : manager.getAbsolutePath(style.url);
         if (style.type === "external" && style.url !== "") {
-            const styleSheet = this.pmChildren.find(
+            const styleSheet = this.children.find(
                 child => child.getTag() === 'link'
                 && child.getAttribute('rel') === 'stylesheet'
                 && child.getAttribute('href') === styleUrl);
@@ -72,12 +72,12 @@ export default class Head extends Component {
         else if (style.type === "external" && style.url === "") {
             throw new Error("Style url is not defined");
         }
-        else if (style.type === "infile" && Object.keys(style.properties[0]).length === 0) {
+        else if (style.type === "infile" && Object.keys(style.cssClass[0]).length === 0) {
             throw new Error("Style properties are not defined");
         }
         else {
             let properties = "";
-            style.properties.forEach(property => {
+            style.cssClass.forEach(property => {
                 Object.keys(property).forEach(selector => {
                     // selector
                     properties += `\n${selector} { \n`;

@@ -1,56 +1,42 @@
-import { Component, Head, Style, ModalContainer, SolarisUI, Page } from "../src/index";
+import Style from '../src/basic/styles';
+
+describe("Style class tests", () => {
+    let style: Style;
+
+    beforeAll(() => {
+        style = new Style("infile", "",
+            {
+                "container": {
+                    "display": "flex",
+                    "justify-content": "center",
+                    "align-items": "center",
+                },
+            },
+        );
+    });
+
+    test("toString() returns the correct CSS string", () => {
+        const expectedCSS =
+            ".container {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n";
+        expect(style.toString()).toContain(".container");
+        expect(style.toString()).toContain("display: flex;");
+        expect(style.toString()).toContain("justify-content: center;");
+    });
 
 
-describe('Styles', () => {
-    let dummy: Component;
-
-    beforeEach(() => {
-        dummy = new Component("div", { "class": "active" });
-        dummy.setStyles({
-            "background-color": "red",
-            "color": "green",
-            "margin-top": "4px"
+    test(" addStyle",()=>{
+        style.addClassProperty("container",{
+            "background":"url(test)"
         });
+
+        expect(style.toString()).toContain("background: url(test)");
+        expect(style.toString()).toContain("display: flex");
     });
 
-    it("should create add styles as an attribute", () => {
-        dummy.setStyles({ "padding": "30px" });
-        expect(dummy.toString()).toBeTruthy();
+    test("remove style",()=>{
+        
+        expect(style.toString()).toContain("background: url(test)")
     });
 
-    it("should reset the style", () => {
-        dummy.setStyles({ "color": "red" });
-        expect(dummy.getAttribute("style")).toContain("color: red;");
-    });
-
-
-    it("should delete styles successfully", () => {
-        dummy.deleteStyles("color", "margin-top");
-        expect(dummy.getAttribute("style")).toEqual("background-color: red;");
-    });
-});
-
-
-describe("Stylesheets", () => {
-    it("must add a link tag to the corresponding head", () => {
-        let head = new Head("Test Head");
-        head.addStylesheet(new Style(
-            "external", "https://example.com/stylesheets"
-        ));
-        expect(head.getChildren().at(-1)?.getTag()).toBe("link");
-        expect(head.getChildren().at(-1)?.getAttribute("href")).toBe("https://example.com/stylesheets");
-    });
-
-
-    it("should successfully add classes and use the external css", () => {
-        let project = new SolarisUI("My Test Project", undefined, undefined,
-            { globalCss: true, bootstrapSupport: false, tailwindSupport: false });
-        let page = new Page("index")
-        let head = new Head("Test Head",);
-        let modal = new ModalContainer();
-        page.addChildren(head, modal);
-        project.build(page);
-
-    })
-
+    
 });

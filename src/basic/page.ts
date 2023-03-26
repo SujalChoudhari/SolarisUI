@@ -34,7 +34,7 @@ export default class Page extends Component {
         else if (child instanceof Body) {
             this.body = child;
         }
-        this.pmChildren.push(child);
+        this.children.push(child);
     }
 
     /**
