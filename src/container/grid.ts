@@ -13,7 +13,7 @@ export default class GridContainer extends Container {
 
         super(padding, margin, attributes, children);
 
-        this.setStyles({
+        this.setInlineStyles({
             "grid-template-columns": columns ?? "1fr",
             "grid-template-rows": rows ?? "auto"
         });

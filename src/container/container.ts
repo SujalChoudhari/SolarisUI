@@ -45,7 +45,7 @@ export default class Container extends Component {
         right: string = "",
         bottom: string = "",
         left: string = ""): void {
-        this.setStyles({
+        this.setInlineStyles({
             "padding": `${top} ${right} ${bottom} ${left}`
         })
     }
@@ -64,7 +64,7 @@ export default class Container extends Component {
         right: string = "",
         bottom: string = "",
         left: string = ""): void {
-        this.setStyles({
+        this.setInlineStyles({
             "margin": `${top} ${right} ${bottom} ${left}`
         })
     }

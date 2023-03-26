@@ -17,7 +17,7 @@ describe("Solaris", () => {
 
         for (let i = 1; i <= 7; i++) {
             const heading =new sui.Text(`h${i}`, "Heading " + i);
-            heading.setStyles({
+            heading.setInlineStyles({
                 color:`#f${i}${i}${i}cc`,
                 "background-color": `#${i}f${i}0${i}f`
             })

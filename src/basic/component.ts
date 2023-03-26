@@ -247,7 +247,7 @@ export default class Component {
    * Set styles for the Component
    * @param properties style properties to set
    */
-  public setStyles(properties: { [key: string]: string }): void {
+  public setInlineStyles(properties: { [key: string]: string }): void {
     const styles = this.getAttribute("style") || "";
     const updatedStyles = Object.keys(properties).reduce((result, key) => {
       return result + key + ": " + properties[key] + "; ";
@@ -259,7 +259,7 @@ export default class Component {
    * Delete the specified css properties
    * @param properties Destructured list of properties to delete
    */
-  public deleteStyles(...properties: string[]): void {
+  public deleteInlineStyles(...properties: string[]): void {
     const styleAttribute = this.getAttribute("style");
     if (styleAttribute !== undefined) {
       let styles = styleAttribute.trim();
@@ -310,16 +310,16 @@ export default class Component {
       direction === "horizontal" || direction === "both" ? "0" : "1";
     let newHeight =
       direction === "vertical" || direction === "both" ? "0" : "1";
-    this.setStyles({
+    this.setInlineStyles({
       "min-height": newHeight,
       "min-width": newWidth,
       "flex-grow": "1",
     });
     if (newWidth == "") {
-      this.deleteStyles("width");
+      this.deleteInlineStyles("width");
     }
     if (newHeight == "") {
-      this.deleteStyles("height");
+      this.deleteInlineStyles("height");
     }
   }
 
@@ -356,7 +356,7 @@ export default class Component {
         justify = "flex-end";
         break;
     }
-    this.setStyles({
+    this.setInlineStyles({
       display: "flex",
       "align-items": align,
       "justify-content": justify,

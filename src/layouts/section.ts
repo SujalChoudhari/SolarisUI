@@ -20,7 +20,7 @@ export default class Section extends Component {
     */
     constructor(height: string = "80vh") {
         super("section");
-        this.setStyles({
+        this.setInlineStyles({
             "height": height,
             "display": "flex",
         })
