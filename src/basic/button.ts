@@ -11,7 +11,7 @@ export default class Button extends Component {
     constructor(text: string, ...children:Component[]) {
         super("button");
         if (text) {
-            this.addChild(new String(text));
+            this.addChildren(new String(text));
         }
         else if (children) {
             this.addChildren(...children);

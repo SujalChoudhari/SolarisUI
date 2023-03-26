@@ -10,15 +10,15 @@ type SolarisUIConfig = {
     /**
      * Whether to use the default CSS provided by the library.
      */
-    globalCss: boolean;
+    globalCss?: boolean;
     /**
      * Whether to enable support for the Bootstrap CSS framework.
      */
-    bootstrapSupport: boolean;
+    bootstrapSupport?: boolean;
     /**
      * Whether to enable support for the Tailwind CSS framework.
      */
-    tailwindSupport: boolean;
+    tailwindSupport?: boolean;
 }
 
 /**

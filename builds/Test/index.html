@@ -2,9 +2,18 @@
 <meta  name="author" content=""></meta>
 <meta  name="description" content=""></meta>
 <meta  name="keywords" content=""></meta>
-<link  rel="stylesheet" href="./style/index.css"></link>
+<link  rel="stylesheet" href="./style/navbar.css"></link>
+<link  rel="stylesheet" href="./style/navbar.css"></link>
 </head>
-<body ><h1  style="color: #f111cc; background-color: #1f101f;">Heading 1</h1>
+<body ><div  id="myTopnav" class="topnav"><a  target="_self" href="https://solarisui.vercel.app">SUI</a>
+<a  target="_self" href="https://solarisui.vercel.app" onClick="document.getElementById('myTopnav').children[0].classList.add('active'); document.getElementById('myTopnav').children[0].classList.remove('active');0 = 0;">Home</a>
+<a  target="_self" href="#" onClick="document.getElementById('myTopnav').children[1].classList.add('active'); document.getElementById('myTopnav').children[0].classList.remove('active');0 = 1;">Github</a>
+<a  target="_self" href="#" onClick="document.getElementById('myTopnav').children[2].classList.add('active'); document.getElementById('myTopnav').children[0].classList.remove('active');0 = 2;">Docs</a>
+<a  class="icon" onClick="document.getElementById('myTopnav').classList.toggle('responsive')"><svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="#fff"><path  d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"></path>
+</svg>
+</a>
+</div>
+<h1  style="color: #f111cc; background-color: #1f101f;">Heading 1</h1>
 <h2  style="color: #f222cc; background-color: #2f202f;">Heading 2</h2>
 <h3  style="color: #f333cc; background-color: #3f303f;">Heading 3</h3>
 <h4  style="color: #f444cc; background-color: #4f404f;">Heading 4</h4>

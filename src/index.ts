@@ -30,6 +30,8 @@ import {
     Style
 } from "./basic";
 
+import * as Components from "./components"
+
 
 import {
     CardContainer,
@@ -83,5 +85,6 @@ export {
     VerticalAlignContainer,
 
     Section,
-    TwoPartSection
+    TwoPartSection,
+    Components
 }

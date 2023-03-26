@@ -12,7 +12,7 @@ describe("Heading",()=>{
         expect(heading.getTag()).toBe("h1");
     });
 
-    it("should should use default p tag",()=>{
+    it("should should use default h6 tag",()=>{
         let heading = new Text("h69","Hello world");
         expect(heading.getTag()).toBe("h6");
     });
