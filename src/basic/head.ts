@@ -72,21 +72,11 @@ export default class Head extends Component {
         else if (style.type === "external" && style.url === "") {
             throw new Error("Style url is not defined");
         }
-        else if (style.type === "infile" && Object.keys(style.cssClass[0]).length === 0) {
+        else if (style.type === "infile" && Object.keys(style.cssClasses[0]).length === 0) {
             throw new Error("Style properties are not defined");
         }
         else {
-            let properties = "";
-            style.cssClass.forEach(property => {
-                Object.keys(property).forEach(selector => {
-                    // selector
-                    properties += `\n${selector} { \n`;
-                    Object.keys(property[selector]).forEach(key => {
-                        properties += `${key}: ${property[selector][key]};\n`;
-                    });
-                    properties += ` } \n`;
-                });
-            });
+            let properties = style.toString();
             const newStyle = new Component('style', {}, [new String(properties)]);
             this.addChildren(newStyle);
         }
