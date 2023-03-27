@@ -34,20 +34,6 @@ import * as Components from "./components"
 
 
 import {
-    CardContainer,
-    Container,
-    GridContainer,
-    HorizontalAlignContainer,
-    ModalContainer,
-    VerticalAlignContainer
-} from "./container";
-
-import {
-    Section,
-    TwoPartSection
-} from "./layouts";
-
-import {
     SolarisUI,
     SolarisUIConfig
 
@@ -76,15 +62,5 @@ export {
     Script,
     String,
     Style,
-
-    CardContainer,
-    Container,
-    GridContainer,
-    HorizontalAlignContainer,
-    ModalContainer,
-    VerticalAlignContainer,
-
-    Section,
-    TwoPartSection,
     Components
 }
