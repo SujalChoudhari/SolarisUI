@@ -16,7 +16,18 @@ describe("Solaris", () => {
         const indexPage = new sui.Page("index.html");
         indexPage.addChild(head);
         indexPage.addChild(new sui.Body());
-        const navbar = new sui.Components.Navbar(new sui.Link("SUI", "https://solarisui.vercel.app"), new sui.Link("Home", "https://solarisui.vercel.app"), new sui.Link("Github", "#"), new sui.Link("Docs", "#"));
+        const navbar = new sui.Components.Navbar(
+            new sui.Link("SUI", "https://solarisui.vercel.app"),
+            new sui.Link("Home", "https://solarisui.vercel.app"),
+            new sui.Link("Github", "#"),
+            new sui.Link("Docs", "#"),
+            new sui.Components.Dropdown(
+                "Menu",
+                new sui.Link("Home", "https://solarisui.vercel.app"),
+                new sui.Link("Github", "#"),
+                new sui.Link("Docs", "#"),),
+
+        );
 
         indexPage.body?.addChildren(navbar);
 

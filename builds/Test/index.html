@@ -2,14 +2,21 @@
 <meta  name="author" content=""></meta>
 <meta  name="description" content=""></meta>
 <meta  name="keywords" content=""></meta>
+<link  rel="stylesheet" href="./style/dropdown.css"></link>
 <link  rel="stylesheet" href="./style/index.css"></link>
 <link  rel="stylesheet" href="./style/navbar.css"></link>
 </head>
-<body ><div  id="myTopnav" class="topnav"><a  target="_self" href="https://solarisui.vercel.app">SUI</a>
+<body ><div  id="navbar-root" class="navbar"><a  target="_self" href="https://solarisui.vercel.app">SUI</a>
 <a  target="_self" href="https://solarisui.vercel.app">Home</a>
 <a  target="_self" href="#">Github</a>
 <a  target="_self" href="#">Docs</a>
-<a  class="icon" onclick="document.getElementById('myTopnav').classList.toggle('responsive')"><svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="#fff"><path  d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"></path>
+<div  class="dropdown"><button  class="dropdown-button">Menu</button>
+<div  class="dropdown-content"><a  target="_self" href="https://solarisui.vercel.app">Home</a>
+<a  target="_self" href="#">Github</a>
+<a  target="_self" href="#">Docs</a>
+</div>
+</div>
+<a  class="icon" onclick="document.getElementById('navbar-root').classList.toggle('responsive')"><svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="#fff"><path  d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"></path>
 </svg>
 </a>
 </div>
