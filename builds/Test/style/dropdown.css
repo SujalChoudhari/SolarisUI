@@ -48,11 +48,3 @@
 .dropdown:hover .dropdown-button {
     background-color: #3e8e41;
 }
-
-
-@media screen and (max-width: 600px) {
-
-    .dropdown-button {
-        /* display:none; */
-    }
-}

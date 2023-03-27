@@ -8,7 +8,7 @@ import Component from "./component";
  *
  * TODO:
  *  - Instead of using classes from public/style/index.css
- *      every component will have its own exportCss function.
+ *    every component will have its own exportCss function.
  *  - These generated classes will be dumped into the `build/[name]/style/` folder.
  *  - Style folder will be created for each page or for each style component.
  *  - And included into head of page that contains that style component.
