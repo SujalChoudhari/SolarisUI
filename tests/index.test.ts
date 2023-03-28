@@ -29,14 +29,10 @@ describe("Solaris", () => {
 
         );
 
-        indexPage.body?.addChildren(navbar);
+        let c = sui.SolarisUI.loadComponent("./tests/test.component.html",
+            { name: "And I am", b: "idk" })
 
-        for (let i = 1; i < 10; i++) {
-            const heading = new sui.Text(`h${i}`, "Heading " + i);
-            heading.addClasses("info");
-
-            indexPage.body?.addChild(heading);
-        }
+        indexPage.body?.addChildren(navbar, c);
         sui.SolarisUI.build(indexPage);
     });
 });

@@ -10,6 +10,5 @@ export default class Dropdown extends Component {
         let content = new Component("div",{class:"dropdown-content"});
         content.addChildren(...links);
         this.addChildren(content);
-
     }
 }

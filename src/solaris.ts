@@ -1,4 +1,5 @@
-import { Component, Page, Script, Style } from "./basic";
+import { Component, Page, Script, Style,String } from "./basic";
+import * as htmlparser2 from "htmlparser2";
 import FileManager from "./filemanager";
 import Logger from "./logger";
 
@@ -64,7 +65,7 @@ class SolarisUI {
      * @property bootstrapSupport - Whether or not to include Bootstrap support. Defaults to `false`.
      * @property tailwindSupport - Whether or not to include Tailwind support. Defaults to `false`.
      */
-    public static config: SolarisUIConfig = { globalCss: true, bootstrapSupport: false, tailwindSupport: false };
+    public static config: SolarisUIConfig = { bootstrapSupport: false, tailwindSupport: false };
 
     /**
      * Creates a new instance of the `SolarisUI` class.
@@ -73,7 +74,7 @@ class SolarisUI {
      * @param encoding - The character encoding of the SolarisUI instance. Defaults to "utf-8".
      * @param config - The configuration of the SolarisUI instance.
      */
-    public static init(name: string, lang: string = "en", encoding: string = "utf-8", config: SolarisUIConfig = { globalCss: true, bootstrapSupport: false, tailwindSupport: false }) {
+    public static init(name: string, lang: string = "en", encoding: string = "utf-8", config: SolarisUIConfig = { bootstrapSupport: false, tailwindSupport: false }) {
         SolarisUI.projectName = name;
         SolarisUI.lang = lang;
         SolarisUI.encoding = encoding;
@@ -86,10 +87,10 @@ class SolarisUI {
      */
     public static build(...root: Page[]): void {
         const fileManager = new FileManager();
-        Logger.info(__filename,"Clearing Output ...");
-        fileManager.removeDirectory(`./builds/${SolarisUI.projectName}`,true);
+        Logger.info(__filename, "Clearing Output ...");
+        fileManager.removeDirectory(`./builds/${SolarisUI.projectName}`, true);
 
-        Logger.info(__filename,"Building Project...");
+        Logger.info(__filename, "Building Project...");
         SolarisUI.pages = root;
         SolarisUI.pages.forEach(page => {
             page.setAttribute("lang", SolarisUI.lang);
@@ -108,7 +109,7 @@ class SolarisUI {
             fileManager.createFile(`./builds/${SolarisUI.projectName}/${key}.html`, SolarisUI.htmlSource[key]);
         });
 
-        Logger.info(__filename,'Build Saved');
+        Logger.info(__filename, 'Build Saved');
     }
 
     /**
@@ -116,7 +117,7 @@ class SolarisUI {
      * @private
      */
     private static compileHtmlSource(): void {
-        Logger.info(__filename,'Compiling HTML source');
+        Logger.info(__filename, 'Compiling HTML source');
         SolarisUI.pages.forEach(element => {
             if (SolarisUI.config.bootstrapSupport) {
                 element.getChildren().forEach((child: any) => {
@@ -139,8 +140,7 @@ class SolarisUI {
      * @private
      */
     private static useGlobalStyles(): void {
-        if (SolarisUI.config.globalCss === false) return;
-        Logger.info(__filename,"Using global styles");
+        Logger.info(__filename, "Using global styles");
         const manager = new FileManager();
         var allFiles: string[];
         let newFile: string | undefined;
@@ -148,7 +148,7 @@ class SolarisUI {
             allFiles = manager.getAllFilesInDirectory("./public/style");
         } catch (error: any) {
             allFiles = [];
-            Logger.error(__filename,`There are no css files under public/style`);
+            Logger.error(__filename, `There are no css files under public/style`);
         }
 
         allFiles.forEach(file => {
@@ -168,6 +168,62 @@ class SolarisUI {
             })
         });
     }
+
+    public static loadComponent(filePath: string, props: {}): Component {
+        const fileManager = new FileManager();
+        const data = fileManager.readFile(filePath);
+        const lexed = eval('`' + data + '`');
+        const rootComponent = new Component('html', {}, []);
+        const parser = new htmlparser2.Parser(
+          {
+            onopentag: (tag: string, attributes: { [key: string]: string }) => {
+                const component = new Component(tag, attributes, []);
+                const parent = rootComponent.getChildren().length === 0 ? rootComponent : rootComponent.getChildren()[0];
+                parent.getChildren().push(component);
+                // component.setParent(parent);
+                component.children = [];
+            },
+            ontext: (text: string) => {
+              const parent =
+                rootComponent.getChildren().length === 0
+                  ? rootComponent
+                  : rootComponent.getChildren()[0];
+              const lastChild =
+                parent.getChildren().length > 0
+                  ? parent.getChildren()[parent.getChildren().length - 1]
+                  : null;
+              if (
+                lastChild &&
+                (lastChild.getTag() === 'h1' || lastChild.getTag() === 'p')
+              ) {
+                lastChild.getChildren().push(new String(text));
+              } else if (text.trim().length !== 0) {
+                const component = new String(text);
+                parent.addChild(component);
+              }
+            },
+            onclosetag: (tag: string) => {
+              const parent =
+                rootComponent.getChildren().length === 0
+                  ? rootComponent
+                  : rootComponent.getChildren()[0];
+              if (parent.getParent() !== null) {
+                parent.getChildren()[
+                  parent.getChildren().length - 1
+                ].children = parent
+                  .getChildren()[parent.getChildren().length - 1]
+                  .children.filter((c) => c !== undefined);
+              }
+            },
+          },
+          { decodeEntities: true }
+        );
+        parser.write(lexed);
+        parser.end();
+    
+        return rootComponent.getChildren()[0];
+      }
+    
 }
 
 export {

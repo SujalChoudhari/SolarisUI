@@ -2,6 +2,7 @@ import FileManager from "../filemanager";
 import Logger from "../logger";
 import Style from "./styles";
 
+
 /**
  * Component
  * -----
@@ -38,7 +39,6 @@ export default class Component {
 	 * child elements of the current element
 	 */
 	public children: Component[];
-
 	private parent: Component | null;
 
 	/**
