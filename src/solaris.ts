@@ -174,6 +174,8 @@ class SolarisUI {
 		const html = SolarisUI.loadComponent(filePath, props);
 		if (html === null)
 			return null;
+
+		console.log(html);
 		const component = SolarisUI.parseComponent(html);
 		component.props = props;
 		return component;
@@ -183,60 +185,36 @@ class SolarisUI {
 		const fileManager = new FileManager();
 		const fileContent = fileManager.readFile(filePath);
 		if (fileContent === null) return null;
-		const propsWithStrings: { [key: string]: string } = {};
-		for (const key in props) {
-			if (props[key] instanceof Component) {
-				propsWithStrings[key] = props[key].toString();
-			} else {
-				propsWithStrings[key] = props[key];
-			}
-		}
-		return Mustache.render(fileContent, propsWithStrings);
+
+
+		return Mustache.render(fileContent, props);
 	}
 
 	private static parseComponent(html: string): Component {
-		const rootComponent = new Component("root");
+		let rootComponent = new Component("root");
+		let currentComponent: Component = rootComponent;
 
 		const parser = new htmlparser2.Parser(
 			{
 				onopentag: (tag: string, attributes: { [key: string]: string }) => {
-					const component = new Component(tag, attributes, []);
-					const parent = rootComponent.getChildren().length === 0 ? rootComponent : rootComponent.getChildren()[0];
-					parent.getChildren().push(component);
-					// component.setParent(parent);
-					component.children = [];
+					const newComponent = new Component(tag, attributes);
+					currentComponent.addChildren(newComponent);
+					currentComponent = newComponent;
 				},
 				ontext: (text: string) => {
-					const parent =
-						rootComponent.getChildren().length === 0
-							? rootComponent
-							: rootComponent.getChildren()[0];
-					const lastChild =
-						parent.getChildren().length > 0
-							? parent.getChildren()[parent.getChildren().length - 1]
-							: null;
-					if (
-						lastChild &&
-						(lastChild.getTag() === 'h1' || lastChild.getTag() === 'p')
-					) {
-						lastChild.getChildren().push(new String(text));
-					} else if (text.trim().length !== 0) {
-						const component = new String(text);
-						parent.addChild(component);
-					}
+					if (text.trim() === "") return;
+
+					const lastChild = currentComponent.getChildren().at(-1);
+					if (lastChild && lastChild instanceof String)
+						lastChild.content += text;
+					else
+						currentComponent.addChildren(new String(text));
 				},
 				onclosetag: (tag: string) => {
-					const parent =
-						rootComponent.getChildren().length === 0
-							? rootComponent
-							: rootComponent.getChildren()[0];
-					if (parent.getParent() !== null) {
-						parent.getChildren()[
-							parent.getChildren().length - 1
-						].children = parent
-							.getChildren()[parent.getChildren().length - 1]
-							.children.filter((c) => c !== undefined);
-					}
+
+					const newComponent = currentComponent.getParent();
+					if (newComponent)
+						currentComponent = newComponent;
 				},
 			},
 			{ decodeEntities: true }
@@ -246,7 +224,6 @@ class SolarisUI {
 
 		return rootComponent.getChildren()[0];
 	}
-
 }
 
 export {

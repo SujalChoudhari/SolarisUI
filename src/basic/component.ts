@@ -228,14 +228,16 @@ export default class Component {
 	 * @returns converted string representation
 	 */
 	public toString(): string {
-		const attrs = Object.entries(this.attribute)
-			.map(([key, value]) => ` ${key}="${value}"`)
-			.join("");
-
-		const content = this.children
-			.map((child) => (child instanceof Component ? child.toString() : child))
-			.join("");
-
-		return `<${this.tag} ${attrs}>${content}</${this.tag}>\n`;
+		// return a html string including the tags and attributes and children. format it well
+		let html = "<" + this.tag;
+		for (const key in this.attribute) {
+			html += " " + key + '="' + this.attribute[key] + '"';
+		}
+		html += ">";
+		for (const child of this.children) {
+			html += child.toString();
+		}
+		html += "</" + this.tag + ">";
+		return html;
 	}
 }
