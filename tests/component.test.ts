@@ -30,10 +30,6 @@ describe("Component", () => {
 
     });
 
-    test("loadComponent",()=>{
-       let c = SolarisUI.loadComponent("./tests/test.component.html",{name:"Sujal Doe",b:"a"}) 
-       console.log(c.getChildren()[0]);
-    });
 
 });
 

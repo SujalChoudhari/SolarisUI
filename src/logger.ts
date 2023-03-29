@@ -1,4 +1,4 @@
-
+import FileManager from "./filemanager";
 export enum LogLevel {
     DEBUG,
     INFO,
@@ -8,7 +8,6 @@ export enum LogLevel {
 
 export default class Logger {
     public static logLevel: LogLevel = LogLevel.INFO;
-
     public static debug(filename: string, ...message: string[]): void {
         if (Logger.logLevel <= 0)
             Logger.write("[DEBUG]", filename, ...message);
@@ -30,7 +29,7 @@ export default class Logger {
     }
 
 
-    private static write(type:string,filename:string,...message: string[]): void {
-        console.log(type +`: (${filename})\n\t` + message.join(" "));
+    private static write(type: string, filename: string, ...message: string[]): void {
+        console.log(type + `: (${filename})\n\t` + message.join(" "));
     }
 }

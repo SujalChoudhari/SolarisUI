@@ -39,7 +39,10 @@ export default class Component {
 	 * child elements of the current element
 	 */
 	public children: Component[];
+
+	public props:any;
 	private parent: Component | null;
+
 
 	/**
 	 * Create a new Component instance
