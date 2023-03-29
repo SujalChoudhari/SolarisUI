@@ -1,4 +1,5 @@
-import { Component, Page, Script, Style,String } from "./basic";
+import { Component, Page, Script, Style, String } from "./basic";
+import Mustache from 'mustache';
 import * as htmlparser2 from "htmlparser2";
 import FileManager from "./filemanager";
 import Logger from "./logger";
@@ -8,18 +9,18 @@ import Logger from "./logger";
  * @author Ansh Sharma
  */
 type SolarisUIConfig = {
-    /**
-     * Whether to use the default CSS provided by the library.
-     */
-    globalCss?: boolean;
-    /**
-     * Whether to enable support for the Bootstrap CSS framework.
-     */
-    bootstrapSupport?: boolean;
-    /**
-     * Whether to enable support for the Tailwind CSS framework.
-     */
-    tailwindSupport?: boolean;
+	/**
+	 * Whether to use the default CSS provided by the library.
+	 */
+	globalCss?: boolean;
+	/**
+	 * Whether to enable support for the Bootstrap CSS framework.
+	 */
+	bootstrapSupport?: boolean;
+	/**
+	 * Whether to enable support for the Tailwind CSS framework.
+	 */
+	tailwindSupport?: boolean;
 }
 
 /**
@@ -30,203 +31,225 @@ type SolarisUIConfig = {
  * @author Sujal Choudhari <sujalchoudari@gmail.com>
  */
 class SolarisUI {
-    /**
-     * The name of the SolarisUI instance.
-     */
-    public static projectName: string;
+	/**
+	 * The name of the SolarisUI instance.
+	 */
+	public static projectName: string;
 
-    /**
-     * The language of the SolarisUI instance. Defaults to "en".
-     */
-    public static lang: string = "en";
+	/**
+	 * The language of the SolarisUI instance. Defaults to "en".
+	 */
+	public static lang: string = "en";
 
-    /**
-     * The character encoding of the SolarisUI instance. Defaults to "utf-8".
-     */
-    public static encoding: string = "utf8";
+	/**
+	 * The character encoding of the SolarisUI instance. Defaults to "utf-8".
+	 */
+	public static encoding: string = "utf8";
 
-    /**
-     * An object containing the HTML source code for each page in the SolarisUI instance.
-     */
-    public static htmlSource: { [key: string]: string } = {};
+	/**
+	 * An object containing the HTML source code for each page in the SolarisUI instance.
+	 */
+	public static htmlSource: { [key: string]: string } = {};
 
-    /**
-     * An object containing the CSS source code for each page in the SolarisUI instance.
-     */
-    public static css: Style[] = [];
+	/**
+	 * An object containing the CSS source code for each page in the SolarisUI instance.
+	 */
+	public static css: Style[] = [];
 
-    /**
-     * An array of `Page` objects representing the pages in the SolarisUI instance.
-     */
-    public static pages: Page[] = [];
+	/**
+	 * An array of `Page` objects representing the pages in the SolarisUI instance.
+	 */
+	public static pages: Component[] = [];
 
-    /**
-     * The configuration of the SolarisUI instance.
-     * @property bootstrapSupport - Whether or not to include Bootstrap support. Defaults to `false`.
-     * @property tailwindSupport - Whether or not to include Tailwind support. Defaults to `false`.
-     */
-    public static config: SolarisUIConfig = { bootstrapSupport: false, tailwindSupport: false };
+	/**
+	 * The configuration of the SolarisUI instance.
+	 * @property bootstrapSupport - Whether or not to include Bootstrap support. Defaults to `false`.
+	 * @property tailwindSupport - Whether or not to include Tailwind support. Defaults to `false`.
+	 */
+	public static config: SolarisUIConfig = { bootstrapSupport: false, tailwindSupport: false };
 
-    /**
-     * Creates a new instance of the `SolarisUI` class.
-     * @param name - The name of the SolarisUI instance.
-     * @param lang - The language of the SolarisUI instance. Defaults to "en".
-     * @param encoding - The character encoding of the SolarisUI instance. Defaults to "utf-8".
-     * @param config - The configuration of the SolarisUI instance.
-     */
-    public static init(name: string, lang: string = "en", encoding: string = "utf-8", config: SolarisUIConfig = { bootstrapSupport: false, tailwindSupport: false }) {
-        SolarisUI.projectName = name;
-        SolarisUI.lang = lang;
-        SolarisUI.encoding = encoding;
-        SolarisUI.config = config;
-    }
+	/**
+	 * Creates a new instance of the `SolarisUI` class.
+	 * @param name - The name of the SolarisUI instance.
+	 * @param lang - The language of the SolarisUI instance. Defaults to "en".
+	 * @param encoding - The character encoding of the SolarisUI instance. Defaults to "utf-8".
+	 * @param config - The configuration of the SolarisUI instance.
+	 */
+	public static init(name: string, lang: string = "en", encoding: string = "utf-8", config: SolarisUIConfig = { bootstrapSupport: false, tailwindSupport: false }) {
+		SolarisUI.projectName = name;
+		SolarisUI.lang = lang;
+		SolarisUI.encoding = encoding;
+		SolarisUI.config = config;
+	}
 
-    /**
-     * Builds the SolarisUI instance by generating HTML and CSS source code for each page.
-     * @param root - The root pages to build.
-     */
-    public static build(...root: Page[]): void {
-        const fileManager = new FileManager();
-        Logger.info(__filename, "Clearing Output ...");
-        fileManager.removeDirectory(`./builds/${SolarisUI.projectName}`, true);
+	/**
+	 * Builds the SolarisUI instance by generating HTML and CSS source code for each page.
+	 * @param root - The root pages to build.
+	 */
+	public static build(...root: Component[]): void {
+		const fileManager = new FileManager();
+		Logger.info(__filename, "Clearing Output ...");
+		fileManager.removeDirectory(`./builds/${SolarisUI.projectName}`, true);
 
-        Logger.info(__filename, "Building Project...");
-        SolarisUI.pages = root;
-        SolarisUI.pages.forEach(page => {
-            page.setAttribute("lang", SolarisUI.lang);
-        });
-        SolarisUI.useGlobalStyles();
-        SolarisUI.compileHtmlSource();
+		Logger.info(__filename, "Building Project...");
+		SolarisUI.pages = root;
+		SolarisUI.pages.forEach(page => {
+			page.setAttribute("lang", SolarisUI.lang);
+		});
+		SolarisUI.useGlobalStyles();
+		SolarisUI.compileHtmlSource();
 
-        //Output
-        fileManager.createDirectory(`./builds/${SolarisUI.projectName}`);
-        fileManager.createDirectory(`./builds/${SolarisUI.projectName}/style`);
+		//Output
+		fileManager.createDirectory(`./builds/${SolarisUI.projectName}`);
+		fileManager.createDirectory(`./builds/${SolarisUI.projectName}/style`);
 
-        fileManager.copyTree(`./public/`, `./builds/${SolarisUI.projectName}/`);
+		fileManager.copyTree(`./public/`, `./builds/${SolarisUI.projectName}/`);
 
-        Object.keys(SolarisUI.htmlSource).forEach(key => {
-            key = key.split('.')[0];
-            fileManager.createFile(`./builds/${SolarisUI.projectName}/${key}.html`, SolarisUI.htmlSource[key]);
-        });
+		Object.keys(SolarisUI.htmlSource).forEach(key => {
+			key = key.split('.')[0];
+			fileManager.createFile(`./builds/${SolarisUI.projectName}/${key}.html`, SolarisUI.htmlSource[key]);
+		});
 
-        Logger.info(__filename, 'Build Saved');
-    }
+		Logger.info(__filename, 'Build Saved');
+	}
 
-    /**
-     * Compiles the HTML source code for each page in the SolarisUI instance.
-     * @private
-     */
-    private static compileHtmlSource(): void {
-        Logger.info(__filename, 'Compiling HTML source');
-        SolarisUI.pages.forEach(element => {
-            if (SolarisUI.config.bootstrapSupport) {
-                element.getChildren().forEach((child: any) => {
-                    child.getTag() === "head" && child.addStylesheet(new Style("external", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"));
-                    child.getTag() === "body" && child.addScript(new Script("external", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"));
-                });
-            }
-            if (SolarisUI.config.tailwindSupport) {
-                element.getChildren().forEach((child: any) => {
-                    child.getTag() === "head" && child.addStylesheet(new Style("external", "https://unpkg.com/tailwindcss@2/dist/tailwind.min.css"));
-                    // child.getTag() === "body" && child.addScript(new Script("external", "https://unpkg.com/tailwindcss@2/dist/tailwind.min.js"));
-                });
-            }
-            SolarisUI.htmlSource[element.url.split(".")[0]] = element.toString();
-        });
-    }
+	/**
+	 * Compiles the HTML source code for each page in the SolarisUI instance.
+	 * @private
+	 */
+	private static compileHtmlSource(): void {
+		Logger.info(__filename, 'Compiling HTML source');
+		SolarisUI.pages.forEach(element => {
+			if (SolarisUI.config.bootstrapSupport) {
+				element.getChildren().forEach((child: any) => {
+					child.getTag() === "head" && child.addStylesheet(new Style("external", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"));
+					child.getTag() === "body" && child.addScript(new Script("external", "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"));
+				});
+			}
+			if (SolarisUI.config.tailwindSupport) {
+				element.getChildren().forEach((child: any) => {
+					child.getTag() === "head" && child.addStylesheet(new Style("external", "https://unpkg.com/tailwindcss@2/dist/tailwind.min.css"));
+					child.getTag() === "body" && child.addScript(new Script("external", "https://unpkg.com/tailwindcss@2/dist/tailwind.min.js"));
+				});
+			}
+			SolarisUI.htmlSource[element.props.url.split(".")[0]] = element.toString();
+		});
+	}
 
-    /**
-     * Add default styles to all the pages in the project
-     * @private
-     */
-    private static useGlobalStyles(): void {
-        Logger.info(__filename, "Using global styles");
-        const manager = new FileManager();
-        var allFiles: string[];
-        let newFile: string | undefined;
-        try {
-            allFiles = manager.getAllFilesInDirectory("./public/style");
-        } catch (error: any) {
-            allFiles = [];
-            Logger.error(__filename, `There are no css files under public/style`);
-        }
+	/**
+	 * Add default styles to all the pages in the project
+	 * @private
+	 */
+	private static useGlobalStyles(): void {
+		Logger.info(__filename, "Using global styles");
+		const manager = new FileManager();
+		var allFiles: string[];
+		let newFile: string | undefined;
+		try {
+			allFiles = manager.getAllFilesInDirectory("./public/style");
+		} catch (error: any) {
+			allFiles = [];
+			Logger.error(__filename, `There are no css files under public/style`);
+		}
 
-        allFiles.forEach(file => {
+		allFiles.forEach(file => {
 
-            newFile = file.split("\\").at(-1);
-            if (newFile)
-                newFile = newFile.split(".").at(0);
-        });
+			newFile = file.split("\\").at(-1);
+			if (newFile)
+				newFile = newFile.split(".").at(0);
+		});
 
-        SolarisUI.pages.forEach(page => {
-            allFiles.forEach(file => {
-                let name = file.split("\\").at(-1);
-                name = name?.split(".")[0];
-                const newStyle = new Component('link', { rel: 'stylesheet', href: `./style/${name}.css` });
-                if (page.head)
-                    page.head.addChildren(newStyle);
-            })
-        });
-    }
+		SolarisUI.pages.forEach(page => {
+			allFiles.forEach(file => {
+				let name = file.split("\\").at(-1);
+				name = name?.split(".")[0];
+				const newStyle = new Component('link', { rel: 'stylesheet', href: `./style/${name}.css` });
+				if (page.props.head)
+					page.props.head.addChildren(newStyle);
+			})
+		});
+	}
 
-    public static loadComponent(filePath: string, props: {}): Component {
-        const fileManager = new FileManager();
-        const data = fileManager.readFile(filePath);
-        const lexed = eval('`' + data + '`');
-        const rootComponent = new Component('html', {}, []);
-        const parser = new htmlparser2.Parser(
-          {
-            onopentag: (tag: string, attributes: { [key: string]: string }) => {
-                const component = new Component(tag, attributes, []);
-                const parent = rootComponent.getChildren().length === 0 ? rootComponent : rootComponent.getChildren()[0];
-                parent.getChildren().push(component);
-                // component.setParent(parent);
-                component.children = [];
-            },
-            ontext: (text: string) => {
-              const parent =
-                rootComponent.getChildren().length === 0
-                  ? rootComponent
-                  : rootComponent.getChildren()[0];
-              const lastChild =
-                parent.getChildren().length > 0
-                  ? parent.getChildren()[parent.getChildren().length - 1]
-                  : null;
-              if (
-                lastChild &&
-                (lastChild.getTag() === 'h1' || lastChild.getTag() === 'p')
-              ) {
-                lastChild.getChildren().push(new String(text));
-              } else if (text.trim().length !== 0) {
-                const component = new String(text);
-                parent.addChild(component);
-              }
-            },
-            onclosetag: (tag: string) => {
-              const parent =
-                rootComponent.getChildren().length === 0
-                  ? rootComponent
-                  : rootComponent.getChildren()[0];
-              if (parent.getParent() !== null) {
-                parent.getChildren()[
-                  parent.getChildren().length - 1
-                ].children = parent
-                  .getChildren()[parent.getChildren().length - 1]
-                  .children.filter((c) => c !== undefined);
-              }
-            },
-          },
-          { decodeEntities: true }
-        );
-        parser.write(lexed);
-        parser.end();
-    
-        return rootComponent.getChildren()[0];
-      }
-    
+	public static createComponent(filePath: string, props: any): Component | null {
+		const html = SolarisUI.loadComponent(filePath, props);
+		if (html === null)
+			return null;
+		const component = SolarisUI.parseComponent(html);
+		component.props = props;
+		return component;
+	}
+
+	private static loadComponent(filePath: string, props: any): string | null {
+		const fileManager = new FileManager();
+		const fileContent = fileManager.readFile(filePath);
+		if (fileContent === null) return null;
+		const propsWithStrings: { [key: string]: string } = {};
+		for (const key in props) {
+			if (props[key] instanceof Component) {
+				propsWithStrings[key] = props[key].toString();
+			} else {
+				propsWithStrings[key] = props[key];
+			}
+		}
+		return Mustache.render(fileContent, propsWithStrings);
+	}
+
+	private static parseComponent(html: string): Component {
+		const rootComponent = new Component("root");
+
+		const parser = new htmlparser2.Parser(
+			{
+				onopentag: (tag: string, attributes: { [key: string]: string }) => {
+					const component = new Component(tag, attributes, []);
+					const parent = rootComponent.getChildren().length === 0 ? rootComponent : rootComponent.getChildren()[0];
+					parent.getChildren().push(component);
+					// component.setParent(parent);
+					component.children = [];
+				},
+				ontext: (text: string) => {
+					const parent =
+						rootComponent.getChildren().length === 0
+							? rootComponent
+							: rootComponent.getChildren()[0];
+					const lastChild =
+						parent.getChildren().length > 0
+							? parent.getChildren()[parent.getChildren().length - 1]
+							: null;
+					if (
+						lastChild &&
+						(lastChild.getTag() === 'h1' || lastChild.getTag() === 'p')
+					) {
+						lastChild.getChildren().push(new String(text));
+					} else if (text.trim().length !== 0) {
+						const component = new String(text);
+						parent.addChild(component);
+					}
+				},
+				onclosetag: (tag: string) => {
+					const parent =
+						rootComponent.getChildren().length === 0
+							? rootComponent
+							: rootComponent.getChildren()[0];
+					if (parent.getParent() !== null) {
+						parent.getChildren()[
+							parent.getChildren().length - 1
+						].children = parent
+							.getChildren()[parent.getChildren().length - 1]
+							.children.filter((c) => c !== undefined);
+					}
+				},
+			},
+			{ decodeEntities: true }
+		);
+		parser.write(html);
+		parser.end();
+
+		return rootComponent.getChildren()[0];
+	}
+
 }
 
 export {
-    SolarisUI,
-    SolarisUIConfig
+	SolarisUI,
+	SolarisUIConfig
 };
