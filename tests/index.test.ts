@@ -5,18 +5,15 @@ import * as sui from "../src/index";
 describe("Solaris", () => {
     it("should successfully create the given data source", () => {
 
-        sui.SolarisUI.init("Test", "en", "utf-8", {
-            globalCss: true
+
+        const page = sui.SolarisUI.createPage("Test Page", {
+            "name": "Sujal Choudhari",
+            "description": "This is a test page",
+            "keywords": "test,page,solarisui"
         });
 
-        sui.Atomizer.templateFolder = "./src/templates/"
-        const page = sui.Atomizer.loadTemplate("page");
-        const head = sui.Atomizer.loadTemplate("head");
-        const body = sui.Atomizer.loadTemplate("body");
-        const headComponent = new sui.Atom(head, {title: "Test"});
-        const bodyComponent = new sui.Atom(body, {children: ["Hello World!","World Hello"]});
-        const pageComponent = new sui.Atom(page,{head:headComponent,body:bodyComponent}); 
-        console.log(pageComponent.toString());
+        // sui.SolarisUI.build();
+        console.log(page.toString());
     });
 });
 

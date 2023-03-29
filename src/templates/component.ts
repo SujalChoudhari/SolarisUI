@@ -1,5 +1,5 @@
-import FileManager from "../filemanager";
-import Logger from "../logger";
+import FileManager from "../utils/filemanager";
+import Logger from "../utils/logger";
 import Style from "./styles";
 
 

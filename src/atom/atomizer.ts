@@ -1,12 +1,21 @@
 import Mustache from "mustache";
-import FileManager from "../filemanager";
-import Logger from "../logger";
+import FileManager from "../utils/filemanager";
+import * as htmlparser2 from "htmlparser2"
+import Logger from "../utils/logger";
 import fs from "fs";
+import { Component, String } from "../templates";
 
 export type AtomizerTemplate = string | null;
 
 export default class Atomizer {
-    public static templateFolder: string = "./filename";
+    public static templateFolder: string = "./src/templates/";
+
+    public static page = Atomizer.loadTemplate("page.component.html");
+    public static head = Atomizer.loadTemplate("head.component.html");
+    public static body = Atomizer.loadTemplate("body.component.html");
+    public static button = Atomizer.loadTemplate("button.component.html");
+    public static link = Atomizer.loadTemplate("link.component.html");
+    public static text = Atomizer.loadTemplate("text.component.html");
 
 
     public static loadTemplate(filename: string): AtomizerTemplate {
@@ -17,6 +26,42 @@ export default class Atomizer {
             Logger.error(__filename, `Template ${newName} not found`);
             return null;
         }
+        Logger.info(__filename, `Template ${newName} loaded`);
         return template;
+    }
+
+    public static buildComponentTree(html: string) {
+        let rootComponent = new Component("root");
+        let currentComponent: Component = rootComponent;
+
+        const parser = new htmlparser2.Parser(
+            {
+                onopentag: (tag: string, attributes: { [key: string]: string }) => {
+                    const newComponent = new Component(tag, attributes);
+                    currentComponent.addChildren(newComponent);
+                    currentComponent = newComponent;
+                },
+                ontext: (text: string) => {
+                    if (text.trim() === "") return;
+
+                    const lastChild = currentComponent.getChildren().at(-1);
+                    if (lastChild && lastChild instanceof String)
+                        lastChild.content += text;
+                    else
+                        currentComponent.addChildren(new String(text));
+                },
+                onclosetag: (tag: string) => {
+
+                    const newComponent = currentComponent.getParent();
+                    if (newComponent)
+                        currentComponent = newComponent;
+                },
+            },
+            { decodeEntities: true }
+        );
+        parser.write(html);
+        parser.end();
+        Logger.info(__filename, `Component tree built`);
+        return rootComponent.getChildren()[0];
     }
 };

@@ -41,8 +41,8 @@ export default class Logger {
         const filePath = `./logs/${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${date.getHours()}-${date.getMinutes()}.log`;
 
         if (!fs.existsSync(filePath))
-            fs.writeFileSync(filePath,`${type} :(${filename})\t ${message.join(" ")}\n`);
-        else
-            fs.appendFileSync(filePath,`${type}:\t(${filename})\t ${message.join(" ")}\n`);
+            fs.writeFileSync(filePath, `=====Log file created at ${date.toDateString()} ${date.toTimeString()}=====\n\n`);
+
+        fs.appendFileSync(filePath, `${type}:\t(${filename})\t ${message.join(" ")}\n`);
     }
 }

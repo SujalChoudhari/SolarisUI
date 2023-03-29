@@ -30,19 +30,17 @@ import {
 } from "./atom";
 
 import {
-    SolarisUI,
-    SolarisUIConfig
+    SolarisUI
 
-} from "./solaris"
+} from "./utils/solaris"
 
-import FileManager from "./filemanager";
-import Logger, { LogLevel } from "./logger";
+import FileManager from "./utils/filemanager";
+import Logger, { LogLevel } from "./utils/logger";
 
 
 export default SolarisUI;
 export {
     SolarisUI,
-    SolarisUIConfig,
 
     FileManager,
     Logger,
