@@ -28,7 +28,7 @@ import {
     Script,
     String,
     Style
-} from "./basic";
+} from "./vdom";
 
 import * as Components from "./components"
 

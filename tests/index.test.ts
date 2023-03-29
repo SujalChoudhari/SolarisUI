@@ -1,5 +1,5 @@
 import { text } from "stream/consumers";
-import { Component } from "../src/basic";
+import { Component } from "../src/vdom";
 import * as sui from "../src/index";
 
 import Logger, { LogLevel } from "../src/logger";
@@ -18,14 +18,15 @@ describe("Solaris", () => {
 
         const body = sui.SolarisUI.createComponent("./src/basic/body.component.html",
             { children: 'None' });
-        const index = sui.SolarisUI.createComponent("./src/basic/page.component.html",
-            { head: head, body: body, url: "index.html" });
         const text = sui.SolarisUI.createComponent("./src/basic/text.component.html",
             { type: "h1", text: "Hello" });
-        if (index && text) {
+        if (text)
             body?.addChildren(text); // this wont affect the index as it creates a copy of the props
+        const index = sui.SolarisUI.createComponent("./src/basic/page.component.html",
+            { head: head, body: body, url: "index.html" });
+        if (index)
             sui.SolarisUI.build(index);
-        }
+
     });
-});
+}); 
 

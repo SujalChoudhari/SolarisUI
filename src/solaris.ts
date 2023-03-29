@@ -1,4 +1,4 @@
-import { Component, Page, Script, Style, String } from "./basic";
+import { Component, Script, Style, String } from "./vdom";
 import Mustache from 'mustache';
 import * as htmlparser2 from "htmlparser2";
 import FileManager from "./filemanager";
@@ -170,7 +170,7 @@ class SolarisUI {
 		});
 	}
 
-	public static createComponent(filePath: string, props: any): Component | null {
+	public static createComponent(filePath: string, props: { [key: string]: any }): Component | null {
 		const html = SolarisUI.loadComponent(filePath, props);
 		if (html === null)
 			return null;
@@ -178,6 +178,12 @@ class SolarisUI {
 		console.log(html);
 		const component = SolarisUI.parseComponent(html);
 		component.props = props;
+		// check for each component.children if its tag is equal anything in props.keys, replace the child with the value in the prop
+		component.getChildren().forEach((child: Component) => {
+			if (props[child.getTag()]) {
+				child = props[child.getTag()];
+			}
+		});
 		return component;
 	}
 
@@ -185,8 +191,6 @@ class SolarisUI {
 		const fileManager = new FileManager();
 		const fileContent = fileManager.readFile(filePath);
 		if (fileContent === null) return null;
-
-
 		return Mustache.render(fileContent, props);
 	}
 

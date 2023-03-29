@@ -40,7 +40,7 @@ export default class Component {
 	 */
 	public children: Component[];
 
-	public props:any;
+	public props: any;
 	private parent: Component | null;
 
 
