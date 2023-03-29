@@ -18,20 +18,16 @@
 
 
 import {
-    Body,
-    Button,
     Component,
-    Head,
-    Text,
-    Link,
-    Page,
     Script,
     String,
     Style
-} from "./vdom";
+} from "./templates";
 
-import * as Components from "./components"
-
+import {
+    Atom,
+    Atomizer,
+} from "./atom";
 
 import {
     SolarisUI,
@@ -52,15 +48,11 @@ export {
     Logger,
     LogLevel,
 
-    Body,
-    Button,
     Component,
-    Head,
-    Text,
-    Link,
-    Page,
     Script,
     String,
     Style,
-    Components
+
+    Atom,
+    Atomizer
 }

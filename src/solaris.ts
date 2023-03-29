@@ -1,4 +1,4 @@
-import { Component, Script, Style, String } from "./vdom";
+import { Component, Script, Style, String } from "./templates";
 import Mustache from 'mustache';
 import * as htmlparser2 from "htmlparser2";
 import FileManager from "./filemanager";
@@ -170,64 +170,64 @@ class SolarisUI {
 		});
 	}
 
-	public static createComponent(filePath: string, props: { [key: string]: any }): Component | null {
-		const html = SolarisUI.loadComponent(filePath, props);
-		if (html === null)
-			return null;
+	// public static createComponent(filePath: string, props: { [key: string]: any }): Component | null {
+	// 	const html = SolarisUI.loadComponent(filePath, props);
+	// 	if (html === null)
+	// 		return null;
 
-		console.log(html);
-		const component = SolarisUI.parseComponent(html);
-		component.props = props;
-		// check for each component.children if its tag is equal anything in props.keys, replace the child with the value in the prop
-		component.getChildren().forEach((child: Component) => {
-			if (props[child.getTag()]) {
-				child = props[child.getTag()];
-			}
-		});
-		return component;
-	}
+	// 	console.log(html);
+	// 	const component = SolarisUI.parseComponent(html);
+	// 	component.props = props;
+	// 	// check for each component.children if its tag is equal anything in props.keys, replace the child with the value in the prop
+	// 	component.getChildren().forEach((child: Component) => {
+	// 		if (props[child.getTag()]) {
+	// 			child = props[child.getTag()];
+	// 		}
+	// 	});
+	// 	return component;
+	// }
 
-	private static loadComponent(filePath: string, props: any): string | null {
-		const fileManager = new FileManager();
-		const fileContent = fileManager.readFile(filePath);
-		if (fileContent === null) return null;
-		return Mustache.render(fileContent, props);
-	}
+	// private static loadComponent(filePath: string, props: any): string | null {
+	// 	const fileManager = new FileManager();
+	// 	const fileContent = fileManager.readFile(filePath);
+	// 	if (fileContent === null) return null;
+	// 	return Mustache.render(fileContent, props);
+	// }
 
-	private static parseComponent(html: string): Component {
-		let rootComponent = new Component("root");
-		let currentComponent: Component = rootComponent;
+	// private static parseComponent(html: string): Component {
+	// 	let rootComponent = new Component("root");
+	// 	let currentComponent: Component = rootComponent;
 
-		const parser = new htmlparser2.Parser(
-			{
-				onopentag: (tag: string, attributes: { [key: string]: string }) => {
-					const newComponent = new Component(tag, attributes);
-					currentComponent.addChildren(newComponent);
-					currentComponent = newComponent;
-				},
-				ontext: (text: string) => {
-					if (text.trim() === "") return;
+	// 	const parser = new htmlparser2.Parser(
+	// 		{
+	// 			onopentag: (tag: string, attributes: { [key: string]: string }) => {
+	// 				const newComponent = new Component(tag, attributes);
+	// 				currentComponent.addChildren(newComponent);
+	// 				currentComponent = newComponent;
+	// 			},
+	// 			ontext: (text: string) => {
+	// 				if (text.trim() === "") return;
 
-					const lastChild = currentComponent.getChildren().at(-1);
-					if (lastChild && lastChild instanceof String)
-						lastChild.content += text;
-					else
-						currentComponent.addChildren(new String(text));
-				},
-				onclosetag: (tag: string) => {
+	// 				const lastChild = currentComponent.getChildren().at(-1);
+	// 				if (lastChild && lastChild instanceof String)
+	// 					lastChild.content += text;
+	// 				else
+	// 					currentComponent.addChildren(new String(text));
+	// 			},
+	// 			onclosetag: (tag: string) => {
 
-					const newComponent = currentComponent.getParent();
-					if (newComponent)
-						currentComponent = newComponent;
-				},
-			},
-			{ decodeEntities: true }
-		);
-		parser.write(html);
-		parser.end();
+	// 				const newComponent = currentComponent.getParent();
+	// 				if (newComponent)
+	// 					currentComponent = newComponent;
+	// 			},
+	// 		},
+	// 		{ decodeEntities: true }
+	// 	);
+	// 	parser.write(html);
+	// 	parser.end();
 
-		return rootComponent.getChildren()[0];
-	}
+	// 	return rootComponent.getChildren()[0];
+	// }
 }
 
 export {

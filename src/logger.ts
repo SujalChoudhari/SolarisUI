@@ -32,7 +32,7 @@ export default class Logger {
 
 
     private static write(type: string, filename: string, ...message: string[]): void {
-        // console.log(type + `: (${filename})\n\t` + message.join(" "));
+        console.log(type + `: (${filename})\n\t` + message.join(" "));
 
         if (!fs.existsSync('./logs'))
             fs.mkdirSync("./logs")

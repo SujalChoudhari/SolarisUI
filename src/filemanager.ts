@@ -20,8 +20,10 @@ export default class FileManager {
      * While creating a new instance of FileManager, base path will be automatically
      * set to the current working directory.
      */
-    constructor() {
-        this.basePath = path.resolve(process.cwd());
+    constructor(basepath: string = "") {
+        if (basepath == "")
+            this.basePath = path.resolve(process.cwd());
+        else this.basePath = path.resolve(basepath);        
     }
 
     /**
@@ -92,13 +94,13 @@ export default class FileManager {
         }
     }
 
-     /**
-     * Get a list of names of files and in the directory and its subdirectories.
-     * @param directoryPath The path to the directory to get the names from
-     * @returns A List of the names (absolute paths)
-     * 
-     * @author Ansh Sharma
-     */
+    /**
+    * Get a list of names of files and in the directory and its subdirectories.
+    * @param directoryPath The path to the directory to get the names from
+    * @returns A List of the names (absolute paths)
+    * 
+    * @author Ansh Sharma
+    */
     public getAllFilesInDirectory(directoryPath: string): string[] {
         const absolutePath = this.getAbsolutePath(directoryPath);
         if (!fs.existsSync(absolutePath)) {
@@ -174,7 +176,7 @@ export default class FileManager {
      */
     public copyTree(srcPath: string, destPath: string): void {
         if (!fs.existsSync(srcPath)) {
-            Logger.warn(__filename,srcPath," does not exist");
+            Logger.warn(__filename, srcPath, " does not exist");
             return;
         }
 
@@ -200,10 +202,10 @@ export default class FileManager {
      * @param path Path of the directory to remove
      * @param force Remove the directory forefully. Even if the directory is not empty.
      */
-    public removeDirectory(path:string,force:boolean=false):void {
-        fs.rmSync(path,{
-            force:force,
-            recursive:true
+    public removeDirectory(path: string, force: boolean = false): void {
+        fs.rmSync(path, {
+            force: force,
+            recursive: true
         });
     }
 }

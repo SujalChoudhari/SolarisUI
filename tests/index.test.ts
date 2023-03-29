@@ -1,8 +1,6 @@
-import { text } from "stream/consumers";
-import { Component } from "../src/vdom";
+import { Component } from "../src/templates";
 import * as sui from "../src/index";
 
-import Logger, { LogLevel } from "../src/logger";
 
 describe("Solaris", () => {
     it("should successfully create the given data source", () => {
@@ -10,23 +8,15 @@ describe("Solaris", () => {
         sui.SolarisUI.init("Test", "en", "utf-8", {
             globalCss: true
         });
-        const head = sui.SolarisUI.createComponent("./src/basic/head.component.html",
-            { title: "Title", meta: "" });
 
-        // console.log(head?.children[0]);
-
-
-        const body = sui.SolarisUI.createComponent("./src/basic/body.component.html",
-            { children: 'None' });
-        const text = sui.SolarisUI.createComponent("./src/basic/text.component.html",
-            { type: "h1", text: "Hello" });
-        if (text)
-            body?.addChildren(text); // this wont affect the index as it creates a copy of the props
-        const index = sui.SolarisUI.createComponent("./src/basic/page.component.html",
-            { head: head, body: body, url: "index.html" });
-        if (index)
-            sui.SolarisUI.build(index);
-
+        sui.Atomizer.templateFolder = "./src/templates/"
+        const page = sui.Atomizer.loadTemplate("page");
+        const head = sui.Atomizer.loadTemplate("head");
+        const body = sui.Atomizer.loadTemplate("body");
+        const headComponent = new sui.Atom(head, {title: "Test"});
+        const bodyComponent = new sui.Atom(body, {children: ["Hello World!","World Hello"]});
+        const pageComponent = new sui.Atom(page,{head:headComponent,body:bodyComponent}); 
+        console.log(pageComponent.toString());
     });
-}); 
+});
 
