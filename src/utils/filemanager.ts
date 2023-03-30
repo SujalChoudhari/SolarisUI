@@ -164,8 +164,8 @@ export default class FileManager {
      * @param contents The contents of the file to create with.
      */
     public createFile(filePath: string, contents: string): void {
-        console.log(filePath);
         const absolutePath = this.getAbsolutePath(filePath);
+        console.log(absolutePath);
         fs.writeFileSync(absolutePath, contents);
     }
 

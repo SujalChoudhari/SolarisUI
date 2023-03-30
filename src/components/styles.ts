@@ -42,7 +42,7 @@ export default class Style extends Component {
 		url = "",
 		cssClasseses: { [key: string]: { [key: string]: string } } = {}
 	) {
-		super("style",{},[],null);
+		super("style", {}, [], null);
 		this.cssClasses = cssClasseses;
 		this.url = url;
 		this.type = type;
@@ -156,10 +156,13 @@ export default class Style extends Component {
 
 	/**
 	 * Exports the CSS classes and their properties as a string.
+	 * Returns a <style> tag if the type is inline, otherwise returns the CSS classes and their properties as a string.
 	 * @returns A string representation of the CSS classes and their properties.
 	 */
 	public toString(): string {
 		let cssString = "";
+		if (this.type === "infile")
+			cssString += `<style>\n`;
 		Object.keys(this.cssClasses).forEach((className) => {
 			cssString += `.${className} {\n`;
 			Object.keys(this.cssClasses[className]).forEach((property) => {
@@ -167,6 +170,9 @@ export default class Style extends Component {
 			});
 			cssString += "}\n\n";
 		});
+
+		if (this.type === "infile")
+			cssString += `</style>\n`;
 		return cssString.trim();
 	}
 }

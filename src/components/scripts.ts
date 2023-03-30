@@ -46,4 +46,17 @@ export default class Script {
         this.type = type;
         this.params = params;
     }
+
+    /**
+     * Get the script as a string
+     * @returns the script as a string
+     */
+    public toString(): string {
+        if (this.type === "infile") {
+            return `<script>${this.script}</script>`;
+        } else {
+            return `<script src="${this.url}"></script>`;
+        }
+    }
+    
 }

@@ -3,19 +3,14 @@ import FileManager from "../utils/filemanager";
 import * as htmlparser2 from "htmlparser2"
 import Logger from "../utils/logger";
 import fs from "fs";
-import { Component, String } from "../templates";
+import { Component, String } from "../components";
 
 export type AtomizerTemplate = string | null;
 
 export default class Atomizer {
     public static templateFolder: string = "./src/templates/";
 
-    public static page = Atomizer.loadTemplate("page.component.html");
-    public static head = Atomizer.loadTemplate("head.component.html");
-    public static body = Atomizer.loadTemplate("body.component.html");
-    public static button = Atomizer.loadTemplate("button.component.html");
-    public static link = Atomizer.loadTemplate("link.component.html");
-    public static text = Atomizer.loadTemplate("text.component.html");
+    public static templates:{[key:string]:AtomizerTemplate} = Atomizer.preloadTemplates();
 
 
     public static loadTemplate(filename: string): AtomizerTemplate {
@@ -28,6 +23,18 @@ export default class Atomizer {
         }
         Logger.info(__filename, `Template ${newName} loaded`);
         return template;
+    }
+
+    public static preloadTemplates():{[key:string]:AtomizerTemplate}{
+        const templates:{[key:string]:AtomizerTemplate} = {};
+        const files = fs.readdirSync(Atomizer.templateFolder);
+        files.forEach(file => {
+            let newKey = file.split(".")[0];
+            const template = Atomizer.loadTemplate(file);
+            if(template != null)
+                templates[newKey] = template;
+        });
+        return templates;
     }
 
     public static buildComponentTree(html: string) {

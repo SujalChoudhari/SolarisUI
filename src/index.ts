@@ -22,7 +22,7 @@ import {
     Script,
     String,
     Style
-} from "./templates";
+} from "./components";
 
 import {
     Atom,
