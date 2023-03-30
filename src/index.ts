@@ -27,6 +27,7 @@ import {
 import {
     Atom,
     Atomizer,
+    AtomizerTemplate
 } from "./atom";
 
 import {
@@ -52,5 +53,6 @@ export {
     Style,
 
     Atom,
-    Atomizer
+    Atomizer,
+    AtomizerTemplate
 }

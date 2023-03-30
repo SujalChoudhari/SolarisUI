@@ -28,6 +28,11 @@ class SolarisUI {
 		return page;
 	}
 
+	/**
+	 * Build the pages in the project
+	 * @param name The name of the project
+	 * @param pages The pages of the project
+	 */
 	public static buildProject(name: string, pages: Component[]) {
 		const fm = new FileManager();
 

@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import FileManager from '../src/filemanager';
+import FileManager from '../src/utils/filemanager';
 
 describe('FileManager', () => {
 

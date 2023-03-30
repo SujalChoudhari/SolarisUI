@@ -7,9 +7,15 @@ export enum LogLevel {
     ERROR,
 }
 
+/**
+ * Logger
+ * -----
+ * A simple logger class for logging messages to the console.
+ * @remarks
+ * Logger class stores logs into a ./logs folder.
+ */
 export default class Logger {
     public static logLevel: LogLevel = LogLevel.INFO;
-    // private static fm = new FileManager();
     public static debug(filename: string, ...message: string[]): void {
         if (Logger.logLevel <= 0)
             Logger.write("[DEBUG]", filename, ...message);
