@@ -43,7 +43,7 @@ describe("Solaris", () => {
             ],children: [dropdown]
         });
 
-        page.getChildren()[1].addChildren(sui.Atomizer.buildComponentTree(navbar.toString()));
+        page.getChildren()[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(navbar));
         sui.SolarisUI.buildProject("Test", [page]);
 
     });

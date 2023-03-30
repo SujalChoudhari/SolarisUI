@@ -1,4 +1,4 @@
-import Mustache from "mustache";
+import Atom from "./atom";
 import FileManager from "../utils/filemanager";
 import * as htmlparser2 from "htmlparser2"
 import Logger from "../utils/logger";
@@ -66,7 +66,18 @@ export default class Atomizer {
             if(template != null)
                 templates[newKey] = template;
         });
+
+        Logger.info(__filename, `Templates loaded from ${Atomizer.templateFolder}`);
         return templates;
+    }
+
+    /**
+     * Build the component tree from the atom.
+     * @param atom The atom to be parsed and built into a component tree
+     * @returns The root component of the component tree.
+     */
+    public static buildComponentTreeFromAtom(atom:Atom):Component{
+        return Atomizer.buildComponentTree(atom.toString());
     }
 
     /**

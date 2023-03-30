@@ -1,7 +1,5 @@
-import { Component, Script, Style, String } from "../components";
-import Mustache from 'mustache';
+import { Component} from "../components";
 import fs from "fs";
-import * as htmlparser2 from "htmlparser2";
 import FileManager from "./filemanager";
 import Logger from "./logger";
 import { Atom, Atomizer } from "../atom";
@@ -59,7 +57,7 @@ class SolarisUI {
 		// TODO: Create JS files
 
 		Logger.info(__filename, "Copying public folders");
-		fm.copyTree("public", `builds/${name}/public`);
+		fm.copyTree("public", `builds/${name}/`);
 
 	}
 }
