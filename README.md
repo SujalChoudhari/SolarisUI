@@ -33,6 +33,7 @@ yarn add @sujalchoudhari/solaris-ui
 ```
 OR `download the code from the repository.`
 
+[Note: NPM might not work for alpha builds. Use the repository instead.]
 
 ## Usage
 
