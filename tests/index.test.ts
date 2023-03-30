@@ -1,46 +1,51 @@
-import { Component } from "../src/basic";
+import { Component } from "../src/components";
 import * as sui from "../src/index";
 
-import Logger, { LogLevel } from "../src/logger";
 
 describe("Solaris", () => {
     it("should successfully create the given data source", () => {
 
-        const project = new sui.SolarisUI("Test");
+        const page = sui.SolarisUI.createPage("Test Page", "index.html", {
+            "name": "Sujal Choudhari",
+            "description": "This is a test page",
+            "keywords": "test,page,solarisui"
+        });
 
-        const head = new sui.Head("Head");
+        // const temp = sui.Atomizer.preloadTemplates();
+        console.log(Object.keys(sui.Atomizer.templates));
 
-        // creating index page
-        const indexPage = new sui.Page("index.html");
-        indexPage.addChild(head);
-        indexPage.addChild(new sui.Body());
+        const dropdown = new sui.Atom(sui.Atomizer.templates.dropdown, {
+            text: "Dropdown",
+            links: [{
+                href: "index.html",
+                text: "Home"
+            }, {
+                href: "about.html",
+                text: "About"
+            }, {
+                href: "contact.html",
+                text: "Contact"
+            }
+            ]
+        });
+        const navbar = new sui.Atom(sui.Atomizer.templates.navbar, {
+            title: "Navv Barr",
+            links: [{
+                href: "index.html",
+                text: "Home"
+            }, {
+                href: "about.html",
+                text: "About"
+            }, {
+                href: "contact.html",
+                text: "Contact"
+            }
+            ],children: [dropdown]
+        });
 
-        for (let i = 1; i <= 6; i++) {
-            const heading =new sui.Heading(i, "Heading");
-            heading.setStyles({
-                color:`#f${i}${i}${i}cc`,
-                "background-color": `#${i}f${i}0${i}f`
-            })
-            indexPage.body?.addChild(heading);
-        }
+        page.getChildren()[1].addChildren(sui.Atomizer.buildComponentTree(navbar.toString()));
+        sui.SolarisUI.buildProject("Test", [page]);
 
-        // Hero 
-        const hero = new sui.HorizontalAlignContainer(["20px"]);
-        hero.align("middle", "center");
-        hero.addChild(new sui.Heading(1, "Hero Test"));
-        hero.addChild(new sui.Button("Click me!"));
-
-        
-        // Full height Container
-        const container = new sui.VerticalAlignContainer(["20px"]);
-        container.align("middle", "center");
-        container.fill("vertical");
-        for (let i = 0; i < 10; i++) {
-            container.addChild(new sui.String(`Hello ${i}`) );
-        }
-
-        indexPage.body?.addChildren(hero,container);
-        project.build(indexPage);
     });
 });
 

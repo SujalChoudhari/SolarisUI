@@ -18,5 +18,6 @@ public/
 # Miscellaneous
 *.log
 *.lock
+/logs
 yarn.lock
 package-lock.json
