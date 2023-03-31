@@ -28,6 +28,8 @@ export default class Atomizer {
      * Only the templated from this folder will be preloaded loaded.
      * If there are many template folders then those components will have to be loaded manually.
      * or change the template folder and preload the templates again.
+     * 
+     * @author Ansh Sharma
      */
     public static templateFolder: { baseDir: string, htmlDir?: string, cssDir?: string, jsDir?: string } = { baseDir: "./src/templates/", htmlDir: "", cssDir: "css", jsDir: "js" };
 

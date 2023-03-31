@@ -71,7 +71,7 @@ class SolarisUI {
 			if(fs.existsSync(`${Atomizer.templateFolder.baseDir}\\${Atomizer.templateFolder.jsDir}`)){
 				fm.createDirectory(`builds/${name}/templates/js`);
 				fm.copyTree(`${Atomizer.templateFolder.baseDir}\\${Atomizer.templateFolder.jsDir}`, `builds/${name}/templates/js/`);
-			}
+			}	
 		}
 
 
