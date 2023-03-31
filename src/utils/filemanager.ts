@@ -22,7 +22,7 @@ export default class FileManager {
      */
     constructor(basepath: string = "") {
         if (basepath == "")
-            this.basePath = path.resolve(process.cwd());
+            this.basePath = path.resolve(__dirname, '../');
         else this.basePath = path.resolve(basepath);        
     }
 
@@ -32,7 +32,7 @@ export default class FileManager {
      * @returns The abosolute path of the file or directory.
      */
     public getAbsolutePath(relativePath: string): string {
-        return path.join(this.basePath, relativePath);
+        return path.resolve(this.basePath, relativePath);
     }
 
     /**

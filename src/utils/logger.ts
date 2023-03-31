@@ -3,6 +3,7 @@ import fs from 'fs';
 export enum LogLevel {
     DEBUG,
     INFO,
+    TIME,
     WARNING,
     ERROR,
 }
@@ -16,6 +17,7 @@ export enum LogLevel {
  */
 export default class Logger {
     public static logLevel: LogLevel = LogLevel.INFO;
+    private static mTime: number = 0;
     public static debug(filename: string, ...message: string[]): void {
         if (Logger.logLevel <= 0)
             Logger.write("[DEBUG]", filename, ...message);
@@ -26,16 +28,22 @@ export default class Logger {
             Logger.write("[INFO]", filename, ...message);
     }
 
+    public static time(filename: string, ...message: string[]): void {
+        if(Logger.logLevel <= 2)
+            Logger.write("[TIME]", filename, ...message);
+    }
+
     public static warn(filename: string, ...message: string[]): void {
-        if (Logger.logLevel <= 2)
+        if (Logger.logLevel <= 3)
             Logger.write("[WARN]", filename, ...message);
     }
 
     public static error(filename: string, ...message: string[]): void {
-        if (Logger.logLevel <= 3)
+        if (Logger.logLevel <= 4)
             Logger.write("[ERROR]", filename, ...message);
     }
-
+    
+    
 
     private static write(type: string, filename: string, ...message: string[]): void {
         console.log(type + `: (${filename})\n\t` + message.join(" "));
@@ -51,4 +59,18 @@ export default class Logger {
 
         fs.appendFileSync(filePath, `${type}:\t(${filename})\t ${message.join(" ")}\n`);
     }
+
+
+    public static start(){
+        Logger.mTime = Date.now();
+    }
+
+    /**
+     * 
+     * @returns The time elapsed since the last call to Logger.start() in milliseconds
+     */
+    public static end():number{
+        return Date.now() - Logger.mTime;
+    }
+
 }

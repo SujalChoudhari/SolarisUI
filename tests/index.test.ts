@@ -5,15 +5,14 @@ import * as sui from "../src/index";
 describe("Solaris", () => {
     it("should successfully create the given data source", () => {
 
-
+        sui.Logger.logLevel = sui.LogLevel.TIME;
         const page = sui.SolarisUI.createPage("Test Page", "index.html", {
             "name": "Sujal Choudhari",
             "description": "This is a test page",
             "keywords": "test,page,solarisui"
         });
-        
+
         // const temp = sui.Atomizer.preloadTemplates();
-        console.log(Object.keys(sui.Atomizer.templates));
         const dropdown = new sui.Atom(sui.Atomizer.templates.dropdown, {
             text: "Dropdown",
             links: [{
@@ -28,6 +27,8 @@ describe("Solaris", () => {
             }
             ]
         });
+
+
         const navbar = new sui.Atom(sui.Atomizer.templates.navbar, {
             title: "Navv Barr",
             links: [{
@@ -40,7 +41,7 @@ describe("Solaris", () => {
                 href: "contact.html",
                 text: "Contact"
             }
-            ],children: [dropdown]
+            ], children: [dropdown]
         });
 
         page.getChildren()[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(navbar));

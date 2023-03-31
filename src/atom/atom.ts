@@ -24,7 +24,7 @@ export default class Atom {
      * @param template The template string
      * @param props The props that are to be rendered in the template
      */
-    constructor(template: AtomizerTemplate, props: { [key: string]: any }) {
+    constructor(template:AtomizerTemplate, props: { [key: string]: any }) {
         this.template = template;
         this.props = props;
         if (this.template !== null)
