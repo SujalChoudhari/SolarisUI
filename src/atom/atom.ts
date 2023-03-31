@@ -27,7 +27,6 @@ export default class Atom {
     constructor(template: AtomizerTemplate, props: { [key: string]: any }) {
         this.template = template;
         this.props = props;
-
         if (this.template !== null)
             Mustache.parse(this.template);
     }

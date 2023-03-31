@@ -5,15 +5,15 @@ import * as sui from "../src/index";
 describe("Solaris", () => {
     it("should successfully create the given data source", () => {
 
+
         const page = sui.SolarisUI.createPage("Test Page", "index.html", {
             "name": "Sujal Choudhari",
             "description": "This is a test page",
             "keywords": "test,page,solarisui"
         });
-
+        
         // const temp = sui.Atomizer.preloadTemplates();
         console.log(Object.keys(sui.Atomizer.templates));
-
         const dropdown = new sui.Atom(sui.Atomizer.templates.dropdown, {
             text: "Dropdown",
             links: [{
