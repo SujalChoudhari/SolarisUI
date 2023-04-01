@@ -1,4 +1,5 @@
 import Component from "./component";
+import StyleManager from "./StyleManager";
 /**
  * Style
  * -----
@@ -46,6 +47,7 @@ export default class Style extends Component {
 		this.cssClasses = cssClasseses;
 		this.url = url;
 		this.type = type;
+		StyleManager.addStyle(this);
 	}
 
 	/**

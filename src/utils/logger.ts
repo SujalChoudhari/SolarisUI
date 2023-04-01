@@ -1,5 +1,7 @@
 import FileManager from "./filemanager";
 import fs from 'fs';
+
+import { red, yellow, green, blue, cyan, gray, magentaBright, bold, underline, italic } from 'colorette';
 export enum LogLevel {
     DEBUG,
     INFO,
@@ -7,6 +9,7 @@ export enum LogLevel {
     WARNING,
     ERROR,
 }
+
 
 /**
  * Logger
@@ -46,7 +49,11 @@ export default class Logger {
     
 
     private static write(type: string, filename: string, ...message: string[]): void {
-        console.log(type + `: (${filename})\n\t` + message.join(" "));
+        if(type == "[ERROR]") console.log(underline(italic(bold(red(type + `: (${filename})\n\t` + message.join(" "))))))
+        else if(type == "[WARN]") console.log(underline(italic(bold(yellow(type + `: (${filename})\n\t` + message.join(" "))))))
+        else if(type == "[TIME]") console.log(underline(cyan(type + `: (${filename})\n\t` + message.join(" "))))
+        else if(type == "[DEBUG]") console.log(underline(italic(bold(blue(type + `: (${filename})\n\t` + message.join(" "))))))
+        else console.log(underline(magentaBright(type + `: (${filename})\n\t` + message.join(" "))));
 
         if (!fs.existsSync('./logs'))
             fs.mkdirSync("./logs")

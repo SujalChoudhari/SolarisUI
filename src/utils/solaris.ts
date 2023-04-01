@@ -3,6 +3,8 @@ import fs from "fs";
 import FileManager from "./filemanager";
 import Logger from "./logger";
 import { Atom, Atomizer } from "../atom";
+import StyleManager from "../components/StyleManager";
+import scriptManager from "../components/ScriptManager";
 
 /**
  * @class Sloaris
@@ -24,12 +26,25 @@ class SolarisUI {
 					return `<link rel="stylesheet" href="./templates/css/${file}">`;
 				}).join("") : ""
 			}
+			<link rel="stylesheet" href="./userStyles.css">
+			${
+				StyleManager.styles.map((style) => {
+					style.type == "external" && style.url ? `<link rel="stylesheet" href="${style.url}">` : ""
+				}).join("")
+			}
 		`});
 		const bodyComponent = new Atom(Atomizer.templates.body, {templateScripts: `
 			${
 				Atomizer.templateFolder.jsDir != null && fs.existsSync(Atomizer.templateFolder.jsDir) ? fs.readdirSync(Atomizer.templateFolder.baseDir + Atomizer.templateFolder.jsDir).map((file) => {
-					return `<script src="./templates/js/${file}"></script>`;
+					return `
+						<script src="./templates/js/${file}"></script>
+						
+							`;
 				}).join("") : ""
+			}
+			<script src="./userScripts.js"></script>
+			${
+				scriptManager.getExternalScripts()
 			}
 		`});
 		const pageAtom = new Atom(Atomizer.templates.page, { head: headComponent, body: bodyComponent });
@@ -71,8 +86,16 @@ class SolarisUI {
 			fm.createFile(`builds/${name}/${page.getAttribute("id")}`, page.toString());
 		});
 
+		Logger.info(__filename, "Creating CSS files");
+		const minifiedCSS = StyleManager.toString();
+		minifiedCSS && fm.createFile(`builds/${name}/userStyles.css`, minifiedCSS);
+		
 
 		// TODO: Create JS files
+		Logger.info(__filename, "Creating JS files");
+		const minifiedJS = scriptManager.toString();
+		minifiedJS && fm.createFile(`builds/${name}/userScripts.js`, minifiedJS);
+
 		Logger.info(__filename, "Copying public folders");
 		fm.copyTree("public", `builds/${name}/`);
 

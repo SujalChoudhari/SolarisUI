@@ -1,3 +1,4 @@
+import scriptManager from "./ScriptManager";
 
 
 /**
@@ -45,6 +46,7 @@ export default class Script {
         this.url = url;
         this.type = type;
         this.params = params;
+        scriptManager.addscript(this);
     }
 
     /**

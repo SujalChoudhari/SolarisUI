@@ -150,8 +150,9 @@ export default class FileManager {
     public copyFile(srcPath: string, destPath: string): void {
         let contents = this.readFile(srcPath);
 
-        if (contents !== null)
+        if (contents !== null){
             this.createFile(destPath, contents);
+        }
         else {
             Logger.warn(__filename, "Failed to read file");
             return;
