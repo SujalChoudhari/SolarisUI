@@ -81,17 +81,29 @@ sui.SolarisUI.buildProject("Test", [page]);
 This code calls the buildProject method of the SolarisUI object to build the entire project, which includes the Test Page and all of its components. The first parameter is the name of the project, and the second parameter is an array of pages to include in the project.
 
 ## Development Roadmap
-- [x] Basic Entity, Attributes, Children System
-- [x] Building The Layout
-- [x] Save and Load System for Intermidiate Files (Json files) 
-- [x] Integraged CSS (inline) 
-- [x] Collection of Containers (Hbox,Vbox and Grid)
-- [x] Integrated Javascript (for animations and event listners)
-- [x] An Encapsulated Template loading and saving system (Atomizer)
-- [x] Templates (basic templates) [Page, Head,Link,etc..]
-- [ ] More Templates (Navbar, Footer, Carousel, etc..)
-- [ ] Higher Level Layout System (Navbars, Carousel, Footer,etc) [WIP]
-- [ ] Sophisticated Ways to Integrate Javascript and Css files.
+
+- [x] Basic Entity, Attributes, Children System: This refers to the foundation of the system and includes the definition of entities (objects), their attributes (properties), and their relationships with other entities (children). This is a crucial step in the development of any application or system.
+
+- [x] Building The Layout: This involves creating the visual layout of the application or system. This includes the placement of various elements on the screen, such as buttons, text fields, images, and so on.
+
+- [x] Save and Load System for Intermediate Files (JSON files): This refers to the capability of the system to save and load data in an intermediate format such as JSON. This is useful for debugging, testing, and sharing data between different systems.
+
+- [x] Integrated CSS (inline): This involves the integration of CSS directly into the HTML code of the application or system. This helps to simplify the code and makes it easier to maintain.
+
+- [x] Collection of Containers (Hbox, Vbox, and Grid): This refers to the various containers available in the system to hold different elements, such as horizontal boxes, vertical boxes, and grids. These containers can be used to organize the layout of the application or system.
+
+- [x] Integrated Javascript (for animations and event listeners): This involves the integration of Javascript code into the HTML code of the application or system. This helps to add dynamic functionality to the system, such as animations and event listeners.
+
+- [x] An Encapsulated Template loading and saving system (Atomizer): This refers to a system that enables the creation and management of templates for different elements of the application or system. This can help to simplify the development process and improve the maintainability of the code.
+
+- [x] Templates (basic templates) [Page, Head, Link, etc.]: This includes the creation of basic templates for various elements of the system, such as the page, head, link, and so on. These templates can be used as a starting point for the development of more complex elements.
+
+- [ ] More Templates (Navbar, Footer, Carousel, etc.): This includes the creation of additional templates for more complex elements of the system, such as the navbar, footer, carousel, and so on.
+
+- [ ] Higher Level Layout System (Navbars, Carousel, Footer, etc.) [WIP]: This involves the creation of a higher level layout system for the application or system. This can help to simplify the development process and improve the maintainability of the code.
+
+- [x] Sophisticated Ways to Integrate Javascript and CSS files: This refers to the various techniques available for integrating Javascript and CSS files into the application or system. This can help to improve the performance of the system and make it more efficient.
+
 
 
 ## Contributing
