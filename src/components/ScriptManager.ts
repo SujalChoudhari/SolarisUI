@@ -1,34 +1,33 @@
+import Logger from "../utils/logger";
 import Script from "./scripts";
 
-export default class scriptManager{
+export default class scriptManager {
     public static scripts: Script[] = [];
 
-    public static addscript(script: Script): void{
+    public static addscript(script: Script): void {
         this.scripts.push(script);
     }
-    public static removescript(script: Script): void{
+    public static removescript(script: Script): void {
         this.scripts = this.scripts.filter(s => s != script);
     }
 
-    public static toString(): string{
+    public static toString(): string {
         let js = "";
         this.scripts.forEach(script => {
-            if(!script.type || script.type == "external") return;
-            if(!script.script) return;
+            if (!script.type || script.type == "external") return;
+            if (!script.script) return;
             js += `${script.script}\n\n`;
         });
         return js;
     }
 
-    public static getExternalScripts(): string {
-        let js = "";
+    public static getExternalScripts(): Array<Script> {
+        let scripts: Array<Script> = [];
         this.scripts.forEach(script => {
-            if(!script.type || script.type == "infile") return;
-            if(!script.url) return;
-            js += `<script src="${script.url}" ${Object.keys(script.params).forEach(param => {
-                return `${param}="${script.params[param]}"`;
-            })}></script>\n`;
+            if (!script.type || script.type !== "external") return;
+            if (!script.url) return;
+            scripts.push(script);
         });
-        return js;
+        return scripts;
     }
 }

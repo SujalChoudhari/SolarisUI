@@ -8,7 +8,7 @@ import Logger from './logger';
  * A class dedicated for handling files and directories
  * This class is responsible for managing project folders, copying files from source to build folders.
  * @author Sujal Choudhari <sujalchoudhari@gmail.com>
- */
+*/
 export default class FileManager {
     /**
      * Absolute path to current working directory
@@ -22,8 +22,8 @@ export default class FileManager {
      */
     constructor(basepath: string = "") {
         if (basepath == "")
-            this.basePath = path.resolve(__dirname, '../');
-        else this.basePath = path.resolve(basepath);        
+            this.basePath = path.resolve(__dirname, '../../');
+        else this.basePath = path.resolve(basepath);
     }
 
     /**
@@ -146,11 +146,12 @@ export default class FileManager {
      * Copy a file to a destination
      * @param srcPath Source file path
      * @param destPath Destination file path
+     * @param srcPathType The type of the source path, relative or absolute. Default is relative
      */
-    public copyFile(srcPath: string, destPath: string): void {
+    public copyFile(srcPath: string, destPath: string, srcPathType : "relative" | "absolute" = "relative"): void {
         let contents = this.readFile(srcPath);
 
-        if (contents !== null){
+        if (contents !== null) {
             this.createFile(destPath, contents);
         }
         else {
@@ -165,9 +166,15 @@ export default class FileManager {
      * @param contents The contents of the file to create with.
      */
     public createFile(filePath: string, contents: string): void {
-        const absolutePath = this.getAbsolutePath(filePath);
-        console.log(absolutePath);
-        fs.writeFileSync(absolutePath, contents);
+        try {
+            console.log(filePath)
+            fs.writeFileSync(filePath, contents);
+        }
+        catch (err : any) {
+            const absolutePath = this.getAbsolutePath(filePath);
+            console.log(absolutePath);
+            fs.writeFileSync(absolutePath, contents);
+        }
     }
 
     /**

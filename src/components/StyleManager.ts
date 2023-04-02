@@ -24,4 +24,14 @@ export default class StyleManager{
         });
         return css;
     }
+
+    public static getExternalStyles(): Array<Style> {
+        let styles: Array<Style> = [];
+        this.styles.forEach(style => {
+            if (!style.type || style.type !== "external") return;
+            if (!style.url) return;
+            styles.push(style);
+        });
+        return styles;
+    }
 }
