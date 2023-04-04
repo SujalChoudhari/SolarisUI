@@ -3,13 +3,13 @@ import Logger, { LogLevel } from '../src/utils/logger';
 describe('Logger', () => {
     let consoleLogSpy: jest.SpyInstance;
 
-    beforeEach(() => {
-        consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
-    });
+    // beforeEach(() => {
+    //     consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
+    // });
 
-    afterEach(() => {
-        consoleLogSpy.mockRestore();
-    });
+    // afterEach(() => {
+    //     consoleLogSpy.mockRestore();
+    // });
 
     it('should log debug messages when log level is set to DEBUG', () => {
         Logger.logLevel = LogLevel.DEBUG;
@@ -52,4 +52,14 @@ describe('Logger', () => {
         Logger.error('testFile', 'test message');
         expect(consoleLogSpy).toHaveBeenCalledWith('[ERROR]: (testFile)\n\ttest message');
     });
+
+
+    it ('should give propper color to all the messages', () => {
+        Logger.logLevel = LogLevel.DEBUG;
+        Logger.debug('testFile', 'test message');
+        Logger.info('testFile', 'test message');
+        Logger.time('testFile', 'test message');
+        Logger.warn('testFile', 'test message');
+        Logger.error('testFile', 'test message');
+    })
 });

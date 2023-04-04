@@ -1,7 +1,7 @@
 import FileManager from "./filemanager";
 import fs from 'fs';
 
-import { red, yellow, green, blue, cyan, gray, magentaBright, bold, underline, italic } from 'colorette';
+import { red, yellow, green, blue, cyan, gray, magentaBright, bold, underline, italic, redBright, yellowBright, cyanBright, blueBright, greenBright } from 'colorette';
 export enum LogLevel {
     DEBUG,
     INFO,
@@ -32,7 +32,7 @@ export default class Logger {
     }
 
     public static time(filename: string, ...message: string[]): void {
-        if(Logger.logLevel <= 2)
+        if (Logger.logLevel <= 2)
             Logger.write("[TIME]", filename, ...message);
     }
 
@@ -45,15 +45,41 @@ export default class Logger {
         if (Logger.logLevel <= 4)
             Logger.write("[ERROR]", filename, ...message);
     }
-    
-    
+
+
 
     private static write(type: string, filename: string, ...message: string[]): void {
-        if(type == "[ERROR]") console.log(underline(italic(bold(red(type + `: (${filename})\n\t` + message.join(" "))))))
-        else if(type == "[WARN]") console.log(underline(italic(bold(yellow(type + `: (${filename})\n\t` + message.join(" "))))))
-        else if(type == "[TIME]") console.log(underline(cyan(type + `: (${filename})\n\t` + message.join(" "))))
-        else if(type == "[DEBUG]") console.log(underline(italic(bold(blue(type + `: (${filename})\n\t` + message.join(" "))))))
-        else console.log(underline(magentaBright(type + `: (${filename})\n\t` + message.join(" "))));
+        if (type == "[ERROR]")
+            console.log(
+                redBright(bold(type)),
+                gray(italic(`(${filename})\n\t`)),
+                red(message.join(" "))
+            )
+        else if (type == "[WARN]")
+            console.log(
+                yellowBright(bold(type)),
+                gray(italic(`(${filename})\n\t`)),
+                yellow(message.join(" "))
+            )
+        else if (type == "[TIME]")
+            console.log(
+                cyanBright(bold(type)),
+                gray(italic(`(${filename})\n\t`)),
+                cyan(message.join(" "))
+            )
+        else if (type == "[DEBUG]")
+            console.log(
+                blueBright(bold(type)),
+                gray(italic(`(${filename})\n\t`)),
+                blue(message.join(" "))
+            )
+        else if (type == "[INFO]")
+            console.log(
+                greenBright(bold(type)),
+                gray(italic(`(${filename})\n\t`)),
+                green(message.join(" "))
+            )
+
 
         if (!fs.existsSync('./logs'))
             fs.mkdirSync("./logs")
@@ -68,7 +94,7 @@ export default class Logger {
     }
 
 
-    public static start(){
+    public static start() {
         Logger.mTime = Date.now();
     }
 
@@ -76,7 +102,7 @@ export default class Logger {
      * 
      * @returns The time elapsed since the last call to Logger.start() in milliseconds
      */
-    public static end():number{
+    public static end(): number {
         return Date.now() - Logger.mTime;
     }
 

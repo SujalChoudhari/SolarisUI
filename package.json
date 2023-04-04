@@ -22,7 +22,6 @@
   "dependencies": {
     "colorette": "^2.0.19",
     "htmlparser2": "^8.0.2",
-    "jest": "^29.5.0",
     "mustache": "^4.2.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2"
@@ -37,6 +36,7 @@
     "@types/mustache": "^4.2.2",
     "@types/node": "^18.15.3",
     "babel-jest": "^29.5.0",
+    "jest": "^29.5.0",
     "ts-node-dev": "^2.0.0",
     "typedoc": "^0.23.28"
   },
