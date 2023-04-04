@@ -1,5 +1,5 @@
-import Style from "./styles";
-import Logger from "../utils/logger";
+import Style from "../components/styles";
+import Logger from "./logger";
 
 export default class StyleManager{
     public static styles: Style[] = [];

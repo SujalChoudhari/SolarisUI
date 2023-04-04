@@ -1,7 +1,14 @@
-import Logger from "../utils/logger";
-import Script from "./scripts";
+import Logger from "./logger";
+import Script from "../components/scripts";
 
-export default class scriptManager {
+/**
+ * ScriptManager
+ * -----
+ * Manages all scripts in the project.
+ * @remarks
+ * Auto importes all the Scripts in each file.
+ */
+export default class ScriptManager {
     public static scripts: Script[] = [];
 
     public static addscript(script: Script): void {

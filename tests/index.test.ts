@@ -3,6 +3,7 @@ import * as sui from "../src/index";
 
 
 describe("Solaris", () => {
+    sui.Logger.logLevel = sui.LogLevel.INFO;
     it("should successfully create the given data source", () => {
         const page = sui.SolarisUI.createPage("Test Page", "index.html", {
             "name": "Sujal Choudhari",

@@ -3,7 +3,7 @@ import FileManager from "../utils/filemanager";
 import * as htmlparser2 from "htmlparser2"
 import Logger from "../utils/logger";
 import fs from "fs";
-import { Component, String } from "../components";
+import { Component, String, Style } from "../components";
 
 /**
  * An Atomizer template can be a string or null.
@@ -59,6 +59,35 @@ export default class Atomizer {
             Logger.error(__filename, `Template ${newName} not found`);
             return null;
         }
+
+        let baseName = newName.split(".")[0];
+        if (fs.existsSync(Atomizer.templateFolder.baseDir
+            + Atomizer.templateFolder.cssDir
+            + "/"
+            + baseName
+            + ".css")) {
+            Atomizer.templateFilesToInclude.push(
+                Atomizer.templateFolder.baseDir
+                + Atomizer.templateFolder.cssDir
+                + "/"
+                + baseName
+                + ".css");
+        }
+
+        if (fs.existsSync(Atomizer.templateFolder.baseDir
+            + Atomizer.templateFolder.jsDir
+            + "/"
+            + baseName
+            + ".js")) {
+            Atomizer.templateFilesToInclude.push(
+                Atomizer.templateFolder.baseDir
+                + Atomizer.templateFolder.jsDir
+                + "/"
+                + baseName
+                + ".js");
+        }
+
+
         Logger.info(__filename, `Template ${newName} loaded`);
         return template;
     }
@@ -91,14 +120,6 @@ export default class Atomizer {
                                 templates[newKey] = template;
                         }
                     });
-                }
-                if (file.name === Atomizer.templateFolder.cssDir) {
-                    const cssFiles = fm.getAllFilesInDirectory(Atomizer.templateFolder.baseDir + Atomizer.templateFolder.cssDir);
-                   Atomizer.templateFilesToInclude = Atomizer.templateFilesToInclude.concat(cssFiles);
-                }
-                else if (file.name === Atomizer.templateFolder.jsDir) {
-                    const jsFiles = fm.getAllFilesInDirectory(Atomizer.templateFolder.baseDir + Atomizer.templateFolder.jsDir);
-                   Atomizer.templateFilesToInclude = Atomizer.templateFilesToInclude.concat(jsFiles);
                 }
             }
         });

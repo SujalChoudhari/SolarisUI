@@ -1,5 +1,5 @@
 import Component from "./component";
-import StyleManager from "./StyleManager";
+import StyleManager from "../utils/stylemanager";
 /**
  * Style
  * -----
