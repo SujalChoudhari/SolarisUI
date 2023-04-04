@@ -166,24 +166,24 @@ describe("Solaris", () => {
     });
 
     test("calltoaction", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.cta2part,{
+        const atom = new sui.Atom(sui.Atomizer.templates.cta2part, {
             title: "Call to Action",
             call: "Click here",
         });
-        const atom2 = new sui.Atom(sui.Atomizer.templates.cta2partdownload,{
+        const atom2 = new sui.Atom(sui.Atomizer.templates.cta2partdownload, {
             title: "Call to Action",
             call: "Click here",
         });
 
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom)
-        ,sui.Atomizer.buildComponentTreeFromAtom(atom2));
+            , sui.Atomizer.buildComponentTreeFromAtom(atom2));
 
         sui.SolarisUI.buildProject("Components", [page])
     });
 
     test("card", () => {
         const atom = new sui.Atom(sui.Atomizer.templates.card, {
-            tag:"AA",
+            tag: "AA",
             title: "Card",
             imgUrl: "https://source.unsplash.com/random/480x360",
             description: "This is a description",
@@ -194,9 +194,9 @@ describe("Solaris", () => {
         sui.SolarisUI.buildProject("Components", [page]);
     });
 
-    test("carousel",()=>{
-        const atom = new sui.Atom(sui.Atomizer.templates.carousel,{
-            images:[
+    test("carousel", () => {
+        const atom = new sui.Atom(sui.Atomizer.templates.carousel, {
+            images: [
                 "https://source.unsplash.com/random/480x360",
                 "https://source.unsplash.com/random/481x360",
                 "https://source.unsplash.com/random/482x360",
@@ -206,6 +206,197 @@ describe("Solaris", () => {
         });
 
         page.getChildren()[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
+
+        sui.SolarisUI.buildProject("Components", [page]);
+    });
+
+    test("error", () => {
+        const atom = new sui.Atom(sui.Atomizer.templates.error, {
+            url: "https://google.com",
+        });
+
+        page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
+
+        sui.SolarisUI.buildProject("Components", [page]);
+    });
+
+    test("faq", () => {
+        const atom = new sui.Atom(sui.Atomizer.templates.faq, {
+            tag: "One Tag",
+            faqs: [
+                {
+                    question: "This is a question",
+                    answer: "This is an answer"
+                },
+                {
+                    question: "This is a question",
+                    answer: "This is an answer"
+                },
+                {
+                    question: "This is a question",
+                    answer: "This is an answer"
+                },
+            ]
+        });
+
+        page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
+
+        sui.SolarisUI.buildProject("Components", [page]);
+
+    });
+
+
+    test("feature", () => {
+        const atom = new sui.Atom(sui.Atomizer.templates.feature, {
+            imgUrl: "https://source.unsplash.com/random/480x360",
+            features: [
+                { title: "Feature1", description: "This is a description" },
+                { title: "Feature2", description: "This is a description" },
+                { title: "Feature3", description: "This is a description" },
+                { title: "Feature4", description: "This is a description" },
+                { title: "Feature5", description: "This is a description" },
+                { title: "Feature6", description: "This is a description" },
+                { title: "Feature7", description: "This is a description" },
+            ]
+        });
+
+        page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
+
+        sui.SolarisUI.buildProject("Components", [page]);
+
+    });
+
+
+    test("footerbig", () => {
+        const atom = new sui.Atom(sui.Atomizer.templates.footerbig, {
+            note: "Copywrite",
+            columns: [
+                {
+                    title: "Intro",
+                    rows: [{
+                        title: "Intro",
+                        link: "https://google.com",
+                    }, {
+                        title: "About",
+                        link: "https://google.com",
+                    }
+                    ]
+                },
+                {
+                    title: "company",
+                    rows: [{
+                        title: "Intro2",
+                        link: "https://google.com",
+                    }, {
+                        title: "About3",
+                        link: "https://google.com",
+                    }]
+                }
+            ]
+        });
+
+        page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
+
+        sui.SolarisUI.buildProject("Components", [page]);
+
+    });
+
+
+    test("footer", () => {
+        const atom = new sui.Atom(sui.Atomizer.templates.footer, {
+            imgUrl: "https://source.unsplash.com/random/480x360",
+            links: [
+                { title: "Link1", link: "https://google.com" },
+                { title: "Link2", link: "https://google.com" },
+                { title: "Link3", link: "https://google.com" },
+            ],
+            social: [
+                { title: "Link1", link: "https://google.com" },
+                { title: "Link2", link: "https://google.com" },
+                { title: "Link3", link: "https://google.com" },
+            ]
+        });
+
+        page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
+
+        sui.SolarisUI.buildProject("Components", [page]);
+
+    });
+
+
+
+    test("gallery", () => {
+        const atom = new sui.Atom(sui.Atomizer.templates.gallery, {
+            images: [
+                {
+                    imgUrl: "https://source.unsplash.com/random/480x360",
+                    isBig: true,
+                },
+                {
+                    imgUrl: "https://source.unsplash.com/random/481x360",
+                    isBig: false,
+                },
+                {
+                    imgUrl: "https://source.unsplash.com/random/482x360",
+                    isBig: false,
+                }, {
+                    imgUrl: "https://source.unsplash.com/random/483x360",
+                    isBig: false,
+                },
+                {
+                    imgUrl: "https://source.unsplash.com/random/484x360",
+                    isBig: false,
+                },
+                {
+                    imgUrl: "https://source.unsplash.com/random/480x360",
+                    isBig: false,
+                },
+                {
+                    imgUrl: "https://source.unsplash.com/random/481x360",
+                    isBig: false,
+                }, {
+                    imgUrl: "https://source.unsplash.com/random/482x360",
+                    isBig: true,
+                }, {
+                    imgUrl: "https://source.unsplash.com/random/483x360",
+                    isBig: false,
+                },
+                {
+                    imgUrl: "https://source.unsplash.com/random/484x360",
+                    isBig: false,
+                }
+            ]
+        });
+
+        page.children[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
+
+        sui.SolarisUI.buildProject("Components", [page]);
+
+    });
+
+
+    test("header", () => {
+        const atom = new sui.Atom(sui.Atomizer.templates.header, {
+            links:[
+                {
+                    title: "Link1",
+                    link: "https://google.com",
+                },
+                {
+                    title: "Link2",
+                    link: "https://google.com",
+                },{
+                    title: "Link3",
+                    link: "https://google.com",
+                },{
+                    title: "Link4",
+                    link: "https://google.com",
+                }
+            ],
+            imgUrl: "https://source.unsplash.com/random/480x360",
+        });
+
+        page.children[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
 
         sui.SolarisUI.buildProject("Components", [page]);
     });
