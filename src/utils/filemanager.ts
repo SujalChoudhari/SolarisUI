@@ -167,12 +167,10 @@ export default class FileManager {
      */
     public createFile(filePath: string, contents: string): void {
         try {
-            console.log(filePath)
             fs.writeFileSync(filePath, contents);
         }
         catch (err : any) {
             const absolutePath = this.getAbsolutePath(filePath);
-            console.log(absolutePath);
             fs.writeFileSync(absolutePath, contents);
         }
     }

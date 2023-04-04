@@ -5,6 +5,7 @@ export default class scriptManager {
     public static scripts: Script[] = [];
 
     public static addscript(script: Script): void {
+        Logger.info(__filename, "Adding script", script.url || script.script);
         this.scripts.push(script);
     }
     public static removescript(script: Script): void {

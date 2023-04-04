@@ -31,9 +31,9 @@ export default class Logger {
             Logger.write("[INFO]", filename, ...message);
     }
 
-    public static time(filename: string, ...message: string[]): void {
+    public static time(filename: string,... message:string[]): void {
         if (Logger.logLevel <= 2)
-            Logger.write("[TIME]", filename, ...message);
+            Logger.write("[TIME]", filename,...message, `${Date.now() - Logger.mTime}ms`);
     }
 
     public static warn(filename: string, ...message: string[]): void {

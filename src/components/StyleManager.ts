@@ -1,9 +1,11 @@
 import Style from "./styles";
+import Logger from "../utils/logger";
 
 export default class StyleManager{
     public static styles: Style[] = [];
 
     public static addStyle(style: Style): void{
+        Logger.info(__filename, "Adding style", style.url || " ");
         this.styles.push(style);
     }
     public static removeStyle(style: Style): void{
