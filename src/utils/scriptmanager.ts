@@ -19,6 +19,10 @@ export default class ScriptManager {
         this.scripts = this.scripts.filter(s => s != script);
     }
 
+    public static isScriptAdded(script: Script): boolean {
+        return this.scripts.includes(script);
+    }
+
     public static toString(): string {
         let js = "";
         this.scripts.forEach(script => {

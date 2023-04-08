@@ -20,40 +20,18 @@ class SolarisUI {
 	// TODO: Build the entire project into a bundle of HTML, CSS, and JS files.
 
 	// Utility functions
-	public static createPage(title: string, url: string, meta?: { [key: string]: string }): Component {
+	public static createPage(title: string, url: string, meta?: { [key: string]: string }, defaultPageTemplateFolderIndex?: 0, defaultBodyTemplateFolderIndex?: 0, defaultHeadTemplateFolderIndex?: 0): Component {
 		const fm = new FileManager();
-		const headComponent = new Atom(Atomizer.templates.head, {
+		const headComponent = new Atom(Atomizer.templates[defaultHeadTemplateFolderIndex || 0].head, {
 			title: title, meta: meta, templatestyles: `
-			${Atomizer.templateFolder.cssDir != null && fs.existsSync(Atomizer.templateFolder.cssDir) ? fs.readdirSync(Atomizer.templateFolder.baseDir + Atomizer.templateFolder.cssDir).map((file) => {
-				return `<link rel="stylesheet" href="./templates/css/${file}">`;
-			}).join("") : ""
-				}
 			<link rel="stylesheet" href="./userStyles.css">
-			${StyleManager.styles.map((style) => {
-					style.type == "external" && style.url ? `<link rel="stylesheet" href="${style.url}">` : ""
-				}).join("")
-				}
 		`});
-		const bodyComponent = new Atom(Atomizer.templates.body, {
+
+		const bodyComponent = new Atom(Atomizer.templates[defaultBodyTemplateFolderIndex || 0].body, {
 			templateScripts: `
-			${Atomizer.templateFolder.jsDir != null && fs.existsSync(Atomizer.templateFolder.jsDir) ? fs.readdirSync(Atomizer.templateFolder.baseDir + Atomizer.templateFolder.jsDir).map((file) => {
-				return `
-						<script src="./templates/js/${file}"></script>
-						
-							`;
-			}).join("") : ""
-				}
-			${ScriptManager.getExternalScripts().map((script) => {
-					console.log(script);
-					return `<script src="${script.url.startsWith("http") ? script.url : fm.getAbsolutePath(script.url)}" params="${Object.keys(script.params).map((key) => {
-						return `${key}="${script.params[key]}"`;
-					}).join(" ")
-						}"></script>`;
-				}).join("")
-				}
 			<script src="./userScripts.js"></script>
 		`});
-		const pageAtom = new Atom(Atomizer.templates.page, { head: headComponent, body: bodyComponent });
+		const pageAtom = new Atom(Atomizer.templates[defaultPageTemplateFolderIndex || 0].page, { head: headComponent, body: bodyComponent });
 		const page = Atomizer.buildComponentTree(pageAtom.toString());
 		page.setAttribute("id", url);
 		return page;
@@ -87,7 +65,7 @@ class SolarisUI {
 			fm.removeDirectory(templateDirectory);
 		}
 		fm.createDirectory(templateDirectory);
-		Atomizer.templateFilesToInclude.forEach((file) => {
+		Array.from(new Set(Atomizer.templateFilesToInclude)).forEach((file) => {
 			fm.copyFile(file, templateDirectory);
 			const baseName = path.basename(file);
 			const extension = path.extname(file);
@@ -101,14 +79,15 @@ class SolarisUI {
 
 		// Create HTML files
 		Logger.info(__filename, "Creating HTML files");
-		const styles = StyleManager.getExternalStyles();
-		const scripts = ScriptManager.getExternalScripts();
+		const styles = new Set(StyleManager.getExternalStyles());
+		console.log(styles)
+		const scripts = new Set(ScriptManager.getExternalScripts());
 		pages.forEach((page) => {
 			page.children[0].addChildren(
-				...styles.map((style) => new Component("link", { rel: "stylesheet", href: style.url }))
+				...Array.from(styles).map((style) => new Component("link", { rel: "stylesheet", href: style.url }))
 			);
 			page.children[1].addChildren(
-				...scripts.map((script) => new Component("script", { src: script.url, ...(script.params) }))
+				...Array.from(scripts).map((script) => new Component("script", { src: script.url, ...(script.params) }))
 			);
 			fm.createFile(`builds/${name}/${page.getAttribute("id")}`, page.toString());
 		});
@@ -136,7 +115,7 @@ class SolarisUI {
 
 
 	public static setTemplateFolder(folder: { baseDir: string, htmlDir?: string, cssDir?: string, jsDir?: string }) {
-		Atomizer.templateFolder = folder;
+		Atomizer.templateFolders.push(folder);
 	}
 }
 

@@ -1,3 +1,4 @@
+import Logger from "../utils/logger";
 import ScriptManager from "../utils/scriptmanager";
 
 
@@ -46,7 +47,10 @@ export default class Script {
         this.url = url;
         this.type = type;
         this.params = params;
-        ScriptManager.addscript(this);
+        if(!ScriptManager.isScriptAdded(this))
+            ScriptManager.addscript(this);
+        else
+            Logger.warn(__filename, `Script ${this.toString()} already added`);
     }
 
     /**

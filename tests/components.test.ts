@@ -21,21 +21,21 @@ describe("Solaris", () => {
 
 
     test("article1", () => {
-        const article = new sui.Atom(sui.Atomizer.templates.article1, {
+        const article = new sui.Atom(sui.Atomizer.getTemplate("article1"), {
             title: "Hello World",
             imgUrl: "https://source.unsplash.com/random/480x360",
             description: "This is a description",
             author: "Sujal Choudhari",
         });
 
-        page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(article));
+        page.children[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(article));
 
         sui.SolarisUI.buildProject("Components", [page])
     });
 
 
     test("article2", () => {
-        const article = new sui.Atom(sui.Atomizer.templates.article2, {
+        const article = new sui.Atom(sui.Atomizer.getTemplate("article2"), {
             title: "Hello World",
             tags: [
                 {
@@ -59,7 +59,7 @@ describe("Solaris", () => {
 
 
     test("avatar", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.avatar, {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("avatar"), {
             images: [
                 "https://source.unsplash.com/random/100x100",
                 "https://source.unsplash.com/random/101x100",
@@ -76,7 +76,7 @@ describe("Solaris", () => {
 
 
     test("banner", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.banner, {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("banner"), {
             title: "Sale!",
             content: "This is a description",
             children: ["Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
@@ -89,7 +89,7 @@ describe("Solaris", () => {
     });
 
     test("blogs", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.blog, {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("blog"), {
             title: "Blog",
             imgUrl: "https://source.unsplash.com/random/480x362",
             description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. ",
@@ -128,7 +128,7 @@ describe("Solaris", () => {
     });
 
     test("breadcrumb", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.breadcrumb, {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("breadcrumb"), {
             title: "Home",
             link: "https://google.com",
             trail: [
@@ -144,15 +144,15 @@ describe("Solaris", () => {
     });
 
     test("button", () => {
-        const button = new sui.Atom(sui.Atomizer.templates.button, {
+        const button = new sui.Atom(sui.Atomizer.getTemplate("button"), {
             text: "Button"
         });
 
-        const ghostButton = new sui.Atom(sui.Atomizer.templates.ghostbutton, {
+        const ghostButton = new sui.Atom(sui.Atomizer.getTemplate("ghostbutton"), {
             text: "Ghost Button"
         });
 
-        const roundedButton = new sui.Atom(sui.Atomizer.templates.roundedbutton, {
+        const roundedButton = new sui.Atom(sui.Atomizer.getTemplate("roundedbutton"), {
             text: "Rounded Button"
         });
 
@@ -166,11 +166,11 @@ describe("Solaris", () => {
     });
 
     test("calltoaction", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.cta2part, {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("cta2part"), {
             title: "Call to Action",
             call: "Click here",
         });
-        const atom2 = new sui.Atom(sui.Atomizer.templates.cta2partdownload, {
+        const atom2 = new sui.Atom(sui.Atomizer.getTemplate("cta2partdownload"), {
             title: "Call to Action",
             call: "Click here",
         });
@@ -182,7 +182,7 @@ describe("Solaris", () => {
     });
 
     test("card", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.card, {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("card"), {
             tag: "AA",
             title: "Card",
             imgUrl: "https://source.unsplash.com/random/480x360",
@@ -195,7 +195,7 @@ describe("Solaris", () => {
     });
 
     test("carousel", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.carousel, {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("carousel"), {
             images: [
                 "https://source.unsplash.com/random/480x360",
                 "https://source.unsplash.com/random/481x360",
@@ -211,7 +211,7 @@ describe("Solaris", () => {
     });
 
     test("error", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.error, {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("error"), {
             url: "https://google.com",
         });
 
@@ -221,7 +221,7 @@ describe("Solaris", () => {
     });
 
     test("faq", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.faq, {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("faq"), {
             tag: "One Tag",
             faqs: [
                 {
@@ -247,7 +247,7 @@ describe("Solaris", () => {
 
 
     test("feature", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.feature, {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("feature"), {
             imgUrl: "https://source.unsplash.com/random/480x360",
             features: [
                 { title: "Feature1", description: "This is a description" },
@@ -268,7 +268,7 @@ describe("Solaris", () => {
 
 
     test("footerbig", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.footerbig, {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("footerbig"), {
             note: "Copywrite",
             columns: [
                 {
@@ -303,7 +303,7 @@ describe("Solaris", () => {
 
 
     test("footer", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.footer, {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("footer"), {
             imgUrl: "https://source.unsplash.com/random/480x360",
             links: [
                 { title: "Link1", link: "https://google.com" },
@@ -326,7 +326,7 @@ describe("Solaris", () => {
 
 
     test("gallery", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.gallery, {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("gallery"), {
             images: [
                 {
                     imgUrl: "https://source.unsplash.com/random/480x360",
@@ -376,7 +376,7 @@ describe("Solaris", () => {
 
 
     test("header", () => {
-        const atom = new sui.Atom(sui.Atomizer.templates.header, {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("header"), {
             links:[
                 {
                     title: "Link1",
