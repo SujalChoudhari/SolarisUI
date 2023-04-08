@@ -6,6 +6,7 @@ describe("Solaris", () => {
     var page: Component;
 
     beforeEach(() => {
+        sui.Atomizer.addTemplateFolder({baseDir: "tests/temp"});
         page = sui.SolarisUI.createPage(
             "Index Page",
             "index.html",
@@ -22,6 +23,21 @@ describe("Solaris", () => {
 
     test("article1", () => {
         const article = new sui.Atom(sui.Atomizer.getTemplate("article1"), {
+            title: "Hello World",
+            imgUrl: "https://source.unsplash.com/random/480x360",
+            description: "This is a description",
+            author: "Sujal Choudhari",
+        });
+
+        page.children[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(article));
+
+        sui.SolarisUI.buildProject("Components", [page])
+    });
+
+    test("ansh", () => {
+
+        
+        const article = new sui.Atom(sui.Atomizer.getTemplate("ansh"), {
             title: "Hello World",
             imgUrl: "https://source.unsplash.com/random/480x360",
             description: "This is a description",

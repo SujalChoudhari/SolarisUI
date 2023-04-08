@@ -140,13 +140,49 @@ export default class Atomizer {
         return Atomizer.buildComponentTree(atom.toString());
     }
 
-    public static getTemplate(templateName: string, templateFolderIndex?: 0): AtomizerTemplate {
-        if (templateName in Atomizer.templates[templateFolderIndex || 0])
-            return Atomizer.templates[templateFolderIndex || 0][templateName];
-        else {
-            Logger.error(__filename, `Template ${templateName} not found`);
-            return null;
+    public static addTemplateFolder(templateFolder: {
+        baseDir: string,
+        htmlDir?: string,
+        cssDir?: string,
+        jsDir?: string
+    }) {
+        if (!Atomizer.templateFolders.find((folder) => folder.baseDir === templateFolder.baseDir)) {
+            Atomizer.templateFolders.push(templateFolder);
+            console.log(Atomizer.templateFolders)
+            Atomizer.templates.push(Atomizer.preloadTemplates()[Atomizer.templateFolders.length - 1]);
         }
+        else {
+            Logger.warn(__filename, `Template folder ${templateFolder.baseDir} already exists`);
+        }
+    }
+
+    public static getTemplate(templateName: string, templateFolderIndex?: 0): AtomizerTemplate {
+        const template = Atomizer.templates[templateFolderIndex || 0][templateName];
+        if (!template) {
+            const newTemplate = Atomizer.templates.map((templateFolder) => {
+                if (templateFolder[templateName]) {
+                    return templateFolder[templateName];
+                }
+            }).join("");
+            if (!newTemplate) {
+                const new_Template = Atomizer.loadTemplate(templateName, templateFolderIndex || 0);
+                if (new_Template) {
+                    Atomizer.templates[templateFolderIndex || 0][templateName] = new_Template;
+                    return new_Template;
+                }
+                else {
+                    Logger.error(__filename, `Template ${templateName} not found`);
+                    return "";
+                }
+            }
+            else {
+                return newTemplate;
+            }
+        }
+        else {
+            return template;
+        }
+
     }
 
     /**

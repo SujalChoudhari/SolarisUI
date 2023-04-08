@@ -80,7 +80,6 @@ class SolarisUI {
 		// Create HTML files
 		Logger.info(__filename, "Creating HTML files");
 		const styles = new Set(StyleManager.getExternalStyles());
-		console.log(styles)
 		const scripts = new Set(ScriptManager.getExternalScripts());
 		pages.forEach((page) => {
 			page.children[0].addChildren(
