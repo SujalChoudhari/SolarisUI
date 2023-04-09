@@ -36,7 +36,7 @@ export default class Atomizer {
         htmlDir?: string,
         cssDir?: string,
         jsDir?: string
-    }] = [{ baseDir: "./src/templates/", htmlDir: "", cssDir: "css", jsDir: "js" }];
+    }] = [{ baseDir: "./templates/", htmlDir: "", cssDir: "css", jsDir: "js" }];
 
     public static templateFilesToInclude: string[] = [];
 

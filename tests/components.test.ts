@@ -4,6 +4,7 @@ import { Article1Props, Article2Props, AvatarProps, BannerProps, BlogProps, Butt
 
 describe("Solaris", () => {
     var page: Component;
+    sui.Logger.logLevel = sui.LogLevel.ERROR;
 
     beforeEach(() => {
         sui.Atomizer.addTemplateFolder({baseDir: "tests/temp"});
