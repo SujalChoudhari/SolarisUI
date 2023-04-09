@@ -1,0 +1,13 @@
+@media (max-width: 768px) {
+    .items-stretch {
+      display: block;
+      background-color: #424242;
+      padding: 10px;
+    }
+    .items-stretch li {
+      display: block;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+  }
+  

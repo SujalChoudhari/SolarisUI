@@ -1,4 +1,4 @@
-import Logger, { LogLevel } from '../src/logger';
+import Logger, { LogLevel } from '../src/utils/logger';
 
 describe('Logger', () => {
     let consoleLogSpy: jest.SpyInstance;
@@ -52,4 +52,14 @@ describe('Logger', () => {
         Logger.error('testFile', 'test message');
         expect(consoleLogSpy).toHaveBeenCalledWith('[ERROR]: (testFile)\n\ttest message');
     });
+
 });
+it('should give propper color to all the messages', () => {
+    Logger.logLevel = LogLevel.DEBUG;
+    Logger.start();
+    Logger.debug('testFile', 'test message');
+    Logger.info('testFile', 'test message');
+    Logger.warn('testFile', 'test message');
+    Logger.error('testFile', 'test message');
+    Logger.time('testFile',"Timing log functions");
+})

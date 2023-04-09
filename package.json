@@ -1,6 +1,6 @@
 {
   "name": "@sujalchoudhari/solaris-ui",
-  "version": "1.0.1-alpha.3",
+  "version": "1.0.1-alpha.4",
   "description": "A UI framework to create HTML pages with just JavaScript.",
   "main": "dist/index.js",
   "types": "index.d.ts",
@@ -20,15 +20,17 @@
     "prepublish": "tsc"
   },
   "dependencies": {
+    "colorette": "^2.0.19",
     "htmlparser2": "^8.0.2",
     "mustache": "^4.2.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.3",
-    "@babel/preset-env": "^7.20.2",
-    "@babel/preset-typescript": "^7.21.0",
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-typescript": "^7.21.4",
     "@types/babel-core": "^6.25.7",
     "@types/jest": "^29.5.0",
     "@types/mustache": "^4.2.2",

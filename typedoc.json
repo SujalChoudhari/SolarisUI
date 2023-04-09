@@ -2,6 +2,9 @@
     "$schema": "https://typedoc.org/schema.json",
     "entryPoints": [
         "./src/index.ts",
+        "./src/components/index.ts",
+        "./src/atom/index.ts",
+        "./src/utils/index.ts",
     ],
     "out": "docs",
     "name": "SolarisUI",
@@ -22,7 +25,6 @@
     "sort": [
         "source-order",
         "visibility",
-        "alphabetical",
     ],
     "includes": "./static/"
 }
