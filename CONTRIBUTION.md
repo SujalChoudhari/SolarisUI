@@ -1,4 +1,4 @@
-# COntribution Guide
+# Contribution Guide
 ## Choose an issue
 Take a look at our issue tracker on GitHub and find an issue that interests you. 
 We label issues with "beginner-friendly" and "good first issue" to make it easier for newcomers to get involved.

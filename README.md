@@ -141,7 +141,7 @@ These scripts can be run using the npm run `<script-name>` command. For example,
 npm run dev
 ```
 
-Read the [Contributing Guidelines](https://github.com/SujalChoudhari/SolarisUI/blob/main/CONTRIBUTING.md) before contributing.
+Read the [Contributing Guidelines](https://github.com/SujalChoudhari/SolarisUI/blob/dev/CONTRIBUTING.md) before contributing.
 
 
 
