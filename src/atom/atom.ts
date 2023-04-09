@@ -1,6 +1,5 @@
 import Mustache from 'mustache';
 import { AtomizerTemplate } from './atomizer';
-
 /**
  * Atom
  * -----

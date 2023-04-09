@@ -115,11 +115,6 @@ class SolarisUI {
 
 		Logger.time(__filename, "Build completed in");
 	}
-
-
-	public static setTemplateFolder(folder: { baseDir: string, htmlDir?: string, cssDir?: string, jsDir?: string }) {
-		Atomizer.templateFolders.push(folder);
-	}
 }
 
 export {
