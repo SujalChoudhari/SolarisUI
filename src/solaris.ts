@@ -1,10 +1,10 @@
-import { Component, Script, Style } from "../components";
+import { Component, Script, Style } from "./components";
 import fs from "fs";
-import FileManager from "./filemanager";
-import Logger from "./logger";
-import { Atom, Atomizer } from "../atom";
-import StyleManager from "./stylemanager";
-import ScriptManager from "./scriptmanager";
+import FileManager from "./utils/filemanager";
+import Logger from "./utils/logger";
+import { Atom, Atomizer } from "./atom";
+import StyleManager from "./utils/stylemanager";
+import ScriptManager from "./utils/scriptmanager";
 import path from "path";
 
 /**
@@ -17,11 +17,15 @@ import path from "path";
 class SolarisUI {
 	// Load Components using Atom and Atomizer 	
 	// TODO: Reload and recompile the entire UI when the config changes.
-	// TODO: Build the entire project into a bundle of HTML, CSS, and JS files.
 
 	// Utility functions
-	public static createPage(title: string, url: string, meta?: { [key: string]: string }, defaultPageTemplateFolderIndex?: 0, defaultBodyTemplateFolderIndex?: 0, defaultHeadTemplateFolderIndex?: 0): Component {
-		const fm = new FileManager();
+	public static createPage(
+			title: string,
+			url: string,
+			meta?: { [key: string]: string },
+			defaultPageTemplateFolderIndex?: 0,
+			defaultBodyTemplateFolderIndex?: 0,
+			defaultHeadTemplateFolderIndex?: 0): Component {
 		const headComponent = new Atom(Atomizer.templates[defaultHeadTemplateFolderIndex || 0].head, {
 			title: title, meta: meta, templatestyles: `
 			<link rel="stylesheet" href="./userStyles.css">
@@ -39,10 +43,10 @@ class SolarisUI {
 
 
 	/**
- * Builds the pages in the project.
- * @param name The name of the project.
- * @param pages The pages of the project.
- */
+ 	* Builds the pages in the project.
+	* @param name The name of the project.
+	* @param pages The pages of the project.
+	*/
 	public static buildProject(name: string, pages: Component[]): void {
 		Logger.start();
 		// Create FileManager object

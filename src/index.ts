@@ -22,7 +22,7 @@ import {
     Script,
     String,
     Style
-} from "./components";
+}  from "./components";
 
 import {
     Atom,
@@ -33,10 +33,14 @@ import {
 import {
     SolarisUI
 
-} from "./utils/solaris"
+} from "./solaris"
 
-import FileManager from "./utils/filemanager";
-import Logger, { LogLevel } from "./utils/logger";
+import {
+    FileManager,
+    Logger,
+    LogLevel
+} from "./utils";
+
 
 
 export default SolarisUI;
@@ -56,3 +60,4 @@ export {
     Atomizer,
     AtomizerTemplate
 }
+

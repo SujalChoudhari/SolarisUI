@@ -5,11 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# [1.0.1-alpha.4] 
-## [Work in Progress]
-
+# [1.0.1-alpha.4] - 09-04-2023
+## [Unreleased]
+The project is going under various changes. 
+The code is not stable and may break at any time.
 ### Added
 - `Atomizer.buildComponentTreeFromAtom` added.
+- `ScriptManager` and `StyleManager` classes.
+- Templates
+- Can select multiple templates from different styles.
+### Changed
+- Logger saves log files under `./logs` folder.
+- Template files(js and css) are included in the build.
+- Renamed `[name].component.html` to `[name].html`
+- Atomizer can have multiple folders to load from.
 
 
 # [1.0.1-alpha.3] - 30-03-2023
