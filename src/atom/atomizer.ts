@@ -140,6 +140,21 @@ export default class Atomizer {
         return Atomizer.buildComponentTree(atom.toString());
     }
 
+    /**
+
+A static method in the Atomizer class that adds a new template folder to the templateFolders array.
+@param {object} templateFolder - An object containing the base directory and optional subdirectories for the template folder.
+@param {string} templateFolder.baseDir - The base directory for the template folder.
+@param {string} [templateFolder.htmlDir] - Optional subdirectory for HTML templates.
+@param {string} [templateFolder.cssDir] - Optional subdirectory for CSS templates.
+@param {string} [templateFolder.jsDir] - Optional subdirectory for JavaScript templates.
+If the templateFolder object's baseDir property does not already exist in Atomizer.templateFolders,
+the templateFolder object is pushed into Atomizer.templateFolders.
+Then, the templates in the newly added folder are preloaded and pushed into Atomizer.templates.
+If the baseDir already exists in Atomizer.templateFolders, a warning is logged.
+@author Ansh Sharma
+*/
+
     public static addTemplateFolder(templateFolder: {
         baseDir: string,
         htmlDir?: string,
@@ -156,6 +171,18 @@ export default class Atomizer {
         }
     }
 
+    /**
+
+A static method in the Atomizer class that retrieves a template with the specified name and index from the templates property.
+@param {string} templateName - The name of the template to retrieve.
+@param {number} [templateFolderIndex=0] - The index of the folder containing the template. Defaults to 0.
+@returns {AtomizerTemplate} - The requested template.
+If the template is found in the templates property, it is returned immediately.
+If the template is not found, this method searches through all template folders for the specified name.
+If a template is found, it is returned and cached in the templates property for future use.
+If no template is found, an error message is logged and an empty string is returned.
+@author Ansh Sharma
+*/
     public static getTemplate(templateName: string, templateFolderIndex?: 0): AtomizerTemplate {
         const template = Atomizer.templates[templateFolderIndex || 0][templateName];
         if (!template) {

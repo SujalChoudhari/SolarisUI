@@ -102,6 +102,10 @@ export default class Component {
 		return this.children;
 	}
 
+	/**
+	 * Get the parent of the component
+	 * @returns Parent of the component
+	 */
 	public getParent(): Component | null {
 		return this.parent;
 	}

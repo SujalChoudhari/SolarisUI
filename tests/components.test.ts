@@ -1,6 +1,6 @@
 import { Component } from "../src/components";
 import * as sui from "../src/index";
-
+import { Article1Props, Article2Props, AvatarProps, BannerProps, BlogProps, ButtonProps, BreadcrumbProps, CallToActionProps, HeaderProps, FooterBigProps, FooterProps, GalleryProps, CardProps, CarouselProps, ErrorProps, FAQProps, FeatureProps } from "../src/types/templates";
 
 describe("Solaris", () => {
     var page: Component;
@@ -27,7 +27,7 @@ describe("Solaris", () => {
             imgUrl: "https://source.unsplash.com/random/480x360",
             description: "This is a description",
             author: "Sujal Choudhari",
-        });
+        } as Article1Props);
 
         page.children[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(article));
 
@@ -56,17 +56,19 @@ describe("Solaris", () => {
             tags: [
                 {
                     name: "tag1",
-                    link: "https://google.com"
+                    link: "https://google.com",
+                    target: "_blank"
                 },
                 {
                     name: "tag2",
-                    link: "https://google.com"
+                    link: "https://google.com",
+                    target: "_blank"
                 }
             ],
             description: "This is a description",
             author: "Sujal Choudhari",
             date: "2020-01-01",
-        });
+        } as Article2Props);
 
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(article));
 
@@ -83,7 +85,7 @@ describe("Solaris", () => {
                 "https://source.unsplash.com/random/103x100",
             ],
             moreNum: 10
-        });
+        } as AvatarProps);
 
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
 
@@ -97,7 +99,7 @@ describe("Solaris", () => {
             content: "This is a description",
             children: ["Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
                 "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",],
-        });
+        } as BannerProps);
 
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
 
@@ -137,7 +139,7 @@ describe("Solaris", () => {
                 },
 
             ],
-        });
+        } as BlogProps);
 
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
         sui.SolarisUI.buildProject("Components", [page])
@@ -154,7 +156,7 @@ describe("Solaris", () => {
                 { title: "Parent4", link: "https://google.com" },
                 { title: "Parent5", link: "https://google.com" },
             ]
-        })
+        } as BreadcrumbProps)
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
         sui.SolarisUI.buildProject("Components", [page])
     });
@@ -162,15 +164,15 @@ describe("Solaris", () => {
     test("button", () => {
         const button = new sui.Atom(sui.Atomizer.getTemplate("button"), {
             text: "Button"
-        });
+        } as ButtonProps);
 
         const ghostButton = new sui.Atom(sui.Atomizer.getTemplate("ghostbutton"), {
             text: "Ghost Button"
-        });
+        } as ButtonProps);
 
         const roundedButton = new sui.Atom(sui.Atomizer.getTemplate("roundedbutton"), {
             text: "Rounded Button"
-        });
+        } as ButtonProps);
 
         page.addChildren(
             sui.Atomizer.buildComponentTreeFromAtom(button),
@@ -185,11 +187,11 @@ describe("Solaris", () => {
         const atom = new sui.Atom(sui.Atomizer.getTemplate("cta2part"), {
             title: "Call to Action",
             call: "Click here",
-        });
+        } as CallToActionProps);
         const atom2 = new sui.Atom(sui.Atomizer.getTemplate("cta2partdownload"), {
             title: "Call to Action",
             call: "Click here",
-        });
+        } as CallToActionProps);
 
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom)
             , sui.Atomizer.buildComponentTreeFromAtom(atom2));
@@ -203,7 +205,7 @@ describe("Solaris", () => {
             title: "Card",
             imgUrl: "https://source.unsplash.com/random/480x360",
             description: "This is a description",
-        });
+        } as CardProps);
 
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
 
@@ -219,7 +221,7 @@ describe("Solaris", () => {
                 "https://source.unsplash.com/random/483x360",
                 "https://source.unsplash.com/random/484x360",
             ]
-        });
+        } as CarouselProps);
 
         page.getChildren()[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
 
@@ -229,7 +231,7 @@ describe("Solaris", () => {
     test("error", () => {
         const atom = new sui.Atom(sui.Atomizer.getTemplate("error"), {
             url: "https://google.com",
-        });
+        } as ErrorProps);
 
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
 
@@ -253,7 +255,7 @@ describe("Solaris", () => {
                     answer: "This is an answer"
                 },
             ]
-        });
+        } as FAQProps);
 
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
 
@@ -274,7 +276,7 @@ describe("Solaris", () => {
                 { title: "Feature6", description: "This is a description" },
                 { title: "Feature7", description: "This is a description" },
             ]
-        });
+        } as FeatureProps);
 
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
 
@@ -309,7 +311,7 @@ describe("Solaris", () => {
                     }]
                 }
             ]
-        });
+        } as FooterBigProps);
 
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
 
@@ -331,7 +333,7 @@ describe("Solaris", () => {
                 { title: "Link2", link: "https://google.com" },
                 { title: "Link3", link: "https://google.com" },
             ]
-        });
+        } as FooterProps);
 
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
 
@@ -382,7 +384,7 @@ describe("Solaris", () => {
                     isBig: false,
                 }
             ]
-        });
+        } as GalleryProps);
 
         page.children[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
 
@@ -410,7 +412,7 @@ describe("Solaris", () => {
                 }
             ],
             imgUrl: "https://source.unsplash.com/random/480x360",
-        });
+        } as HeaderProps);
 
         page.children[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
 
