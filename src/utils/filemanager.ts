@@ -154,8 +154,17 @@ export default class FileManager {
             Logger.warn(__filename, "Failed to read file");
             return;
         }
-        this.createFile(destPath, contents);
+
+        let destFileName = path.basename(srcPath);
+        if (destPath.includes(".") && !destPath.endsWith("/")) {
+            destFileName = path.basename(destPath);
+            destPath = path.dirname(destPath);
+        }
+
+        this.createFile(path.join(destPath, destFileName), contents);
     }
+
+
 
     /**
      * Create a new file at the specified path
