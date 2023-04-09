@@ -148,16 +148,13 @@ export default class FileManager {
      * @param destPath Destination file path
      * @param srcPathType The type of the source path, relative or absolute. Default is relative
      */
-    public copyFile(srcPath: string, destPath: string, srcPathType : "relative" | "absolute" = "relative"): void {
-        let contents = this.readFile(srcPath);
-        let fileName = srcPath.split("/").pop();
-        if (contents !== null) {
-            this.createFile(destPath + "/"+ fileName , contents);
-        }
-        else {
+    public copyFile(srcPath: string, destPath: string, srcPathType: "relative" | "absolute" = "relative"): void {
+        const contents = this.readFile(srcPathType === "relative" ? path.join(process.cwd(), srcPath) : srcPath);
+        if (contents === null) {
             Logger.warn(__filename, "Failed to read file");
             return;
         }
+        this.createFile(destPath, contents);
     }
 
     /**
@@ -169,7 +166,7 @@ export default class FileManager {
         try {
             fs.writeFileSync(filePath, contents);
         }
-        catch (err : any) {
+        catch (err: any) {
             const absolutePath = this.getAbsolutePath(filePath);
             fs.writeFileSync(absolutePath, contents);
         }
