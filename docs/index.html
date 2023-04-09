@@ -37,13 +37,13 @@
   <h2>Installation</h2>
 </a>
 <p><a href="https://github.com/SujalChoudhari/SolarisUI">Clone the repository</a></p>
-<pre><code class="language-bash"><span class="hl-2">git </span><span class="hl-6">clone</span><span class="hl-2"> </span><span class="hl-6">https://github.com/SujalChoudhari/SolarisUI.git</span>
+<pre><code class="language-bash"><span class="hl-0">git </span><span class="hl-1">clone</span><span class="hl-0"> </span><span class="hl-1">https://github.com/SujalChoudhari/SolarisUI.git</span>
 </code></pre>
 <p>OR <code>NPM</code></p>
-<pre><code class="language-bash"><span class="hl-2">npm </span><span class="hl-6">i</span><span class="hl-2"> </span><span class="hl-6">@sujalchoudhari/solaris-ui</span>
+<pre><code class="language-bash"><span class="hl-0">npm </span><span class="hl-1">i</span><span class="hl-0"> </span><span class="hl-1">@sujalchoudhari/solaris-ui</span>
 </code></pre>
 <p>OR <code>YARN</code></p>
-<pre><code class="language-bash"><span class="hl-2">yarn </span><span class="hl-6">add</span><span class="hl-2"> </span><span class="hl-6">@sujalchoudhari/solaris-ui</span>
+<pre><code class="language-bash"><span class="hl-0">yarn </span><span class="hl-1">add</span><span class="hl-0"> </span><span class="hl-1">@sujalchoudhari/solaris-ui</span>
 </code></pre>
 <p>OR <code>download the code from the repository.</code></p>
 <p>[Note: NPM might not work for alpha builds. Use the repository instead.]</p>
@@ -52,16 +52,16 @@
   <h2>Usage</h2>
 </a>
 <p>To create a new project, you can use the following code:</p>
-<pre><code class="language-ts"><span class="hl-1">const</span><span class="hl-2"> </span><span class="hl-3">page</span><span class="hl-2"> = </span><span class="hl-4">sui</span><span class="hl-2">.</span><span class="hl-4">SolarisUI</span><span class="hl-2">.</span><span class="hl-5">createPage</span><span class="hl-2">(</span><span class="hl-6">&quot;Test Page&quot;</span><span class="hl-2">, </span><span class="hl-6">&quot;index.html&quot;</span><span class="hl-2">, {</span><br/><span class="hl-2">    </span><span class="hl-6">&quot;name&quot;</span><span class="hl-4">:</span><span class="hl-2"> </span><span class="hl-6">&quot;Sujal Choudhari&quot;</span><span class="hl-2">,</span><br/><span class="hl-2">    </span><span class="hl-6">&quot;description&quot;</span><span class="hl-4">:</span><span class="hl-2"> </span><span class="hl-6">&quot;This is a test page&quot;</span><span class="hl-2">,</span><br/><span class="hl-2">    </span><span class="hl-6">&quot;keywords&quot;</span><span class="hl-4">:</span><span class="hl-2"> </span><span class="hl-6">&quot;test,page,solarisui&quot;</span><br/><span class="hl-2">});</span><br/>
+<pre><code class="language-ts"><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">page</span><span class="hl-0"> = </span><span class="hl-4">sui</span><span class="hl-0">.</span><span class="hl-4">SolarisUI</span><span class="hl-0">.</span><span class="hl-5">createPage</span><span class="hl-0">(</span><span class="hl-1">&quot;Test Page&quot;</span><span class="hl-0">, </span><span class="hl-1">&quot;index.html&quot;</span><span class="hl-0">, {</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;name&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-1">&quot;Sujal Choudhari&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;description&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-1">&quot;This is a test page&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;keywords&quot;</span><span class="hl-4">:</span><span class="hl-0"> </span><span class="hl-1">&quot;test,page,solarisui&quot;</span><br/><span class="hl-0">});</span><br/>
 </code></pre>
 <p>This code creates a new webpage using the createPage method of the SolarisUI object. The first parameter is the title of the page, the second parameter is the path to the HTML file, and the third parameter is an object that contains metadata about the page, such as the name, description, and keywords. </p>
-<pre><code class="language-ts"><span class="hl-1">const</span><span class="hl-2"> </span><span class="hl-3">dropdown</span><span class="hl-2"> = </span><span class="hl-1">new</span><span class="hl-2"> </span><span class="hl-4">sui</span><span class="hl-2">.</span><span class="hl-5">Atom</span><span class="hl-2">(</span><span class="hl-4">sui</span><span class="hl-2">.</span><span class="hl-4">Atomizer</span><span class="hl-2">.</span><span class="hl-4">templates</span><span class="hl-2">.</span><span class="hl-4">dropdown</span><span class="hl-2">, {</span><br/><span class="hl-2">    </span><span class="hl-4">text:</span><span class="hl-2"> </span><span class="hl-6">&quot;Dropdown&quot;</span><span class="hl-2">,</span><br/><span class="hl-2">    </span><span class="hl-4">links:</span><span class="hl-2"> [{</span><br/><span class="hl-2">        </span><span class="hl-4">href:</span><span class="hl-2"> </span><span class="hl-6">&quot;index.html&quot;</span><span class="hl-2">,</span><br/><span class="hl-2">        </span><span class="hl-4">text:</span><span class="hl-2"> </span><span class="hl-6">&quot;Home&quot;</span><br/><span class="hl-2">    }, {</span><br/><span class="hl-2">        </span><span class="hl-4">href:</span><span class="hl-2"> </span><span class="hl-6">&quot;about.html&quot;</span><span class="hl-2">,</span><br/><span class="hl-2">        </span><span class="hl-4">text:</span><span class="hl-2"> </span><span class="hl-6">&quot;About&quot;</span><br/><span class="hl-2">    }, {</span><br/><span class="hl-2">        </span><span class="hl-4">href:</span><span class="hl-2"> </span><span class="hl-6">&quot;contact.html&quot;</span><span class="hl-2">,</span><br/><span class="hl-2">        </span><span class="hl-4">text:</span><span class="hl-2"> </span><span class="hl-6">&quot;Contact&quot;</span><br/><span class="hl-2">    }]</span><br/><span class="hl-2">});</span><br/>
+<pre><code class="language-ts"><span class="hl-2">const</span><span class="hl-0"> </span><span class="hl-3">dropdown</span><span class="hl-0"> = </span><span class="hl-2">new</span><span class="hl-0"> </span><span class="hl-4">sui</span><span class="hl-0">.</span><span class="hl-5">Atom</span><span class="hl-0">(</span><span class="hl-4">sui</span><span class="hl-0">.</span><span class="hl-4">Atomizer</span><span class="hl-0">.</span><span class="hl-4">templates</span><span class="hl-0">.</span><span class="hl-4">dropdown</span><span class="hl-0">, {</span><br/><span class="hl-0">    </span><span class="hl-4">text:</span><span class="hl-0"> </span><span class="hl-1">&quot;Dropdown&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-4">links:</span><span class="hl-0"> [{</span><br/><span class="hl-0">        </span><span class="hl-4">href:</span><span class="hl-0"> </span><span class="hl-1">&quot;index.html&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-4">text:</span><span class="hl-0"> </span><span class="hl-1">&quot;Home&quot;</span><br/><span class="hl-0">    }, {</span><br/><span class="hl-0">        </span><span class="hl-4">href:</span><span class="hl-0"> </span><span class="hl-1">&quot;about.html&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-4">text:</span><span class="hl-0"> </span><span class="hl-1">&quot;About&quot;</span><br/><span class="hl-0">    }, {</span><br/><span class="hl-0">        </span><span class="hl-4">href:</span><span class="hl-0"> </span><span class="hl-1">&quot;contact.html&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-4">text:</span><span class="hl-0"> </span><span class="hl-1">&quot;Contact&quot;</span><br/><span class="hl-0">    }]</span><br/><span class="hl-0">});</span><br/>
 </code></pre>
 <p>This code creates a dropdown menu using the dropdown template from the Atomizer object. The dropdown menu is created by instantiating a new Atom object and passing it the dropdown template as well as an object that contains the text to display on the menu button and an array of links to display in the menu.</p>
-<pre><code class="language-ts"><span class="hl-4">page</span><span class="hl-2">.</span><span class="hl-5">getChildren</span><span class="hl-2">()[</span><span class="hl-8">1</span><span class="hl-2">].</span><span class="hl-5">addChildren</span><span class="hl-2">(</span><span class="hl-4">sui</span><span class="hl-2">.</span><span class="hl-4">Atomizer</span><span class="hl-2">.</span><span class="hl-5">buildComponentTree</span><span class="hl-2">(</span><span class="hl-4">navbar</span><span class="hl-2">.</span><span class="hl-5">toString</span><span class="hl-2">()));</span><br/>
+<pre><code class="language-ts"><span class="hl-4">page</span><span class="hl-0">.</span><span class="hl-5">getChildren</span><span class="hl-0">()[</span><span class="hl-6">1</span><span class="hl-0">].</span><span class="hl-5">addChildren</span><span class="hl-0">(</span><span class="hl-4">sui</span><span class="hl-0">.</span><span class="hl-4">Atomizer</span><span class="hl-0">.</span><span class="hl-5">buildComponentTree</span><span class="hl-0">(</span><span class="hl-4">navbar</span><span class="hl-0">.</span><span class="hl-5">toString</span><span class="hl-0">()));</span><br/>
 </code></pre>
 <p>This code adds the navbar component to the second child of the page using the addChildren method. The buildComponentTree method is called on the navbar object to create a tree of components that can be added to the page.</p>
-<pre><code class="language-ts"><span class="hl-4">sui</span><span class="hl-2">.</span><span class="hl-4">SolarisUI</span><span class="hl-2">.</span><span class="hl-5">buildProject</span><span class="hl-2">(</span><span class="hl-6">&quot;Test&quot;</span><span class="hl-2">, [</span><span class="hl-4">page</span><span class="hl-2">]);</span><br/>
+<pre><code class="language-ts"><span class="hl-4">sui</span><span class="hl-0">.</span><span class="hl-4">SolarisUI</span><span class="hl-0">.</span><span class="hl-5">buildProject</span><span class="hl-0">(</span><span class="hl-1">&quot;Test&quot;</span><span class="hl-0">, [</span><span class="hl-4">page</span><span class="hl-0">]);</span><br/>
 </code></pre>
 <p>This code calls the buildProject method of the SolarisUI object to build the entire project, which includes the Test Page and all of its components. The first parameter is the name of the project, and the second parameter is an array of pages to include in the project.</p>
 
@@ -69,26 +69,80 @@
   <h2>Development Roadmap</h2>
 </a>
 <ul>
-<li><input checked="" disabled="" type="checkbox"> Basic Entity, Attributes, Children System</li>
-<li><input checked="" disabled="" type="checkbox"> Building The Layout</li>
-<li><input checked="" disabled="" type="checkbox"> Save and Load System for Intermidiate Files (Json files) </li>
-<li><input checked="" disabled="" type="checkbox"> Integraged CSS (inline) </li>
-<li><input checked="" disabled="" type="checkbox"> Collection of Containers (Hbox,Vbox and Grid)</li>
-<li><input checked="" disabled="" type="checkbox"> Integrated Javascript (for animations and event listners)</li>
-<li><input checked="" disabled="" type="checkbox"> An Encapsulated Template loading and saving system (Atomizer)</li>
-<li><input checked="" disabled="" type="checkbox"> Templates (basic templates) [Page, Head,Link,etc..]</li>
-<li><input disabled="" type="checkbox"> More Templates (Navbar, Footer, Carousel, etc..)</li>
-<li><input disabled="" type="checkbox"> Higher Level Layout System (Navbars, Carousel, Footer,etc) [WIP]</li>
-<li><input disabled="" type="checkbox"> Sophisticated Ways to Integrate Javascript and Css files.</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+Basic Entity, Attributes, Children System: This refers to the foundation of the system and includes the definition of entities (objects), their attributes (properties), and their relationships with other entities (children). This is a crucial step in the development of any application or system.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+Building The Layout: This involves creating the visual layout of the application or system. This includes the placement of various elements on the screen, such as buttons, text fields, images, and so on.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+Save and Load System for Intermediate Files (JSON files): This refers to the capability of the system to save and load data in an intermediate format such as JSON. This is useful for debugging, testing, and sharing data between different systems.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+Integrated CSS (inline): This involves the integration of CSS directly into the HTML code of the application or system. This helps to simplify the code and makes it easier to maintain.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+Collection of Containers (Hbox, Vbox, and Grid): This refers to the various containers available in the system to hold different elements, such as horizontal boxes, vertical boxes, and grids. These containers can be used to organize the layout of the application or system.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+Integrated Javascript (for animations and event listeners): This involves the integration of Javascript code into the HTML code of the application or system. This helps to add dynamic functionality to the system, such as animations and event listeners.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+An Encapsulated Template loading and saving system (Atomizer): This refers to a system that enables the creation and management of templates for different elements of the application or system. This can help to simplify the development process and improve the maintainability of the code.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+Templates (basic templates) [Page, Head, Link, etc.]: This includes the creation of basic templates for various elements of the system, such as the page, head, link, and so on. These templates can be used as a starting point for the development of more complex elements.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+More Templates (Navbar, Footer, Carousel, etc.): This includes the creation of additional templates for more complex elements of the system, such as the navbar, footer, carousel, and so on.</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+Sophisticated Ways to Integrate Javascript and CSS files: This refers to the various techniques available for integrating Javascript and CSS files into the application or system. This can help to improve the performance of the system and make it more efficient.</p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+Higher Level Layout System (Navbars, Carousel, Footer, etc.) [WIP]: This involves the creation of a higher level layout system for the application or system. This can help to simplify the development process and improve the maintainability of the code.</p>
+</li>
 </ul>
 
 <a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
   <h2>Contributing</h2>
 </a>
-<p>Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
-Please make sure to update tests as appropriate.
-To add new features, it is suggested to create a new branch <code>feature-[name]</code>.</p>
+
+<a href="#setting-up-the-development-environment" id="setting-up-the-development-environment" style="color: inherit; text-decoration: none;">
+  <h3>Setting up the Development Environment</h3>
+</a>
+<p>To contribute to our project, you&#39;ll need to set up your development environment. Here are the steps to get started:</p>
+<p>Clone the project repository from GitHub using the following command:</p>
+<pre><code class="language-bash"><span class="hl-0">git </span><span class="hl-1">clone</span><span class="hl-0"> </span><span class="hl-1">https://github.com/SujalChoudhari/SolarisUI.git</span>
+</code></pre>
+<p>Install the project dependencies using npm:</p>
+<pre><code class="language-bash"><span class="hl-0">npm </span><span class="hl-1">install</span>
+</code></pre>
+<p>Make sure you have the latest version of TypeScript installed globally:</p>
+<pre><code class="language-bash"><span class="hl-0">npm </span><span class="hl-1">install</span><span class="hl-0"> </span><span class="hl-1">-g</span><span class="hl-0"> </span><span class="hl-1">typescript</span>
+</code></pre>
+<p>You&#39;re now ready to start working on the project!</p>
+
+<a href="#explanation-of-scripts-in-packagejson-file" id="explanation-of-scripts-in-packagejson-file" style="color: inherit; text-decoration: none;">
+  <h3>Explanation of scripts in package.json file</h3>
+</a>
+<p>The scripts in the package.json file automate various tasks related to the development, testing, and documentation of the project. Here&#39;s an explanation of each script:</p>
+<ul>
+<li><p><code>dev</code>: This script uses the ts-node-dev package to run the <code>index.ts</code> file in the <code>src</code> directory. This is useful for development because it automatically restarts the server whenever a file is changed.</p>
+</li>
+<li><p><code>prebuild</code>: This script runs the tests using Jest before the <code>build</code> script is executed. If any tests fail, the build script will not run.</p>
+</li>
+<li><p><code>build</code>: This script uses the TypeScript compiler (<code>tsc</code>) to compile the TypeScript code in the src directory into JavaScript code that can be run in a production environment.</p>
+</li>
+<li><p><code>docs</code>: This script generates documentation for the project using the <code>typedoc</code> package.</p>
+</li>
+<li><p><code>prepublish</code>: This script is run before the package is published to the npm registry. It runs the <code>tsc</code> compiler to ensure that the TypeScript code is compiled into JavaScript before being published.</p>
+</li>
+</ul>
+<p>These scripts can be run using the npm run <code>&lt;script-name&gt;</code> command. For example, to run the development server, you would use the following command:</p>
+<pre><code class="language-bash"><span class="hl-0">npm </span><span class="hl-1">run</span><span class="hl-0"> </span><span class="hl-1">dev</span>
+</code></pre>
+<p>Read the <a href="https://github.com/SujalChoudhari/SolarisUI/blob/main/CONTRIBUTING.md">Contributing Guidelines</a> before contributing.</p>
 
 <a href="#license" id="license" style="color: inherit; text-decoration: none;">
   <h2>License</h2>
@@ -116,19 +170,9 @@ To add new features, it is suggested to create a new branch <code>feature-[name]
 <div class="tsd-accordion-details">
 <ul>
 <li class="current selected"><a href="modules.html">SolarisUI -<wbr/> v1.0.1-<wbr/>alpha.3</a>
-<ul></ul></li></ul></div></details></nav>
-<nav class="tsd-navigation secondary menu-sticky">
 <ul>
-<li class="tsd-kind-class"><a href="classes/Atom.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-class)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-128-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-128-text"></path></svg>Atom</a></li>
-<li class="tsd-kind-type-alias"><a href="types/AtomizerTemplate.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-4194304-path"></rect><path d="M11.31 16V8.224H8.91V7.24H14.79V8.224H12.39V16H11.31Z" fill="var(--color-text)" id="icon-4194304-text"></path></svg>Atomizer<wbr/>Template</a></li>
-<li class="tsd-kind-class"><a href="classes/Atomizer.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Atomizer</a></li>
-<li class="tsd-kind-class"><a href="classes/Component.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Component</a></li>
-<li class="tsd-kind-class"><a href="classes/Script.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Script</a></li>
-<li class="tsd-kind-class"><a href="classes/String.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>String</a></li>
-<li class="tsd-kind-class"><a href="classes/Style.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Style</a></li>
-<li class="tsd-kind-reference"><a href="modules.html#default" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF4D82" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-8388608-path"></rect><path d="M10.354 17V8.24H13.066C13.586 8.24 14.042 8.348 14.434 8.564C14.826 8.772 15.13 9.064 15.346 9.44C15.562 9.816 15.67 10.256 15.67 10.76C15.67 11.352 15.514 11.86 15.202 12.284C14.898 12.708 14.482 13 13.954 13.16L15.79 17H14.518L12.838 13.28H11.434V17H10.354ZM11.434 12.308H13.066C13.514 12.308 13.874 12.168 14.146 11.888C14.418 11.6 14.554 11.224 14.554 10.76C14.554 10.288 14.418 9.912 14.146 9.632C13.874 9.352 13.514 9.212 13.066 9.212H11.434V12.308Z" fill="var(--color-text)" id="icon-8388608-text"></path></svg>default</a></li>
-<li class="tsd-kind-class"><a href="classes/FileManager.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>File<wbr/>Manager</a></li>
-<li class="tsd-kind-enum"><a href="enums/LogLevel.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-enum)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-8-path"></rect><path d="M9.45 16V7.24H14.49V8.224H10.518V10.936H14.07V11.908H10.518V15.016H14.49V16H9.45Z" fill="var(--color-text)" id="icon-8-text"></path></svg>Log<wbr/>Level</a></li>
-<li class="tsd-kind-class"><a href="classes/Logger.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Logger</a></li>
-<li class="tsd-kind-class"><a href="classes/SolarisUI.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>SolarisUI</a></li></ul></nav></div></div>
+<li class="tsd-kind-module"><a href="modules/atom.html">atom</a></li>
+<li class="tsd-kind-module"><a href="modules/components.html">components</a></li>
+<li class="tsd-kind-module"><a href="modules/index.html">index</a></li>
+<li class="tsd-kind-module"><a href="modules/utils.html">utils</a></li></ul></li></ul></div></details></nav></div></div>
 <div class="overlay"></div><script src="assets/main.js"></script></body></html>

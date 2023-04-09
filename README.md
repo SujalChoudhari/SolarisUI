@@ -98,19 +98,52 @@ This code calls the buildProject method of the SolarisUI object to build the ent
 
 - [x] Templates (basic templates) [Page, Head, Link, etc.]: This includes the creation of basic templates for various elements of the system, such as the page, head, link, and so on. These templates can be used as a starting point for the development of more complex elements.
 
-- [ ] More Templates (Navbar, Footer, Carousel, etc.): This includes the creation of additional templates for more complex elements of the system, such as the navbar, footer, carousel, and so on.
-
-- [ ] Higher Level Layout System (Navbars, Carousel, Footer, etc.) [WIP]: This involves the creation of a higher level layout system for the application or system. This can help to simplify the development process and improve the maintainability of the code.
+- [x] More Templates (Navbar, Footer, Carousel, etc.): This includes the creation of additional templates for more complex elements of the system, such as the navbar, footer, carousel, and so on.
 
 - [x] Sophisticated Ways to Integrate Javascript and CSS files: This refers to the various techniques available for integrating Javascript and CSS files into the application or system. This can help to improve the performance of the system and make it more efficient.
 
-
+- [ ] Higher Level Layout System (Navbars, Carousel, Footer, etc.) [WIP]: This involves the creation of a higher level layout system for the application or system. This can help to simplify the development process and improve the maintainability of the code.
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
-Please make sure to update tests as appropriate.
-To add new features, it is suggested to create a new branch `feature-[name]`.
+### Setting up the Development Environment
+To contribute to our project, you'll need to set up your development environment. Here are the steps to get started:
+
+Clone the project repository from GitHub using the following command:
+```bash
+git clone https://github.com/SujalChoudhari/SolarisUI.git
+```
+Install the project dependencies using npm:
+```bash
+npm install
+```
+Make sure you have the latest version of TypeScript installed globally:
+```bash
+npm install -g typescript
+```
+You're now ready to start working on the project!
+
+### Explanation of scripts in package.json file
+The scripts in the package.json file automate various tasks related to the development, testing, and documentation of the project. Here's an explanation of each script:
+
+* `dev`: This script uses the ts-node-dev package to run the `index.ts` file in the `src` directory. This is useful for development because it automatically restarts the server whenever a file is changed.
+
+* `prebuild`: This script runs the tests using Jest before the `build` script is executed. If any tests fail, the build script will not run.
+
+* `build`: This script uses the TypeScript compiler (`tsc`) to compile the TypeScript code in the src directory into JavaScript code that can be run in a production environment.
+
+* `docs`: This script generates documentation for the project using the `typedoc` package.
+
+* `prepublish`: This script is run before the package is published to the npm registry. It runs the `tsc` compiler to ensure that the TypeScript code is compiled into JavaScript before being published.
+
+These scripts can be run using the npm run `<script-name>` command. For example, to run the development server, you would use the following command:
+
+```bash
+npm run dev
+```
+
+Read the [Contributing Guidelines](https://github.com/SujalChoudhari/SolarisUI/blob/main/CONTRIBUTING.md) before contributing.
+
+
 
 ## License
 [MIT](https://github.com/SujalChoudhari/SolarisUI/blob/main/LICENSE)

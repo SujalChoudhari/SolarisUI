@@ -417,5 +417,55 @@ describe("Solaris", () => {
         sui.SolarisUI.buildProject("Components", [page]);
     });
 
+    test("hero", () => {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("hero"), {
+            title: "Hero Title",
+            description: "Hero Description",
+            primary: "Primary",
+            secondary: "Secondary",
+            imgUrl: "https://source.unsplash.com/random/480x360",
+        });
+
+        page.children[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
+
+        sui.SolarisUI.buildProject("Components", [page]);
+    });
+
+    test("input", () => {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("input"), {
+            title: "Name",
+            hint: "Fullname",
+            type: "text",
+            placeholder: "Enter your name"
+        });
+
+        page.children[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
+
+        sui.SolarisUI.buildProject("Components", [page]);
+    });
+
+    test("Fileinput", () => {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("fileinput"), {
+            title: "Name"
+        });
+
+        page.children[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
+        sui.SolarisUI.buildProject("Components", [page]);
+    });
+
+    test("spinners", () => {
+        const atom = new sui.Atom(sui.Atomizer.getTemplate("spinner"), {
+            
+        });
+        const atom2 = new sui.Atom(sui.Atomizer.getTemplate("loader"), {
+            
+        });
+
+        page.children[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom)
+        ,sui.Atomizer.buildComponentTreeFromAtom(atom2));
+        sui.SolarisUI.buildProject("Components", [page]);
+    });
+    
+
 });
 
