@@ -1,11 +1,12 @@
 # .npmignore
-
+src/
 # Configuration files
 *.config.js
 .eslintrc
 .prettierrc
 
 # Test files
+tests/
 test/
 __tests__/
 *.spec.js
@@ -15,9 +16,12 @@ __tests__/
 docs/
 builds/
 public/
+static/
+
 # Miscellaneous
 *.log
 *.lock
 /logs
 yarn.lock
 package-lock.json
+*.tgz

@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+# [1.0.1-alpha.5] - 10-04-2023
+## [Unreleased]
+This alpha has Bug fixes and minor changes.
+
+### Changed
+- File Manager now by default, points to cwd.
+- Templates was moved outside of the `src` folder.
+- Builds are located in cwd by default.
+
 # [1.0.1-alpha.4] - 09-04-2023
 ## [Unreleased]
 The project is going under various changes. 
