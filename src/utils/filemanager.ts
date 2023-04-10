@@ -22,14 +22,15 @@ export default class FileManager {
      */
     constructor(basepath: string = "") {
         if (basepath == "")
-            this.basePath = path.resolve(__dirname, '../../');
-        else this.basePath = path.resolve(basepath);
+            this.basePath = path.resolve(process.cwd());
+        else
+            this.basePath = path.resolve(basepath);
     }
-
     /**
      * Convert relative path to absolute path
      * @param relativePath The relative path of any file or directory
      * @returns The abosolute path of the file or directory.
+     * @deprecated No not use this method. Will be removed in future versions
      */
     public getAbsolutePath(relativePath: string): string {
         return path.resolve(this.basePath, relativePath);
@@ -37,18 +38,17 @@ export default class FileManager {
 
     /**
      * Read a file synchronously
-     * @param relativePath relative path of the file or directory
+     * @param path relative path of the file or directory
      * @returns the contents of the file or directory. `null`if file is not found
      */
-    public readFile(relativePath: string): string | null {
-        const absolutePath = this.getAbsolutePath(relativePath);
-        if (!fs.existsSync(absolutePath)) {
-            Logger.warn(__filename, `Given file: ${absolutePath} does not exist`);
+    public readFile(path: string): string | null {
+        if (!fs.existsSync(path)) {
+            Logger.warn(__filename, `Given file: ${path} does not exist`);
             return null;
         }
 
         try {
-            return fs.readFileSync(absolutePath, 'utf8');
+            return fs.readFileSync(path, 'utf8');
         } catch (err) {
             Logger.warn(__filename, `Error reading file: ${err}`);
             return null;
@@ -57,12 +57,11 @@ export default class FileManager {
 
     /**
      * Create a new directory
-     * @param directoryPath Path at which the directory should be created. The name of the directory should be
+     * @param path Path at which the directory should be created. The name of the directory should be
      * included in the path
      */
-    public createDirectory(directoryPath: string): void {
-        const absolutePath = this.getAbsolutePath(directoryPath);
-        fs.mkdirSync(absolutePath, { recursive: true });
+    public createDirectory(path: string): void {
+        fs.mkdirSync(path, { recursive: true });
     }
 
     /**
@@ -71,20 +70,17 @@ export default class FileManager {
      * @param destPath the final destination path
      */
     public copyDirectory(srcPath: string, destPath: string): void {
-        const srcAbsolutePath = this.getAbsolutePath(srcPath);
-        const destAbsolutePath = this.getAbsolutePath(destPath);
-
-        if (!fs.existsSync(srcAbsolutePath)) {
+        if (!fs.existsSync(srcPath)) {
             Logger.warn(__filename, `Source directory ${srcPath} does not exist.`);
             return;
         }
 
-        fs.mkdirSync(destAbsolutePath, { recursive: true });
+        fs.mkdirSync(destPath, { recursive: true });
 
-        const entries = fs.readdirSync(srcAbsolutePath, { withFileTypes: true });
+        const entries = fs.readdirSync(srcPath, { withFileTypes: true });
         for (const entry of entries) {
-            const srcEntryPath = path.join(srcAbsolutePath, entry.name);
-            const destEntryPath = path.join(destAbsolutePath, entry.name);
+            const srcEntryPath = path.join(srcPath, entry.name);
+            const destEntryPath = path.join(destPath, entry.name);
 
             if (entry.isDirectory()) {
                 this.copyDirectory(srcEntryPath, destEntryPath);
@@ -102,13 +98,12 @@ export default class FileManager {
     * @author Ansh Sharma
     */
     public getAllFilesInDirectory(directoryPath: string): string[] {
-        const absolutePath = this.getAbsolutePath(directoryPath);
-        if (!fs.existsSync(absolutePath)) {
+        if (!fs.existsSync(directoryPath)) {
             Logger.warn(__filename, `Directory ${directoryPath} does not exist.`);
             return [];
         }
 
-        const entries = fs.readdirSync(absolutePath, { withFileTypes: true });
+        const entries = fs.readdirSync(directoryPath, { withFileTypes: true });
         const files: string[] = [];
 
         for (const entry of entries) {
@@ -117,7 +112,7 @@ export default class FileManager {
                 const entryPath = path.join(directoryPath, entry.name);
                 files.push(...this.getAllFilesInDirectory(entryPath));
             } else {
-                const entryPath = path.join(absolutePath, entry.name);
+                const entryPath = path.join(directoryPath, entry.name);
                 files.push(entryPath);
             }
         }
@@ -131,15 +126,12 @@ export default class FileManager {
      * @param destPath Destination path 
      */
     public moveFile(srcPath: string, destPath: string): void {
-        const srcAbsolutePath = this.getAbsolutePath(srcPath);
-        const destAbsolutePath = this.getAbsolutePath(destPath);
-
-        if (!fs.existsSync(srcAbsolutePath)) {
+        if (!fs.existsSync(srcPath)) {
             Logger.warn(__filename, `Source file ${srcPath} does not exist.`);
             return;
         }
 
-        fs.renameSync(srcAbsolutePath, destAbsolutePath);
+        fs.renameSync(srcPath, destPath);
     }
 
     /**
@@ -176,8 +168,7 @@ export default class FileManager {
             fs.writeFileSync(filePath, contents);
         }
         catch (err: any) {
-            const absolutePath = this.getAbsolutePath(filePath);
-            fs.writeFileSync(absolutePath, contents);
+            fs.writeFileSync(filePath, contents);
         }
     }
 

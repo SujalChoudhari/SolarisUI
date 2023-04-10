@@ -7,7 +7,7 @@ describe("Solaris", () => {
     sui.Logger.logLevel = sui.LogLevel.ERROR;
 
     beforeEach(() => {
-        sui.Atomizer.addTemplateFolder({baseDir: "tests/temp"});
+        sui.Atomizer.addTemplateFolder({baseDir: "tests/temp",htmlDir:"",cssDir:"/css/",jsDir:"/js/"});
         page = sui.SolarisUI.createPage(
             "Index Page",
             "index.html",
@@ -37,7 +37,6 @@ describe("Solaris", () => {
 
     test("ansh", () => {
 
-        
         const article = new sui.Atom(sui.Atomizer.getTemplate("ansh"), {
             title: "Hello World",
             imgUrl: "https://source.unsplash.com/random/480x360",
