@@ -17,47 +17,27 @@
  */
 
 
-import {
+export {
     Component,
     Script,
     String,
     Style
-}  from "./components";
+} from "./components";
 
-import {
+export {
     Atom,
     Atomizer,
     AtomizerTemplate
 } from "./atom";
 
-import {
+export {
     SolarisUI
-
 } from "./solaris"
 
-import {
+export {
     FileManager,
     Logger,
     LogLevel
 } from "./utils";
 
-
-
-export default SolarisUI;
-export {
-    SolarisUI,
-
-    FileManager,
-    Logger,
-    LogLevel,
-
-    Component,
-    Script,
-    String,
-    Style,
-
-    Atom,
-    Atomizer,
-    AtomizerTemplate
-}
-
+export * as templateTypes from "./types/templates.d";

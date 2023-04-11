@@ -15,6 +15,10 @@ This alpha has Bug fixes and minor changes.
 - Templates was moved outside of the `src` folder.
 - Builds are located in cwd by default.
 
+### Added
+- `createComponent<T>` method added to SolarisUI class.
+- Template types added
+
 # [1.0.1-alpha.4] - 09-04-2023
 ## [Unreleased]
 The project is going under various changes. 

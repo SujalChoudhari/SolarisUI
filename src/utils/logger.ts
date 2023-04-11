@@ -10,7 +10,6 @@ export enum LogLevel {
     ERROR,
 }
 
-
 /**
  * Logger
  * -----

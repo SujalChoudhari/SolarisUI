@@ -20,12 +20,12 @@ class SolarisUI {
 
 	// Utility functions
 	public static createPage(
-			title: string,
-			url: string,
-			meta?: { [key: string]: string },
-			defaultPageTemplateFolderIndex?: 0,
-			defaultBodyTemplateFolderIndex?: 0,
-			defaultHeadTemplateFolderIndex?: 0): Component {
+		title: string,
+		url: string,
+		meta?: { [key: string]: string },
+		defaultPageTemplateFolderIndex?: 0,
+		defaultBodyTemplateFolderIndex?: 0,
+		defaultHeadTemplateFolderIndex?: 0): Component {
 		const headComponent = new Atom(Atomizer.templates[defaultHeadTemplateFolderIndex || 0].head, {
 			title: title, meta: meta, templatestyles: `
 			<link rel="stylesheet" href="./userStyles.css">
@@ -41,9 +41,28 @@ class SolarisUI {
 		return page;
 	}
 
+	/**
+	 * Creates a component from a given template name and props.
+	 * @template T - The type of props to be passed.
+	 * @param {string} templateName - The name of the template to be used.
+	 * @param {T} props - The props to be passed to the component.
+	 * @returns {Component} - The component tree.
+	 * 
+	 * @example
+	 * ```ts
+	 * const component = SolarisUI.createComponent<ButtonTemplate>("button", { text: "Click me!" });
+	 */
+	public static createComponent<T extends { [key: string]: any }>(
+		templateName: string,
+		props: T
+	):Component {
+		let atom = new Atom(Atomizer.getTemplate(templateName), props);
+		let component = Atomizer.buildComponentTreeFromAtom(atom);
+		return component;
+	}
 
 	/**
- 	* Builds the pages in the project.
+	  * Builds the pages in the project.
 	* @param name The name of the project.
 	* @param pages The pages of the project.
 	*/
