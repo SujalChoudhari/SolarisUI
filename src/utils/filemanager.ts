@@ -141,7 +141,7 @@ export default class FileManager {
      * @param srcPathType The type of the source path, relative or absolute. Default is relative
      */
     public copyFile(srcPath: string, destPath: string, srcPathType: "relative" | "absolute" = "relative"): void {
-        const contents = this.readFile(srcPathType === "relative" ? path.join(process.cwd(), srcPath) : srcPath);
+        const contents = this.readFile(srcPath);
         if (contents === null) {
             Logger.warn(__filename, "Failed to read file");
             return;

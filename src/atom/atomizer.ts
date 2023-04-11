@@ -39,13 +39,11 @@ export default class Atomizer {
         jsDir: string
     }] = [{ baseDir: `${__dirname}/../../templates/`, htmlDir: "", cssDir: "css", jsDir: "js" }];
 
-    public static templateFilesToInclude: string[] = [];
-
+    public static filesToInclude: Set<string> = new Set<string>();
     /**
      * The preloaded templates (the default ones)
      */
     public static templates: { [key: string]: AtomizerTemplate }[] = Atomizer.preloadTemplates();
-
 
     /**
      * Load a template from the template folder
@@ -54,44 +52,32 @@ export default class Atomizer {
      */
     public static loadTemplate(filename: string, templateFolderIndex: number): AtomizerTemplate {
         const fm = new FileManager(Atomizer.templateFolders[templateFolderIndex].baseDir);
-        const newName = filename;
-        const template = fm.readFile(newName);
+        const template = fm.readFile(filename);
         if (template == null) {
-            Logger.error(__filename, `Template ${newName} not found`);
+            Logger.error(__filename, `Template ${filename} not found`);
             return null;
         }
 
-        let baseName = newName.split(".")[0];
-        if (fs.existsSync(Atomizer.templateFolders[templateFolderIndex].baseDir
-            + Atomizer.templateFolders[templateFolderIndex].cssDir
-            + "/"
-            + baseName
-            + ".css")) {
-            Atomizer.templateFilesToInclude.push(
-                Atomizer.templateFolders[templateFolderIndex].baseDir
-                + Atomizer.templateFolders[templateFolderIndex].cssDir
-                + "/"
-                + baseName
-                + ".css");
+        const baseName = path.basename(filename).split(".")[0];
+        const { baseDir, cssDir, jsDir } = Atomizer.templateFolders[templateFolderIndex];
+
+
+        const cssFile = path.join(baseDir, cssDir, baseName + ".css");
+        const jsFile = path.join(baseDir, jsDir, baseName + ".js");
+
+        
+        if (fs.existsSync(cssFile)) {
+            Atomizer.filesToInclude.add(cssFile);
+        }
+        
+        if (fs.existsSync(jsFile)) {
+            Atomizer.filesToInclude.add(jsFile);
         }
 
-        if (fs.existsSync(Atomizer.templateFolders[templateFolderIndex].baseDir
-            + Atomizer.templateFolders[templateFolderIndex].jsDir
-            + "/"
-            + baseName
-            + ".js")) {
-            Atomizer.templateFilesToInclude.push(
-                Atomizer.templateFolders[templateFolderIndex].baseDir
-                + Atomizer.templateFolders[templateFolderIndex].jsDir
-                + "/"
-                + baseName
-                + ".js");
-        }
-
-
-        Logger.info(__filename, `Template ${newName} loaded`);
+        Logger.info(__filename, `Template ${filename} loaded`);
         return template;
     }
+
 
     /**
      * Preload All the templates from the template folder.
@@ -131,7 +117,7 @@ export default class Atomizer {
                 }
             });
 
-            Logger.info(__filename, `Templates loaded from ${templateFolder.baseDir}`);
+            Logger.info(__filename, `Templates loaded from ${path.normalize(templateFolder.baseDir)}`);
             templatesArray.push(templates);
         });
 
@@ -170,7 +156,6 @@ export default class Atomizer {
     }) {
         if (!Atomizer.templateFolders.find((folder) => folder.baseDir === templateFolder.baseDir)) {
             Atomizer.templateFolders.push(templateFolder);
-            console.log(Atomizer.templateFolders)
             Atomizer.templates.push(Atomizer.preloadTemplates()[Atomizer.templateFolders.length - 1]);
         }
         else {
@@ -190,34 +175,33 @@ export default class Atomizer {
     If no template is found, an error message is logged and an empty string is returned.
     @author Ansh Sharma
     */
-    public static getTemplate(templateName: string, templateFolderIndex?: 0): AtomizerTemplate {
-        const template = Atomizer.templates[templateFolderIndex || 0][templateName];
-        if (!template) {
-            const newTemplate = Atomizer.templates.map((templateFolder) => {
-                if (templateFolder[templateName]) {
-                    return templateFolder[templateName];
-                }
-            }).join("");
-            if (!newTemplate) {
-                const new_Template = Atomizer.loadTemplate(templateName, templateFolderIndex || 0);
-                if (new_Template) {
-                    Atomizer.templates[templateFolderIndex || 0][templateName] = new_Template;
-                    return new_Template;
-                }
-                else {
-                    Logger.error(__filename, `Template ${templateName} not found`);
-                    return "";
-                }
-            }
-            else {
-                return newTemplate;
-            }
-        }
-        else {
+    public static getTemplate(templateName: string, templateFolderIndex: number = 0): AtomizerTemplate {
+        const template = Atomizer.templates[templateFolderIndex][templateName];
+
+        if (template) {
             return template;
         }
 
+        const newTemplate = Atomizer.templates
+            .map(templateFolder => templateFolder[templateName])
+            .find(Boolean);
+
+        if (newTemplate) {
+            Atomizer.templates[templateFolderIndex][templateName] = newTemplate;
+            return newTemplate;
+        }
+
+        const loadedTemplate = Atomizer.loadTemplate(templateName, templateFolderIndex);
+
+        if (loadedTemplate) {
+            Atomizer.templates[templateFolderIndex][templateName] = loadedTemplate;
+            return loadedTemplate;
+        }
+
+        Logger.error(__filename, `Template ${templateName} not found`);
+        return "";
     }
+
 
     /**
      * Build the component tree from the HTML string.

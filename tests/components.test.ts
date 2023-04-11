@@ -4,10 +4,10 @@ import { Article1Template, Article2Template, AvatarTemplate, BannerTemplate, Blo
 
 describe("Solaris", () => {
     var page: Component;
-    sui.Logger.logLevel = sui.LogLevel.ERROR;
+    sui.Logger.logLevel = sui.LogLevel.DEBUG;
 
     beforeEach(() => {
-        sui.Atomizer.addTemplateFolder({ baseDir: "tests/temp", htmlDir: "", cssDir: "/css/", jsDir: "/js/" });
+        sui.Atomizer.addTemplateFolder({ baseDir: `${__dirname}/temp`, htmlDir: "", cssDir: "/css/", jsDir: "/js/" });
         page = sui.SolarisUI.createPage(
             "Index Page",
             "index.html",

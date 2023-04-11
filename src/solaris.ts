@@ -88,16 +88,18 @@ class SolarisUI {
 			fm.removeDirectory(templateDirectory);
 		}
 		fm.createDirectory(templateDirectory);
-		Array.from(new Set(Atomizer.templateFilesToInclude)).forEach((file) => {
-			fm.copyFile(file, templateDirectory);
-			const baseName = path.basename(file);
-			const extension = path.extname(file);
-			if (extension == ".js") {
-				new Script("external", `./templates/${baseName}`);
-			} else if (extension == ".css") {
-				new Style("external", `./templates/${baseName}`);
+
+		// Copy template files
+		Atomizer.filesToInclude.forEach((file) => {
+			let destPath = path.join(templateDirectory, path.basename(file));
+			fm.copyFile(file, destPath);
+			const ext = path.extname(file);
+			if (ext === ".css") {
+				new Style("external", `./templates/${path.basename(file)}`)
 			}
-			console.log(baseName, extension);
+			else if (ext === ".js") {
+				new Script("external", `./templates/${path.basename(file)}`)
+			}
 		});
 
 		// Create HTML files
