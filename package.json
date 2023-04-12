@@ -24,10 +24,6 @@
     "prepublish": "tsc"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "ansi-colors": "^4.1.3",
-=======
->>>>>>> 1c7b44d62fcfa0104255153e1a6e2d65e90f4c27
     "htmlparser2": "^8.0.2",
     "mustache": "^4.2.0",
     "typedoc-theme-yaf": "^0.0.4",
