@@ -1,11 +1,8 @@
-import { Component, Script, Style } from "./components";
 import fs from "fs";
-import FileManager from "./utils/filemanager";
-import Logger from "./utils/logger";
-import { Atom, Atomizer } from "./atom";
-import StyleManager from "./utils/stylemanager";
-import ScriptManager from "./utils/scriptmanager";
 import path from "path";
+import { Component, Script, Style } from "./components";
+import { Atom, Atomizer } from "./atom";
+import { StyleManager, ScriptManager, Logger, FileManager } from "./utils";
 
 /**
  * @class Sloaris

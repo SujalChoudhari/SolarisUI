@@ -1,7 +1,4 @@
-import FileManager from "../utils/filemanager";
 import Logger from "../utils/logger";
-import Style from "./styles";
-
 
 /**
  * Component
@@ -20,7 +17,6 @@ import Style from "./styles";
  *
  * var myComponent = new Component("div",{"id":"my-component"});
  * ```
- *
  * @author Sujal Choudhari <sjlchoudhari@gmail.com>
  */
 export default class Component {
@@ -78,18 +74,17 @@ export default class Component {
 	}
 
 	/**
-		 * Get the attributes of the component
-		 * @returns Object containing all the attributes of the component
-		 * 
-		 * @example
-		 * ```js
-		 * var myComponent = new Component("div",{"id":"my-component"});
-
-		 * var attributes = myComponent.getAttributes(); // a div component
-		 * console.log(attributes); // {"id":"my-component"}; 
-		 * 
-		 * ```
-		 */
+	 * Get the attributes of the component
+	 * @returns Object containing all the attributes of the component
+	 * 
+	 * @example
+	 * ```js
+	 * var myComponent = new Component("div",{"id":"my-component"});
+	 * var attributes = myComponent.getAttributes(); // a div component
+	 * console.log(attributes); // {"id":"my-component"}; 
+	 * 
+	 * ```
+	 */
 	public getAttributes(): { [key: string]: string } {
 		return this.attribute;
 	}
@@ -238,16 +233,16 @@ export default class Component {
 			html += ` ${key}="${this.attribute[key]}"`;
 		}
 		html += ">\n";
-	
+
 		// Append children HTML recursively
 		for (const child of this.children) {
 			html += "\t" + child.toString().replace(/\n/g, "\n\t") + "\n";
 		}
-	
+
 		// Close the tag
 		html += `</${this.tag}>`;
-	
+
 		return html;
 	}
-	
+
 }

@@ -1,4 +1,3 @@
-import FileManager from "./filemanager";
 import fs from 'fs';
 
 export enum LogLevel {

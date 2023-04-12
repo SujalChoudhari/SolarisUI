@@ -1,6 +1,6 @@
 import { Component } from "../src/components";
 import * as sui from "../src/index";
-import { Article1Template, Article2Template, AvatarTemplate, BannerTemplate, BlogTemplate, ButtonTemplate, BreadcrumbTemplate, CallToActionTemplate, HeaderTemplate, FooterBigTemplate, FooterTemplate, GalleryTemplate, CardTemplate, CarouselTemplate, ErrorTemplate, FAQTemplate, FeatureTemplate } from "../src/types/templates";
+import { Article1Template, Article2Template, AvatarTemplate, BannerTemplate, BlogTemplate, ButtonTemplate, BreadcrumbTemplate, CallToActionTemplate, HeaderTemplate, FooterBigTemplate, FooterTemplate, GalleryTemplate, CardTemplate, CarouselTemplate, ErrorTemplate, FAQTemplate, FeatureTemplate, TableTemplate } from "../src/types/templates";
 
 describe("Solaris", () => {
     var page: Component;
@@ -468,6 +468,22 @@ describe("Solaris", () => {
         sui.SolarisUI.buildProject("Components", [page]);
     });
 
+    test("table", () => {
+        const page = sui.SolarisUI.createPage("Table","index.html");
+        page.children[1].addChildren(sui.SolarisUI.createComponent<TableTemplate>("table", {
+            title: "",
+            rows: [
+                {
+                    data: ["Data1", "Data2", "Data3"]
+                },
+                {
+                    data: ["Data2", "Data2", "Data3"]
+                }
+            ],
+            header: ["Header1", "Header2", "Header3"]
+        }));
+        sui.SolarisUI.buildProject("Components", [page],"lazy");
+    });
 
 });
 

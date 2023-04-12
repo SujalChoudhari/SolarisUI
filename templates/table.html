@@ -1,0 +1,25 @@
+<div class="container p-2 mx-auto sm:p-4 dark:text-gray-100">
+	<h2 class="mb-4 text-2xl font-semibold leading-tight">{{title}}</h2>
+	<div class="overflow-x-auto">
+		<table class="min-w-full text-xs">
+			<thead class="dark:bg-gray-700">
+				<tr class="text-left">
+                    {{#header}}
+					<th class="p-3 text-white">{{&.}}</th>
+                    {{/header}}
+				</tr>
+			</thead>
+			<tbody>
+                {{#rows}}
+				<tr class="border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-900">
+					{{#data}}
+                    <td class="p-3 text-white">
+						{{&.}}
+					</td>
+					{{/data}}
+				</tr>
+				{{/rows}}
+			</tbody>
+		</table>
+	</div>
+</div>

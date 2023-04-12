@@ -131,3 +131,11 @@ export type HeaderTemplate = {
     links: Array<{title: string, link: string}>,
     imgUrl: string,
 }
+
+export type TableTemplate = {
+    title: string;
+    header: string[];
+    rows: Array<{
+        data: string[];
+    }>;
+};
