@@ -20,7 +20,7 @@
  * ### Style
  * Style is the representation of a single CSS style.
  * A style can be either inline or external.
- * 
+ * [[include:Components.md]]
  * @license MIT license
  */
 

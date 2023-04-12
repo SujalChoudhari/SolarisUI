@@ -1,13 +1,11 @@
-import { type } from "os";
-
-export type Article1Props = {
+export type Article1Template = {
     title?: string;
     imgUrl?: string;
     author?: string;
     description?: string;
 }
 
-export type Article2Props = {
+export type Article2Template = {
     title?: string,
     tags?: Array<
         {
@@ -21,18 +19,18 @@ export type Article2Props = {
     date?: string,
 }
 
-export type AvatarProps = {
+export type AvatarTemplate = {
     images?: Array<string>,
     moreNum?: number
 }
 
-export type BannerProps = {
+export type BannerTemplate = {
     title: string,
     content: string,
     children: Array<string>,
 }
 
-export type BlogProps = {
+export type BlogTemplate = {
     title: string,
     imgUrl: string,
     description: string,
@@ -47,7 +45,7 @@ export type BlogProps = {
     >,
 }
 
-export type BreadcrumbProps = {
+export type BreadcrumbTemplate = {
 
     title: string,
     link: string,
@@ -57,31 +55,31 @@ export type BreadcrumbProps = {
 
 }
 
-export type ButtonProps = {
+export type ButtonTemplate = {
     text: string
 }
 
-export type CallToActionProps = {
+export type CallToActionTemplate = {
     title: string,
     call: string,
 }
 
-export type CardProps = {
+export type CardTemplate = {
     tag: string,
     title: string,
     imgUrl: string,
     description: string,
 }
 
-export type CarouselProps = {
+export type CarouselTemplate = {
     images: Array<string>
 }
 
-export type ErrorProps = {
+export type ErrorTemplate = {
     url: string,
 }
 
-export type FAQProps = {
+export type FAQTemplate = {
     tag: string,
     faqs: Array<
         {
@@ -91,14 +89,14 @@ export type FAQProps = {
     >
 }
 
-export type FeatureProps = {
+export type FeatureTemplate = {
     imgUrl: string,
     features: Array<
         { title: string, description: string }
     >
 }
 
-export type FooterBigProps = {
+export type FooterBigTemplate = {
     note: string,
     columns: Array<
         {
@@ -110,7 +108,7 @@ export type FooterBigProps = {
         }>
 }
 
-export type FooterProps = {
+export type FooterTemplate = {
     imgUrl: string,
     links: Array<
         { title: string, link: string }
@@ -120,7 +118,7 @@ export type FooterProps = {
     >
 }
 
-export type GalleryProps = {
+export type GalleryTemplate = {
     images: Array<
         {
             imgUrl: "https://source.unsplash.com/random/480x360",
@@ -129,7 +127,15 @@ export type GalleryProps = {
     >
 }
 
-export type HeaderProps = {
+export type HeaderTemplate = {
     links: Array<{title: string, link: string}>,
     imgUrl: string,
 }
+
+export type TableTemplate = {
+    title: string;
+    header: string[];
+    rows: Array<{
+        data: string[];
+    }>;
+};

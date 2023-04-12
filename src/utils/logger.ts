@@ -1,3 +1,4 @@
+import FileManager from "./filemanager";
 import fs from 'fs';
 import { red, yellow, green, blue, cyan, gray, bold, italic, redBright, yellowBright, cyanBright, blueBright, greenBright } from 'ansi-colors';
 export enum LogLevel {
@@ -7,7 +8,6 @@ export enum LogLevel {
     WARNING,
     ERROR,
 }
-
 
 /**
  * Logger
@@ -19,6 +19,20 @@ export enum LogLevel {
 export default class Logger {
     public static logLevel: LogLevel = LogLevel.INFO;
     private static mTime: number = 0;
+
+    private static mLogColors: Record<string, string> = {
+        "[ERROR]": "\x1b[31m\x1b[1m",
+        "[WARN]": "\x1b[33m\x1b[1m",
+        "[TIME]": "\x1b[36m\x1b[1m",
+        "[DEBUG]": "\x1b[34m\x1b[1m",
+        "[INFO]": "\x1b[32m\x1b[1m",
+    };
+
+    private static mResetColor = "\x1b[0m";
+    private static mBoldText = "\x1b[1m";
+    private static mItalicText = "\x1b[3m";
+
+
     public static debug(filename: string, ...message: string[]): void {
         if (Logger.logLevel <= 0)
             Logger.write("[DEBUG]", filename, ...message);
@@ -29,9 +43,9 @@ export default class Logger {
             Logger.write("[INFO]", filename, ...message);
     }
 
-    public static time(filename: string,... message:string[]): void {
+    public static time(filename: string, ...message: string[]): void {
         if (Logger.logLevel <= 2)
-            Logger.write("[TIME]", filename,...message, `${Date.now() - Logger.mTime}ms`);
+            Logger.write("[TIME]", filename, ...message, `${Logger.end()}ms`);
     }
 
     public static warn(filename: string, ...message: string[]): void {
@@ -47,51 +61,33 @@ export default class Logger {
 
 
     private static write(type: string, filename: string, ...message: string[]): void {
-        if (type == "[ERROR]")
-            console.log(
-                redBright(bold(type)),
-                gray(italic(`(${filename})\n\t`)),
-                red(message.join(" "))
-            )
-        else if (type == "[WARN]")
-            console.log(
-                yellowBright(bold(type)),
-                gray(italic(`(${filename})\n\t`)),
-                yellow(message.join(" "))
-            )
-        else if (type == "[TIME]")
-            console.log(
-                cyanBright(bold(type)),
-                gray(italic(`(${filename})\n\t`)),
-                cyan(message.join(" "))
-            )
-        else if (type == "[DEBUG]")
-            console.log(
-                blueBright(bold(type)),
-                gray(italic(`(${filename})\n\t`)),
-                blue(message.join(" "))
-            )
-        else if (type == "[INFO]")
-            console.log(
-                greenBright(bold(type)),
-                gray(italic(`(${filename})\n\t`)),
-                green(message.join(" "))
-            )
 
+        const currentTime = new Date();
+        const logFilePath = `./logs/${currentTime.getFullYear()}-${currentTime.getMonth()}-${currentTime.getDate()}-${currentTime.getHours()}-${currentTime.getMinutes()}.log`;
+        const logMessage = `${type}:\t(${filename})\t ${message.join(" ")}\n`;
 
-        if (!fs.existsSync('./logs'))
-            fs.mkdirSync("./logs")
+        // Write to console
+        const logColor = Logger.mLogColors[type] || "";
 
-        const date = new Date();
-        const filePath = `./logs/${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${date.getHours()}-${date.getMinutes()}.log`;
+        console.log(
+            `${logColor}${Logger.mBoldText}${type}${Logger.mResetColor}`,
+            `${Logger.mItalicText}(${filename})${Logger.mResetColor}\n\t`,
+            `${logColor}${message.join(" ")}${Logger.mResetColor}`);
 
-        if (!fs.existsSync(filePath))
-            fs.writeFileSync(filePath, `=====Log file created at ${date.toDateString()} ${date.toTimeString()}=====\n\n`);
-
-        fs.appendFileSync(filePath, `${type}:\t(${filename})\t ${message.join(" ")}\n`);
+        // Write to file
+        if (!fs.existsSync("./logs")) {
+            fs.mkdirSync("./logs");
+        }
+        if (!fs.existsSync(logFilePath)) {
+            fs.writeFileSync(logFilePath, `=====Log file created at ${currentTime.toDateString()} ${currentTime.toTimeString()}=====\n\n`);
+        }
+        fs.appendFileSync(logFilePath, logMessage);
     }
 
 
+    /**
+     * Starts the timer for the Logger.time() function
+     */
     public static start() {
         Logger.mTime = Date.now();
     }
@@ -100,7 +96,7 @@ export default class Logger {
      * 
      * @returns The time elapsed since the last call to Logger.start() in milliseconds
      */
-    public static end(): number {
+    private static end(): number {
         return Date.now() - Logger.mTime;
     }
 

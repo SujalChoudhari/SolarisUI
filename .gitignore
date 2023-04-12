@@ -7,3 +7,5 @@
 # Logs
 /logs
 *.log
+/builds/
+/build/
