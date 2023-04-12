@@ -1,4 +1,4 @@
-<div class="relative flex items-center justify-center w-full dark:text-gray-50">
+<!-- <div id="solaris-template-carousel" class="relative flex items-center justify-center w-full dark:text-gray-50">
 	<button aria-label="Slide back" type="button" class="absolute left-0 z-30 p-2 ml-10 focus:outline-none focus:dark:bg-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-400">
 		<svg width="8" height="14" fill="none" viewBox="0 0 8 14" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
 			<path d="M7 1L1 7L7 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -16,4 +16,20 @@
 			<path d="M1 1L7 7L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
 		</svg>
 	</button>
+</div> -->
+
+<div class="slider-container">
+
+	<div class="slider-content">
+		{{#images}}
+		<div class="slider-single">
+			<img class="slider-single-image" src="{{.}}" alt="1" />
+			<!-- <h1 class="slider-single-title">Through the Mountains</h1>
+            <a class="slider-single-likes" href="javascript:void(0);">
+                <i class="fa fa-heart"></i>
+                <p>1,247</p>
+            </a> -->
+		</div>
+		{{/images}}
+	</div>
 </div>

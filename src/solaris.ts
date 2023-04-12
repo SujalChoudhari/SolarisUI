@@ -126,7 +126,7 @@ class SolarisUI {
 				new Style("external", `./templates/${path.basename(file)}`)
 			}
 			else if (ext === ".js") {
-				new Script("external", `./templates/${path.basename(file)}`)
+				new Script("external", `./templates/${path.basename(file)}`, "", { type: "module" })
 			}
 		});
 
