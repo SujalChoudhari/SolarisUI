@@ -232,16 +232,22 @@ export default class Component {
 	 * @returns converted string representation
 	 */
 	public toString(): string {
-		// return a html string including the tags and attributes and children. format it well
-		let html = "<" + this.tag;
+		// Initialize HTML string with opening tag and attributes
+		let html = `<${this.tag}`;
 		for (const key in this.attribute) {
-			html += " " + key + '="' + this.attribute[key] + '"';
+			html += ` ${key}="${this.attribute[key]}"`;
 		}
-		html += ">";
+		html += ">\n";
+	
+		// Append children HTML recursively
 		for (const child of this.children) {
-			html += child.toString();
+			html += "\t" + child.toString().replace(/\n/g, "\n\t") + "\n";
 		}
-		html += "</" + this.tag + ">";
+	
+		// Close the tag
+		html += `</${this.tag}>`;
+	
 		return html;
 	}
+	
 }

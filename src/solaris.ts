@@ -55,7 +55,7 @@ class SolarisUI {
 	public static createComponent<T extends { [key: string]: any }>(
 		templateName: string,
 		props: T
-	):Component {
+	): Component {
 		let atom = new Atom(Atomizer.getTemplate(templateName), props);
 		let component = Atomizer.buildComponentTreeFromAtom(atom);
 		return component;
@@ -65,13 +65,44 @@ class SolarisUI {
 	  * Builds the pages in the project.
 	* @param name The name of the project.
 	* @param pages The pages of the project.
+	* @param buildType The type of build to be done. 
+	* lazy - Only the html of the pages is redone
+	* full - The entire project is rebuilt.
 	*/
-	public static buildProject(name: string, pages: Component[]): void {
+	public static buildProject(name: string, pages: Component[], buildType: "lazy" | "full" = "full"): void {
 		Logger.start();
 		// Create FileManager object
 		const fm = new FileManager();
 
 		// Create build directory if it doesn't exist
+		if (!fs.existsSync(`builds/${name}`) || buildType === "full") {
+			fm.createDirectory("builds");
+			this.fullBuild(fm, name, pages);
+		}
+		else {
+			this.lazyBuild(fm, name, pages);
+		}
+		Logger.time(__filename, "Build completed in");
+	}
+
+	private static lazyBuild(fm: FileManager, name: string, pages: Component[]) {
+		// Create HTML files
+		Logger.info(__filename, "Creating HTML files");
+		const styles = new Set(StyleManager.getExternalStyles());
+		const scripts = new Set(ScriptManager.getExternalScripts());
+		pages.forEach((page) => {
+			page.children[0].addChildren(
+				...Array.from(styles).map((style) => new Component("link", { rel: "stylesheet", href: style.url }))
+			);
+			page.children[1].addChildren(
+				...Array.from(scripts).map((script) => new Component("script", { src: script.url, ...(script.params) }))
+			);
+			fm.createFile(`builds/${name}/${page.getAttribute("id")}`, page.toString());
+		});
+	}
+
+	private static fullBuild(fm: FileManager, name: string, pages: Component[]) {
+
 		if (!fs.existsSync("builds")) {
 			fm.createDirectory("builds");
 		}
@@ -103,18 +134,7 @@ class SolarisUI {
 		});
 
 		// Create HTML files
-		Logger.info(__filename, "Creating HTML files");
-		const styles = new Set(StyleManager.getExternalStyles());
-		const scripts = new Set(ScriptManager.getExternalScripts());
-		pages.forEach((page) => {
-			page.children[0].addChildren(
-				...Array.from(styles).map((style) => new Component("link", { rel: "stylesheet", href: style.url }))
-			);
-			page.children[1].addChildren(
-				...Array.from(scripts).map((script) => new Component("script", { src: script.url, ...(script.params) }))
-			);
-			fm.createFile(`builds/${name}/${page.getAttribute("id")}`, page.toString());
-		});
+		this.lazyBuild(fm, name, pages);
 
 		// Create CSS file
 		Logger.info(__filename, "Creating CSS files");
@@ -134,7 +154,6 @@ class SolarisUI {
 		Logger.info(__filename, "Copying public folders");
 		fm.copyTree("public", `builds/${name}/`);
 
-		Logger.time(__filename, "Build completed in");
 	}
 }
 

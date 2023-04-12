@@ -65,11 +65,11 @@ export default class Atomizer {
         const cssFile = path.join(baseDir, cssDir, baseName + ".css");
         const jsFile = path.join(baseDir, jsDir, baseName + ".js");
 
-        
+
         if (fs.existsSync(cssFile)) {
             Atomizer.filesToInclude.add(cssFile);
         }
-        
+
         if (fs.existsSync(jsFile)) {
             Atomizer.filesToInclude.add(jsFile);
         }
@@ -91,28 +91,25 @@ export default class Atomizer {
             const files = fs.readdirSync(templateFolder.baseDir, { withFileTypes: true });
 
             files.forEach(file => {
-                if (!file.isDirectory()) {
-                    let newKey = file.name.split(".")[0];
+                if (file.isDirectory() && file.name === templateFolder.htmlDir) {
+                    const htmlFiles = fs.readdirSync(path.join(templateFolder.baseDir, templateFolder.htmlDir), { withFileTypes: true });
+
+                    htmlFiles.forEach(htmlFile => {
+                        if (!htmlFile.isDirectory()) {
+                            const newKey = htmlFile.name.split(".")[0];
+                            if (templateFolder.htmlDir !== "") {
+                                const template = Atomizer.loadTemplate(path.join(templateFolder.baseDir, templateFolder.htmlDir, htmlFile.name), index);
+                                if (template != null) {
+                                    templates[newKey] = template;
+                                }
+                            }
+                        }
+                    });
+                } else if (!file.isDirectory()) {
+                    const newKey = file.name.split(".")[0];
                     const template = Atomizer.loadTemplate(path.join(templateFolder.baseDir, file.name), index);
                     if (template != null) {
                         templates[newKey] = template;
-                    }
-                } else {
-                    if (file.name === templateFolder.htmlDir) {
-                        const htmlFiles = fs.readdirSync(path.join(templateFolder.baseDir, templateFolder.htmlDir), { withFileTypes: true });
-
-                        htmlFiles.forEach(htmlFile => {
-                            if (!htmlFile.isDirectory()) {
-                                let newKey = htmlFile.name.split(".")[0];
-                                if (templateFolder.htmlDir != "") {
-                                    const template = Atomizer.loadTemplate(path.join(templateFolder.baseDir, templateFolder.htmlDir, htmlFile.name), index);
-
-                                    if (template != null) {
-                                        templates[newKey] = template;
-                                    }
-                                }
-                            }
-                        });
                     }
                 }
             });

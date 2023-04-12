@@ -142,7 +142,7 @@ describe("Solaris", () => {
         } as BlogTemplate);
 
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
-        sui.SolarisUI.buildProject("Components", [page])
+        sui.SolarisUI.buildProject("Components", [page],"lazy")
     });
 
     test("breadcrumb", () => {
