@@ -1,7 +1,5 @@
-import FileManager from "./filemanager";
 import fs from 'fs';
-
-import { red, yellow, green, blue, cyan, gray, magentaBright, bold, underline, italic, redBright, yellowBright, cyanBright, blueBright, greenBright } from 'colorette';
+import { red, yellow, green, blue, cyan, gray, bold, italic, redBright, yellowBright, cyanBright, blueBright, greenBright } from 'ansi-colors';
 export enum LogLevel {
     DEBUG,
     INFO,

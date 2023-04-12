@@ -109,7 +109,6 @@ export default class Atomizer {
                         templates[newKey] = template;
                 }
                 else if (file.isDirectory()) {
-                    console.log(file.name);
                     if (file.name === templateFolder.htmlDir) {
                         const htmlFiles = fs.readdirSync(templateFolder.baseDir + templateFolder.htmlDir, { withFileTypes: true });
 
@@ -163,7 +162,6 @@ If the baseDir already exists in Atomizer.templateFolders, a warning is logged.
     }) {
         if (!Atomizer.templateFolders.find((folder) => folder.baseDir === templateFolder.baseDir)) {
             Atomizer.templateFolders.push(templateFolder);
-            console.log(Atomizer.templateFolders)
             Atomizer.templates.push(Atomizer.preloadTemplates()[Atomizer.templateFolders.length - 1]);
         }
         else {

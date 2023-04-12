@@ -78,7 +78,6 @@ class SolarisUI {
 			} else if (extension == ".css") {
 				new Style("external", `./templates/${baseName}`);
 			}
-			console.log(baseName, extension);
 		});
 
 		// Create HTML files
