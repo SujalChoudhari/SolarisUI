@@ -89,7 +89,7 @@ class SolarisUI {
 		}
 		fm.createDirectory(templateDirectory);
 
-		// Copy template files
+		Logger.info(__filename, "Copying template files");
 		Atomizer.filesToInclude.forEach((file) => {
 			let destPath = path.join(templateDirectory, path.basename(file));
 			fm.copyFile(file, destPath);

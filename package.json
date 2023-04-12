@@ -24,7 +24,6 @@
     "prepublish": "tsc"
   },
   "dependencies": {
-    "colorette": "^2.0.19",
     "htmlparser2": "^8.0.2",
     "mustache": "^4.2.0",
     "typescript": "^5.0.2"
