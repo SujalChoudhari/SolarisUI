@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utils/filemanager.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils/filemanager.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
+    return (mod &amp;&amp; mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
+const logger_1 = __importDefault(require("./logger"));
+/**
+ * FileManager
+ * -----
+ * A class dedicated for handling files and directories
+ * This class is responsible for managing project folders, copying files from source to build folders.
+ * @author Sujal Choudhari &lt;sujalchoudhari@gmail.com>
+*/
+class FileManager {
+    /**
+     * Absolute path to current working directory
+     */
+    basePath;
+    /**
+     * Creare a new instance of FileManager
+     * While creating a new instance of FileManager, base path will be automatically
+     * set to the current working directory.
+     */
+    constructor(basepath = "") {
+        if (basepath == "")
+            this.basePath = path_1.default.resolve(process.cwd());
+        else
+            this.basePath = path_1.default.resolve(basepath);
+    }
+    /**
+     * Convert relative path to absolute path
+     * @param relativePath The relative path of any file or directory
+     * @returns The abosolute path of the file or directory.
+     * @deprecated No not use this method. Will be removed in future versions
+     */
+    getAbsolutePath(relativePath) {
+        return path_1.default.resolve(this.basePath, relativePath);
+    }
+    /**
+     * Read a file synchronously
+     * @param path relative path of the file or directory
+     * @returns the contents of the file or directory. `null`if file is not found
+     */
+    readFile(path) {
+        if (!fs_1.default.existsSync(path)) {
+            logger_1.default.warn(__filename, `Given file: ${path} does not exist`);
+            return null;
+        }
+        try {
+            return fs_1.default.readFileSync(path, 'utf8');
+        }
+        catch (err) {
+            logger_1.default.warn(__filename, `Error reading file: ${err}`);
+            return null;
+        }
+    }
+    /**
+     * Create a new directory
+     * @param path Path at which the directory should be created. The name of the directory should be
+     * included in the path
+     */
+    createDirectory(path) {
+        fs_1.default.mkdirSync(path, { recursive: true });
+    }
+    /**
+     * Copy the directory from source to destination
+     * @param srcPath THe source path of the directory
+     * @param destPath the final destination path
+     */
+    copyDirectory(srcPath, destPath) {
+        if (!fs_1.default.existsSync(srcPath)) {
+            logger_1.default.warn(__filename, `Source directory ${srcPath} does not exist.`);
+            return;
+        }
+        fs_1.default.mkdirSync(destPath, { recursive: true });
+        const entries = fs_1.default.readdirSync(srcPath, { withFileTypes: true });
+        for (const entry of entries) {
+            const srcEntryPath = path_1.default.join(srcPath, entry.name);
+            const destEntryPath = path_1.default.join(destPath, entry.name);
+            if (entry.isDirectory()) {
+                this.copyDirectory(srcEntryPath, destEntryPath);
+            }
+            else {
+                fs_1.default.copyFileSync(srcEntryPath, destEntryPath);
+            }
+        }
+    }
+    /**
+    * Get a list of names of files and in the directory and its subdirectories.
+    * @param directoryPath The path to the directory to get the names from
+    * @returns A List of the names (absolute paths)
+    *
+    * @author Ansh Sharma
+    */
+    getAllFilesInDirectory(directoryPath) {
+        if (!fs_1.default.existsSync(directoryPath)) {
+            logger_1.default.warn(__filename, `Directory ${directoryPath} does not exist.`);
+            return [];
+        }
+        const entries = fs_1.default.readdirSync(directoryPath, { withFileTypes: true });
+        const files = [];
+        for (const entry of entries) {
+            if (entry.isDirectory()) {
+                const entryPath = path_1.default.join(directoryPath, entry.name);
+                files.push(...this.getAllFilesInDirectory(entryPath));
+            }
+            else {
+                const entryPath = path_1.default.join(directoryPath, entry.name);
+                files.push(entryPath);
+            }
+        }
+        return files;
+    }
+    /**
+     * Move a file from one directory to another
+     * @param srcPath Source path
+     * @param destPath Destination path
+     */
+    moveFile(srcPath, destPath) {
+        if (!fs_1.default.existsSync(srcPath)) {
+            logger_1.default.warn(__filename, `Source file ${srcPath} does not exist.`);
+            return;
+        }
+        fs_1.default.renameSync(srcPath, destPath);
+    }
+    /**
+     * Copy a file to a destination
+     * @param srcPath Source file path
+     * @param destPath Destination file path
+     * @param srcPathType The type of the source path, relative or absolute. Default is relative
+     */
+    copyFile(srcPath, destPath, srcPathType = "relative") {
+        const contents = this.readFile(srcPath);
+        if (contents === null) {
+            logger_1.default.warn(__filename, "Failed to read file");
+            return;
+        }
+        let destFileName = path_1.default.basename(srcPath);
+        if (destPath.includes(".") &amp;&amp; !destPath.endsWith("/")) {
+            destFileName = path_1.default.basename(destPath);
+            destPath = path_1.default.dirname(destPath);
+        }
+        this.createFile(path_1.default.join(destPath, destFileName), contents);
+    }
+    /**
+     * Create a new file at the specified path
+     * @param filePath New File Path, the name of file should be included in the path.
+     * @param contents The contents of the file to create with.
+     */
+    createFile(filePath, contents) {
+        try {
+            fs_1.default.writeFileSync(filePath, contents);
+        }
+        catch (err) {
+            fs_1.default.writeFileSync(filePath, contents);
+        }
+    }
+    /**
+     * Copy the contents of the folder into another folder including subdirectories.
+     * @param srcPath Source file path
+     * @param destPath Destination path
+     */
+    copyTree(srcPath, destPath) {
+        if (!fs_1.default.existsSync(srcPath)) {
+            logger_1.default.warn(__filename, srcPath, " does not exist");
+            return;
+        }
+        if (!fs_1.default.existsSync(destPath)) {
+            fs_1.default.mkdirSync(destPath);
+        }
+        const files = fs_1.default.readdirSync(srcPath);
+        for (const file of files) {
+            const srcFile = path_1.default.join(srcPath, file);
+            const destFile = path_1.default.join(destPath, file);
+            const stat = fs_1.default.statSync(srcFile);
+            if (stat.isDirectory()) {
+                this.copyTree(srcFile, destFile);
+            }
+            else {
+                fs_1.default.copyFileSync(srcFile, destFile);
+            }
+        }
+    }
+    /**
+     * Delete the specified folder
+     * @param path Path of the directory to remove
+     * @param force Remove the directory forefully. Even if the directory is not empty.
+     */
+    removeDirectory(path, force = false) {
+        fs_1.default.rmSync(path, {
+            force: force,
+            recursive: true
+        });
+    }
+}
+exports.default = FileManager;
+//# sourceMappingURL=filemanager.js.map</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Atom.html">Atom</a></li><li><a href="Atomizer.html">Atomizer</a></li><li><a href="Component.html">Component</a></li><li><a href="FileManager.html">FileManager</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Script.html">Script</a></li><li><a href="ScriptManager.html">ScriptManager</a></li><li><a href="SolarisUI.html">SolarisUI</a></li><li><a href="Style.html">Style</a></li><li><a href="StyleManager.html">StyleManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#__createBinding">__createBinding</a></li><li><a href="global.html#__importDefault">__importDefault</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Apr 13 2023 14:11:42 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

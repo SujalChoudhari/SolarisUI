@@ -220,6 +220,9 @@ body {
     border-bottom: 2px solid #fdc84b;
     border-left: 2px solid #fdc84b;
     margin-right: -2px;
+    font-size: xx-large;
+    font-weight: bolder;
+    color: #fdc84b;
 }
 .slider-container .slider-right {
     position: absolute;
@@ -235,6 +238,9 @@ body {
     border-bottom: 2px solid #fdc84b;
     border-left: 2px solid #fdc84b;
     margin-left: -2px;
+    font-size: xx-large;
+    font-weight: bolder;
+    color: #fdc84b;
 }
 .slider-container .not-visible {
     display: none !important;

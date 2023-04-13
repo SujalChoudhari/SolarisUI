@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/component.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/component.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
+    return (mod &amp;&amp; mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const logger_1 = __importDefault(require("../utils/logger"));
+/**
+ * Component
+ * -----
+ * Represents the entire hirarchy of HTML elements
+ * Each and every html element can be expressed as a single
+ * Component or A hirarchy of components.
+ *
+ * @remarks
+ * This class hirarchy is then compiled into normal HTML code.
+ * This Component can be inherited to create newer more complex components.
+ *
+ * @example
+ * Creating A component
+ * ```js
+ *
+ * var myComponent = new Component("div",{"id":"my-component"});
+ * ```
+ * @author Sujal Choudhari &lt;sjlchoudhari@gmail.com>
+ */
+class Component {
+    /**
+     * The html tag it is supposed to represent.
+     */
+    tag;
+    /**
+     * HTMl attributes in the form of key value pairs.
+     */
+    attribute;
+    /**
+     * An array of `Component` which would be rendered as
+     * child elements of the current element
+     */
+    children;
+    props;
+    parent;
+    /**
+     * Create a new Component instance
+     * @param tag  The tag the Component belongs to. For example div,p,a,strong,etc.
+     * @param attributes The html attributes in the form of key value pairs
+     * @param children The children of the Component
+     */
+    constructor(tag, attributes = {}, children = [], parent = null) {
+        this.tag = tag;
+        this.attribute = attributes;
+        this.children = children;
+        this.parent = parent;
+        logger_1.default.info(__filename, "Created an new Component", this.tag);
+    }
+    /**
+     * Get the tag name
+     * @returns the tag of the component
+     *
+     * @example
+     * ```js
+     * var tag = myComponent.getTag(); // a div component
+     * console.log(tag); // div
+     * ```
+     */
+    getTag() {
+        return this.tag;
+    }
+    /**
+     * Get the attributes of the component
+     * @returns Object containing all the attributes of the component
+     *
+     * @example
+     * ```js
+     * var myComponent = new Component("div",{"id":"my-component"});
+     * var attributes = myComponent.getAttributes(); // a div component
+     * console.log(attributes); // {"id":"my-component"};
+     *
+     * ```
+     */
+    getAttributes() {
+        return this.attribute;
+    }
+    /**
+     * Get the children of the component
+     * @returns List of all the Childrens of the component
+     */
+    getChildren() {
+        return this.children;
+    }
+    /**
+     * Get the parent of the component
+     * @returns Parent of the component
+     */
+    getParent() {
+        return this.parent;
+    }
+    /**
+     * Sets or Creates a new attribute on the component
+     * @param name nmae of the attribute to set
+     * @param value the value of the attribute to set
+     *
+     * @example
+     * ```js
+     *
+     * var myComponent = new Component("p");
+     * myComponent.setAttribute("class", "my-component para lg:mx-5 sm:mx-1");
+     * myComponent.setAttribute("id","my-unique-id");
+     *
+     * ```
+     */
+    setAttribute(name, value) {
+        this.attribute[name] = value;
+    }
+    /**
+     * Get the value of the attribute at the specified name
+     * @param name the value of the attribute to get
+     * @returns the value of the attribute
+     */
+    getAttribute(name) {
+        return this.attribute[name];
+    }
+    /**
+     * Remove the attribute at the specified name
+     * @param name Attribute to remove from the component
+     */
+    removeAttribute(name) {
+        delete this.attribute[name];
+    }
+    /**
+     * Add a new child to the component
+     * @param child Add a child to the component. Child can be of any level of inheritance of component.
+     *
+     * @example
+     * ```js
+     *  var component1 = new Component("div"); // parent component
+     *  var component2 = new Component("p"); // child component
+     *  component1.addChild(component2);
+     *
+     * ```
+     * @deprecated Use `addChildren` instead
+     */
+    addChild(child) {
+        child.parent = this;
+        this.children.push(child);
+        logger_1.default.info(__filename, "Adding " + child.getTag() + " to component ", this.tag);
+        logger_1.default.warn(__filename, "addChild is deprecated");
+    }
+    /**
+     * Add multiple children to the component
+     * @param childrenToAdd  A destructured list of components to add as children
+     *
+     * @example
+     * ```js
+     *  var component1 = new Component("div"); // parent component
+     *  var component2 = new Component("p"); // child component
+     *  component1.addChildren(component2);
+     *
+     * ```
+     */
+    addChildren(...childrenToAdd) {
+        childrenToAdd.forEach((child) => {
+            child.parent = this;
+        });
+        this.children.push(...childrenToAdd);
+        logger_1.default.info(__filename, "Adding " + childrenToAdd.length + " children to component ", this.tag);
+    }
+    /**
+     * Remove the child from the parent.
+     * Note if the child is not refrenced anywhere but only by the parent, then remove it will delete it.
+     * @param child The children component to remove as a child
+     */
+    removeChild(child) {
+        const index = this.children.indexOf(child);
+        if (index !== -1) {
+            this.children.splice(index, 1);
+        }
+    }
+    /**
+     * Add multiple classes to the list of classes
+     * @param classNames the destructured string array of class names to add to the component
+     *
+     * @example
+     * ```js
+     *  var myComponent = new Component("div");
+     *  myComponent.addClasses("mx-5"); // class = "mx-5"
+     *  myComponent.addClasses("my-1"); // class = "my-1" "mx-5"
+     * ```
+     */
+    addClasses(...classNames) {
+        let classes = this.getAttribute("class");
+        if (classes !== undefined) {
+            let classArray = [...new Set(classes.split(","))];
+            classArray = [...classArray, ...classNames];
+            classes = classArray.join(" ");
+            this.setAttribute("class", classes);
+        }
+        else {
+            this.setAttribute("class", classNames.join(" "));
+        }
+    }
+    /**
+     * Get the string version of the entire component
+     * @returns converted string representation
+     */
+    toString() {
+        // Initialize HTML string with opening tag and attributes
+        let html = `&lt;${this.tag}`;
+        for (const key in this.attribute) {
+            html += ` ${key}="${this.attribute[key]}"`;
+        }
+        html += ">\n";
+        // Append children HTML recursively
+        for (const child of this.children) {
+            html += "\t" + child.toString().replace(/\n/g, "\n\t") + "\n";
+        }
+        // Close the tag
+        html += `&lt;/${this.tag}>`;
+        return html;
+    }
+}
+exports.default = Component;
+//# sourceMappingURL=component.js.map</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Atom.html">Atom</a></li><li><a href="Atomizer.html">Atomizer</a></li><li><a href="Component.html">Component</a></li><li><a href="FileManager.html">FileManager</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Script.html">Script</a></li><li><a href="ScriptManager.html">ScriptManager</a></li><li><a href="SolarisUI.html">SolarisUI</a></li><li><a href="Style.html">Style</a></li><li><a href="StyleManager.html">StyleManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#__createBinding">__createBinding</a></li><li><a href="global.html#__importDefault">__importDefault</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Apr 13 2023 14:11:42 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

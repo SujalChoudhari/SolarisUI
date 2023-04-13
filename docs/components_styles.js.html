@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/styles.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/styles.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
+    return (mod &amp;&amp; mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const component_1 = __importDefault(require("./component"));
+const stylemanager_1 = __importDefault(require("../utils/stylemanager"));
+/**
+ * Style
+ * -----
+ * A representation of Style tag.
+ *
+ * @author Ansh Sharma
+ *
+ * TODO:
+ *  - Instead of using classes from public/style/index.css
+ *    every component will have its own exportCss function.
+ *  - These generated classes will be dumped into the `build/[name]/style/` folder.
+ *  - Style folder will be created for each page or for each style component.
+ *  - And included into head of page that contains that style component.
+ */
+class Style extends component_1.default {
+    /**
+     * The CSS classes and their properties.
+     */
+    cssClasses;
+    /**
+     * URL to an external source file.
+     */
+    url = "";
+    /**
+     * Type of the CSS attachment. Either inline or external.
+     * Note: inline attachments are supported under Attributes, and Style functions under Component.
+     */
+    type = "";
+    /**
+     * Create a new instance of Style.
+     * @param type The type of the CSS attachment. Either inline or external.
+     * @param url URL to an external source file. Optional.
+     * @param cssClasseses The CSS classes and their properties.
+     */
+    constructor(type, url = "", cssClasseses = {}) {
+        super("style", {}, [], null);
+        this.cssClasses = cssClasseses;
+        this.url = url;
+        this.type = type;
+        stylemanager_1.default.addStyle(this);
+    }
+    /**
+     * Adds a new CSS class with the specified properties.
+     * @param className The name of the CSS class to add.
+     * @param properties The properties to associate with the new CSS class.
+     */
+    addClass(className, properties) {
+        this.cssClasses[className] = properties;
+    }
+    /**
+     * Updates the properties of an existing CSS class.
+     * @param className The name of the CSS class to update.
+     * @param properties The updated properties to associate with the CSS class.
+     */
+    updateClass(className, properties) {
+        if (this.cssClasses[className]) {
+            this.cssClasses[className] = properties;
+        }
+        else {
+            throw new Error(`Class ${className} does not exist.`);
+        }
+    }
+    /**
+     * Removes an existing CSS class.
+     * @param className The name of the CSS class to remove.
+     */
+    removeClass(className) {
+        if (this.cssClasses[className]) {
+            delete this.cssClasses[className];
+        }
+        else {
+            throw new Error(`Class ${className} does not exist.`);
+        }
+    }
+    /**
+     * Adds the given properties to the specified class. If the class does not exist, it will be created.
+     * @param className The name of the class to add properties to.
+     * @param properties An object containing the properties to add, where the key is the property name and the value is the property value.
+     */
+    addClassProperty(className, properties) {
+        if (!(className in this.cssClasses)) {
+            this.cssClasses[className] = {};
+        }
+        Object.keys(properties).forEach((propertyName) => {
+            this.cssClasses[className][propertyName] = properties[propertyName];
+        });
+    }
+    /**
+     * Removes the given properties from the specified class. If the class no longer has any properties, it will be removed.
+     * @param className The name of the class to remove properties from.
+     * @param properties An object containing the properties to remove, where the key is the property name and the value is the property value.
+     */
+    removeClassProperty(className, properties) {
+        if (className in this.cssClasses) {
+            Object.keys(properties).forEach((propertyName) => {
+                if (propertyName in this.cssClasses[className]) {
+                    delete this.cssClasses[className][propertyName];
+                }
+            });
+            if (Object.keys(this.cssClasses[className]).length === 0) {
+                delete this.cssClasses[className];
+            }
+        }
+    }
+    /**
+     * Updates the given properties of the specified class. If the class does not exist, it will be created.
+     * @param className The name of the class to update properties of.
+     * @param properties An object containing the properties to update, where the key is the property name and the value is the property value.
+     */
+    updateClassProperty(className, properties) {
+        if (!(className in this.cssClasses)) {
+            this.cssClasses[className] = {};
+        }
+        Object.keys(properties).forEach((propertyName) => {
+            this.cssClasses[className][propertyName] = properties[propertyName];
+        });
+    }
+    /**
+     * Gets the properties of an existing CSS class.
+     * @param className The name of the CSS class to get the properties of.
+     * @returns The properties of the specified CSS class, or undefined if the CSS class does not exist.
+     */
+    getClassProperties(className) {
+        return this.cssClasses[className];
+    }
+    /**
+     * Exports the CSS classes and their properties as a string.
+     * Returns a &lt;style> tag if the type is inline, otherwise returns the CSS classes and their properties as a string.
+     * @returns A string representation of the CSS classes and their properties.
+     */
+    toString() {
+        let cssString = "";
+        if (this.type === "infile")
+            cssString += `&lt;style>\n`;
+        Object.keys(this.cssClasses).forEach((className) => {
+            cssString += `.${className} {\n`;
+            Object.keys(this.cssClasses[className]).forEach((property) => {
+                cssString += `  ${property}: ${this.cssClasses[className][property]};\n`;
+            });
+            cssString += "}\n\n";
+        });
+        if (this.type === "infile")
+            cssString += `&lt;/style>\n`;
+        return cssString.trim();
+    }
+}
+exports.default = Style;
+//# sourceMappingURL=styles.js.map</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Atom.html">Atom</a></li><li><a href="Atomizer.html">Atomizer</a></li><li><a href="Component.html">Component</a></li><li><a href="FileManager.html">FileManager</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Script.html">Script</a></li><li><a href="ScriptManager.html">ScriptManager</a></li><li><a href="SolarisUI.html">SolarisUI</a></li><li><a href="Style.html">Style</a></li><li><a href="StyleManager.html">StyleManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#__createBinding">__createBinding</a></li><li><a href="global.html#__importDefault">__importDefault</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Apr 13 2023 14:11:42 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

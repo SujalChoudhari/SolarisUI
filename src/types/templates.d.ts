@@ -130,6 +130,9 @@ export type GalleryTemplate = {
 export type HeaderTemplate = {
     links: Array<{title: string, link: string}>,
     imgUrl: string,
+    title: string,
+    primary: string,
+    secondary: string,
 }
 
 export type TableTemplate = {

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: solaris.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: solaris.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
+    return (mod &amp;&amp; mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SolarisUI = void 0;
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
+const components_1 = require("./components");
+const atom_1 = require("./atom");
+const utils_1 = require("./utils");
+/**
+ * @class Sloaris
+ * A UI framework to create HTML pages with just JavaScript.
+ * This component is responsible for building the entire UI framework.
+ * @license MIT license
+ * @author Sujal Choudhari &lt;sujalchoudari@gmail.com>
+ */
+class SolarisUI {
+    // Load Components using Atom and Atomizer 	
+    // TODO: Reload and recompile the entire UI when the config changes.
+    // Utility functions
+    static createPage(title, url, meta, defaultPageTemplateFolderIndex, defaultBodyTemplateFolderIndex, defaultHeadTemplateFolderIndex) {
+        const headComponent = new atom_1.Atom(atom_1.Atomizer.templates[defaultHeadTemplateFolderIndex || 0].head, {
+            title: title, meta: meta, templatestyles: `
+			&lt;link rel="stylesheet" href="./userStyles.css">
+		`
+        });
+        const bodyComponent = new atom_1.Atom(atom_1.Atomizer.templates[defaultBodyTemplateFolderIndex || 0].body, {
+            templateScripts: `
+			&lt;script src="./userScripts.js">&lt;/script>
+		`
+        });
+        const pageAtom = new atom_1.Atom(atom_1.Atomizer.templates[defaultPageTemplateFolderIndex || 0].page, { head: headComponent, body: bodyComponent });
+        const page = atom_1.Atomizer.buildComponentTree(pageAtom.toString());
+        page.setAttribute("id", url);
+        return page;
+    }
+    /**
+     * Creates a component from a given template name and props.
+     * @template T - The type of props to be passed.
+     * @param {string} templateName - The name of the template to be used.
+     * @param {T} props - The props to be passed to the component.
+     * @returns {Component} - The component tree.
+     *
+     * @example
+     * ```ts
+     * const component = SolarisUI.createComponent&lt;ButtonTemplate>("button", { text: "Click me!" });
+     */
+    static createComponent(templateName, props) {
+        let atom = new atom_1.Atom(atom_1.Atomizer.getTemplate(templateName), props);
+        let component = atom_1.Atomizer.buildComponentTreeFromAtom(atom);
+        return component;
+    }
+    /**
+      * Builds the pages in the project.
+    * @param name The name of the project.
+    * @param pages The pages of the project.
+    * @param buildType The type of build to be done.
+    * lazy - Only the html of the pages is redone
+    * full - The entire project is rebuilt.
+    */
+    static buildProject(name, pages, buildType = "full") {
+        utils_1.Logger.start();
+        // Create FileManager object
+        const fm = new utils_1.FileManager();
+        // Create build directory if it doesn't exist
+        if (!fs_1.default.existsSync(`builds/${name}`) || buildType === "full") {
+            fm.createDirectory("builds");
+            this.fullBuild(fm, name, pages);
+        }
+        else {
+            this.lazyBuild(fm, name, pages);
+        }
+        utils_1.Logger.time(__filename, "Build completed in");
+    }
+    static lazyBuild(fm, name, pages) {
+        // Create HTML files
+        utils_1.Logger.info(__filename, "Creating HTML files");
+        const styles = new Set(utils_1.StyleManager.getExternalStyles());
+        const scripts = new Set(utils_1.ScriptManager.getExternalScripts());
+        pages.forEach((page) => {
+            page.children[0].addChildren(...Array.from(styles).map((style) => new components_1.Component("link", { rel: "stylesheet", href: style.url })));
+            page.children[1].addChildren(...Array.from(scripts).map((script) => new components_1.Component("script", { src: script.url, ...(script.params) })));
+            fm.createFile(`builds/${name}/${page.getAttribute("id")}`, page.toString());
+        });
+    }
+    static fullBuild(fm, name, pages) {
+        if (!fs_1.default.existsSync("builds")) {
+            fm.createDirectory("builds");
+        }
+        // Remove existing build directory and create new one
+        utils_1.Logger.info(__filename, "Clearing the build directory");
+        fm.removeDirectory(`builds/${name}`, true);
+        fm.createDirectory(`builds/${name}`);
+        // Create templates directory and copy template files
+        utils_1.Logger.info(__filename, "Creating template files");
+        const templateDirectory = `builds/${name}/templates/`;
+        if (fs_1.default.existsSync(templateDirectory)) {
+            fm.removeDirectory(templateDirectory);
+        }
+        fm.createDirectory(templateDirectory);
+        utils_1.Logger.info(__filename, "Copying template files");
+        atom_1.Atomizer.filesToInclude.forEach((file) => {
+            let destPath = path_1.default.join(templateDirectory, path_1.default.basename(file));
+            fm.copyFile(file, destPath);
+            const ext = path_1.default.extname(file);
+            if (ext === ".css") {
+                new components_1.Style("external", `./templates/${path_1.default.basename(file)}`);
+            }
+            else if (ext === ".js") {
+                new components_1.Script("external", `./templates/${path_1.default.basename(file)}`);
+            }
+        });
+        // Create HTML files
+        this.lazyBuild(fm, name, pages);
+        // Create CSS file
+        utils_1.Logger.info(__filename, "Creating CSS files");
+        const minifiedCSS = utils_1.StyleManager.toString();
+        if (minifiedCSS) {
+            fm.createFile(`builds/${name}/userStyles.css`, minifiedCSS);
+        }
+        // Create JS file
+        utils_1.Logger.info(__filename, "Creating JS files");
+        const minifiedJS = utils_1.ScriptManager.toString();
+        if (minifiedJS) {
+            fm.createFile(`builds/${name}/userScripts.js`, minifiedJS);
+        }
+        // Copy public folder
+        utils_1.Logger.info(__filename, "Copying public folders");
+        fm.copyTree("public", `builds/${name}/`);
+    }
+}
+exports.SolarisUI = SolarisUI;
+//# sourceMappingURL=solaris.js.map</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Atom.html">Atom</a></li><li><a href="Atomizer.html">Atomizer</a></li><li><a href="Component.html">Component</a></li><li><a href="FileManager.html">FileManager</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Script.html">Script</a></li><li><a href="ScriptManager.html">ScriptManager</a></li><li><a href="SolarisUI.html">SolarisUI</a></li><li><a href="Style.html">Style</a></li><li><a href="StyleManager.html">StyleManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#__createBinding">__createBinding</a></li><li><a href="global.html#__importDefault">__importDefault</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Apr 13 2023 14:11:42 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

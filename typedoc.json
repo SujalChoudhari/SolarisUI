@@ -10,12 +10,7 @@
     "name": "SolarisUI",
     "includeVersion": true,
     "tsconfig": "./tsconfig.json",
-    "hideGenerator": true,
-    "sidebarLinks": {
-        "Github": "https://github.com/SujalChoudhari/SolarisUI",
-        "LICENSE": "https://github.com/SujalChoudhari/SolarisUI/blob/main/LICENSE",
-        "NPM":"https://www.npmjs.com/package/@sujalchoudhari/solaris-ui",
-    },
+   
     "visibilityFilters": {
         "protected": false,
         "private": false,
@@ -28,10 +23,9 @@
     ],
     "includes": "./static/",
     "plugin": ["typedoc-theme-yaf"],
+    "theme": "yaf",
     "versions":{
-        "dev":"1.0.1-alpha.5"
-        
-    },
-	"theme": "yaf",
+        "dev":"v1.0.1-beta.0",
+    }
     
 }

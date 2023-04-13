@@ -142,7 +142,7 @@ describe("Solaris", () => {
         } as BlogTemplate);
 
         page.addChildren(sui.Atomizer.buildComponentTreeFromAtom(atom));
-        sui.SolarisUI.buildProject("Components", [page],"lazy")
+        sui.SolarisUI.buildProject("Components", [page], "lazy")
     });
 
     test("breadcrumb", () => {
@@ -215,11 +215,15 @@ describe("Solaris", () => {
     test("carousel", () => {
         const atom = new sui.Atom(sui.Atomizer.getTemplate("carousel"), {
             images: [
-                "https://source.unsplash.com/random/480x360",
-                "https://source.unsplash.com/random/481x360",
-                "https://source.unsplash.com/random/482x360",
-                "https://source.unsplash.com/random/483x360",
-                "https://source.unsplash.com/random/484x360",
+                "https://source.unsplash.com/720x600/?water",
+                "https://source.unsplash.com/720x600/?code",
+                "https://source.unsplash.com/720x600/?fire",
+                "https://source.unsplash.com/720x600/?java",
+                "https://source.unsplash.com/720x600/?sun",
+                "https://source.unsplash.com/720x600/?adhd",
+                "https://source.unsplash.com/720x600/?jupiter",
+                "https://source.unsplash.com/720x600/?solar",
+                "https://source.unsplash.com/720x600/?moon",
             ]
         } as CarouselTemplate);
 
@@ -395,6 +399,7 @@ describe("Solaris", () => {
 
     test("header", () => {
         const atom = new sui.Atom(sui.Atomizer.getTemplate("header"), {
+            title:"Solaris",
             links: [
                 {
                     title: "Link1",
@@ -469,7 +474,7 @@ describe("Solaris", () => {
     });
 
     test("table", () => {
-        const page = sui.SolarisUI.createPage("Table","index.html");
+        const page = sui.SolarisUI.createPage("Table", "index.html");
         page.children[1].addChildren(sui.SolarisUI.createComponent<TableTemplate>("table", {
             title: "",
             rows: [
@@ -482,7 +487,7 @@ describe("Solaris", () => {
             ],
             header: ["Header1", "Header2", "Header3"]
         }));
-        sui.SolarisUI.buildProject("Components", [page],"lazy");
+        sui.SolarisUI.buildProject("Components", [page], "lazy");
     });
 
 });
@@ -490,14 +495,17 @@ describe("Solaris", () => {
 
 describe("Create Components", () => {
     test("types work correctly", () => {
-        const component = sui.SolarisUI.createComponent<HeaderTemplate>("header",{
+        const component = sui.SolarisUI.createComponent<HeaderTemplate>("header", {
             links: [
                 {
                     title: "Link1",
                     link: "https://google.com",
                 }
             ],
-            imgUrl: ""
+            imgUrl: "",
+            title: "",
+            primary: "Join",
+            secondary: "Login"
         })
         expect(component).toBeInstanceOf(sui.Component);
     });

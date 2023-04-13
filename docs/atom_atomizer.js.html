@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: atom/atomizer.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: atom/atomizer.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+var __createBinding = (this &amp;&amp; this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this &amp;&amp; this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this &amp;&amp; this.__importStar) || function (mod) {
+    if (mod &amp;&amp; mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" &amp;&amp; Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
+    return (mod &amp;&amp; mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
+const htmlparser2 = __importStar(require("htmlparser2"));
+const components_1 = require("../components");
+const utils_1 = require("../utils");
+/**
+ * Atomizer
+ * -----
+ * An utility class for loading/parsing and creating templates.
+ *
+ * @remarks
+ * This class is responsible for loading the templates from the template folder.
+ * It also provides a function to build the component tree from the HTML string.
+ *
+ * @author Sujal Choudhari &lt;sjlchoudhari.gmail.com>
+ */
+class Atomizer {
+    /**
+     * The folder where the templates are stored.
+     * @remarks
+     * Only the templated from this folder will be preloaded loaded.
+     * If there are many template folders then those components will have to be loaded manually.
+     * or change the template folder and preload the templates again.
+     *
+     * @author Ansh Sharma
+     */
+    static templateFolders = [{ baseDir: `${__dirname}/../../templates/`, htmlDir: "", cssDir: "css", jsDir: "js" }];
+    static filesToInclude = new Set();
+    /**
+     * The preloaded templates (the default ones)
+     */
+    static templates = Atomizer.preloadTemplates();
+    /**
+     * Load a template from the template folder
+     * @param filename The name of the template file
+     * @returns New atomizer template
+     */
+    static loadTemplate(filename, templateFolderIndex) {
+        const fm = new utils_1.FileManager(Atomizer.templateFolders[templateFolderIndex].baseDir);
+        const template = fm.readFile(filename);
+        if (template == null) {
+            utils_1.Logger.error(__filename, `Template ${filename} not found`);
+            return null;
+        }
+        utils_1.Logger.info(__filename, `Template ${filename} loaded`);
+        return template;
+    }
+    /**
+     * Preload All the templates from the template folder.
+     * @returns A dictionary of all the preloaded templates with their names as keys.
+     */
+    static preloadTemplates() {
+        const templatesArray = [];
+        Atomizer.templateFolders.forEach((templateFolder, index) => {
+            const templates = {};
+            const files = fs_1.default.readdirSync(templateFolder.baseDir, { withFileTypes: true });
+            files.forEach(file => {
+                if (file.isDirectory() &amp;&amp; file.name === templateFolder.htmlDir) {
+                    const htmlFiles = fs_1.default.readdirSync(path_1.default.join(templateFolder.baseDir, templateFolder.htmlDir), { withFileTypes: true });
+                    htmlFiles.forEach(htmlFile => {
+                        if (!htmlFile.isDirectory()) {
+                            const newKey = htmlFile.name.split(".")[0];
+                            if (templateFolder.htmlDir !== "") {
+                                const template = Atomizer.loadTemplate(path_1.default.join(templateFolder.baseDir, templateFolder.htmlDir, htmlFile.name), index);
+                                if (template != null) {
+                                    templates[newKey] = template;
+                                }
+                            }
+                        }
+                    });
+                }
+                else if (!file.isDirectory()) {
+                    const newKey = file.name.split(".")[0];
+                    const template = Atomizer.loadTemplate(path_1.default.join(templateFolder.baseDir, file.name), index);
+                    if (template != null) {
+                        templates[newKey] = template;
+                    }
+                }
+            });
+            utils_1.Logger.info(__filename, `Templates loaded from ${path_1.default.normalize(templateFolder.baseDir)}`);
+            templatesArray.push(templates);
+        });
+        return templatesArray;
+    }
+    /**
+     * Build the component tree from the atom.
+     * @param atom The atom to be parsed and built into a component tree
+     * @returns The root component of the component tree.
+     */
+    static buildComponentTreeFromAtom(atom) {
+        return Atomizer.buildComponentTree(atom.toString());
+    }
+    /**
+    A static method in the Atomizer class that adds a new template folder to the templateFolders array.
+    @param {object} templateFolder - An object containing the base directory and optional subdirectories for the template folder.
+    @param {string} templateFolder.baseDir - The base directory for the template folder.
+    @param {string} [templateFolder.htmlDir] - Optional subdirectory for HTML templates.
+    @param {string} [templateFolder.cssDir] - Optional subdirectory for CSS templates.
+    @param {string} [templateFolder.jsDir] - Optional subdirectory for JavaScript templates.
+    @remarks
+    If the templateFolder object's baseDir property does not already exist in Atomizer.templateFolders,
+    the templateFolder object is pushed into Atomizer.templateFolders.
+    Then, the templates in the newly added folder are preloaded and pushed into Atomizer.templates.
+    If the baseDir already exists in Atomizer.templateFolders, a warning is logged.
+    @author Ansh Sharma
+    */
+    static addTemplateFolder(templateFolder) {
+        if (!Atomizer.templateFolders.find((folder) => folder.baseDir === templateFolder.baseDir)) {
+            Atomizer.templateFolders.push(templateFolder);
+            Atomizer.templates.push(Atomizer.preloadTemplates()[Atomizer.templateFolders.length - 1]);
+        }
+        else {
+            utils_1.Logger.warn(__filename, `Template folder ${templateFolder.baseDir} already exists`);
+        }
+    }
+    /**
+    A static method in the Atomizer class that retrieves a template with the specified name and index from the templates property.
+    @param {string} templateName - The name of the template to retrieve.
+    @param {number} [templateFolderIndex=0] - The index of the folder containing the template. Defaults to 0.
+    @returns {AtomizerTemplate} - The requested template.
+    @remarks
+    If the template is found in the templates property, it is returned immediately.
+    If the template is not found, this method searches through all template folders for the specified name.
+    If a template is found, it is returned and cached in the templates property for future use.
+    If no template is found, an error message is logged and an empty string is returned.
+    @author Ansh Sharma
+    */
+    static getTemplate(templateName, templateFolderIndex = 0) {
+        // Include any dependent js and css
+        const { baseDir, cssDir, jsDir } = Atomizer.templateFolders[templateFolderIndex];
+        const cssFile = path_1.default.join(baseDir, cssDir, templateName + ".css");
+        const jsFile = path_1.default.join(baseDir, jsDir, templateName + ".js");
+        if (fs_1.default.existsSync(cssFile)) {
+            Atomizer.filesToInclude.add(cssFile);
+        }
+        if (fs_1.default.existsSync(jsFile)) {
+            Atomizer.filesToInclude.add(jsFile);
+        }
+        // find and return the template if it exists
+        const template = Atomizer.templates[templateFolderIndex][templateName];
+        if (template) {
+            return template;
+        }
+        // if the template doesn't exist, search through all template folders for the template
+        const newTemplate = Atomizer.templates
+            .map(templateFolder => templateFolder[templateName])
+            .find(Boolean);
+        if (newTemplate) {
+            Atomizer.templates[templateFolderIndex][templateName] = newTemplate;
+            return newTemplate;
+        }
+        // load the template if it exists
+        const loadedTemplate = Atomizer.loadTemplate(templateName, templateFolderIndex);
+        if (loadedTemplate) {
+            Atomizer.templates[templateFolderIndex][templateName] = loadedTemplate;
+            return loadedTemplate;
+        }
+        utils_1.Logger.error(__filename, `Template ${templateName} not found`);
+        return "";
+    }
+    /**
+     * Build the component tree from the HTML string.
+     * @param html The HTML string to be parsed and built into a component tree
+     * @returns The root component of the component tree.
+     */
+    static buildComponentTree(html) {
+        let rootComponent = new components_1.Component("root");
+        let currentComponent = rootComponent;
+        const parser = new htmlparser2.Parser({
+            onopentag: (tag, attributes) => {
+                const newComponent = new components_1.Component(tag, attributes);
+                currentComponent.addChildren(newComponent);
+                currentComponent = newComponent;
+            },
+            ontext: (text) => {
+                if (text.trim() === "")
+                    return;
+                const lastChild = currentComponent.getChildren().at(-1);
+                if (lastChild &amp;&amp; lastChild instanceof components_1.String)
+                    lastChild.content += text;
+                else
+                    currentComponent.addChildren(new components_1.String(text));
+            },
+            onclosetag: (tag) => {
+                const newComponent = currentComponent.getParent();
+                if (newComponent)
+                    currentComponent = newComponent;
+            },
+        }, { decodeEntities: true });
+        parser.write(html);
+        parser.end();
+        utils_1.Logger.info(__filename, `Component tree built`);
+        return rootComponent.getChildren()[0];
+    }
+}
+exports.default = Atomizer;
+;
+//# sourceMappingURL=atomizer.js.map</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Atom.html">Atom</a></li><li><a href="Atomizer.html">Atomizer</a></li><li><a href="Component.html">Component</a></li><li><a href="FileManager.html">FileManager</a></li><li><a href="Logger.html">Logger</a></li><li><a href="Script.html">Script</a></li><li><a href="ScriptManager.html">ScriptManager</a></li><li><a href="SolarisUI.html">SolarisUI</a></li><li><a href="Style.html">Style</a></li><li><a href="StyleManager.html">StyleManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#__createBinding">__createBinding</a></li><li><a href="global.html#__importDefault">__importDefault</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Apr 13 2023 14:11:42 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
