@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import * as htmlparser2 from "htmlparser2"
 import { Component, String } from "../components";
-import {Logger,FileManager} from "../utils";
+import { Logger, FileManager } from "../utils";
 import Atom from "./atom";
 
 /**
@@ -38,7 +38,7 @@ export default class Atomizer {
         jsDir: string
     }] = [{ baseDir: `${__dirname}/../../templates/`, htmlDir: "", cssDir: "css", jsDir: "js" }];
 
-    public static filesToInclude: Set<string> = new Set<string>();
+    public static filesToInclude: Array<string> = [];
     /**
      * The preloaded templates (the default ones)
      */
@@ -57,7 +57,7 @@ export default class Atomizer {
             return null;
         }
 
-       
+
 
         Logger.info(__filename, `Template ${filename} loaded`);
         return template;
@@ -144,7 +144,7 @@ export default class Atomizer {
             Logger.warn(__filename, `Template folder ${templateFolder.baseDir} already exists`);
         }
     }
-
+    
     /**
     A static method in the Atomizer class that retrieves a template with the specified name and index from the templates property.
     @param {string} templateName - The name of the template to retrieve.
@@ -158,20 +158,20 @@ export default class Atomizer {
     @author Ansh Sharma
     */
     public static getTemplate(templateName: string, templateFolderIndex: number = 0): AtomizerTemplate {
+
         // Include any dependent js and css
         const { baseDir, cssDir, jsDir } = Atomizer.templateFolders[templateFolderIndex];
         const cssFile = path.join(baseDir, cssDir, templateName + ".css");
         const jsFile = path.join(baseDir, jsDir, templateName + ".js");
 
         if (fs.existsSync(cssFile)) {
-            Atomizer.filesToInclude.add(cssFile);
+            Atomizer.filesToInclude.push(cssFile);
         }
 
         if (fs.existsSync(jsFile)) {
-            Atomizer.filesToInclude.add(jsFile);
+            Atomizer.filesToInclude.push(jsFile);
         }
 
-        
         // find and return the template if it exists
         const template = Atomizer.templates[templateFolderIndex][templateName];
         if (template) {
@@ -192,7 +192,8 @@ export default class Atomizer {
             return loadedTemplate;
         }
 
-        
+        Atomizer.filesToInclude = Array.from(new Set(Atomizer.filesToInclude));
+
 
         Logger.error(__filename, `Template ${templateName} not found`);
         return "";
