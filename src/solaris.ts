@@ -24,9 +24,13 @@ class SolarisUI {
 		defaultBodyTemplateFolderIndex?: 0,
 		defaultHeadTemplateFolderIndex?: 0): Component {
 		const headComponent = new Atom(Atomizer.templates[defaultHeadTemplateFolderIndex || 0].head, {
-			title: title, meta: meta, templatestyles: `
+			title: title, templatestyles: `
 			<link rel="stylesheet" href="./userStyles.css">
 		`});
+		
+		headComponent.props.meta = Object.keys(meta || {}).map(key => {
+			return { name: key, content: meta && meta[key]}
+		});
 
 		const bodyComponent = new Atom(Atomizer.templates[defaultBodyTemplateFolderIndex || 0].body, {
 			templateScripts: `

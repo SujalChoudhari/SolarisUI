@@ -1,6 +1,6 @@
 import { Component } from "../src/components";
 import * as sui from "../src/index";
-import { Article1Template, Article2Template, AvatarTemplate, BannerTemplate, BlogTemplate, ButtonTemplate, BreadcrumbTemplate, CallToActionTemplate, HeaderTemplate, FooterBigTemplate, FooterTemplate, GalleryTemplate, CardTemplate, CarouselTemplate, ErrorTemplate, FAQTemplate, FeatureTemplate, TableTemplate } from "../src/types/templates";
+import { Article1Template, Article2Template, AvatarTemplate, BannerTemplate, BlogTemplate, ButtonTemplate, BreadcrumbTemplate, CallToActionTemplate, HeaderTemplate, FooterBigTemplate, FooterTemplate, GalleryTemplate, CardTemplate, CarouselTemplate, ErrorTemplate, FAQTemplate, FeatureTemplate, TableTemplate } from "../src/templates";
 
 describe("Solaris", () => {
     var page: Component;

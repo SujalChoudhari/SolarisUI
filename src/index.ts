@@ -40,4 +40,4 @@ export {
     LogLevel
 } from "./utils";
 
-export * as templateTypes from "./types/templates.d";
+export * as templateTypes from "./templates";

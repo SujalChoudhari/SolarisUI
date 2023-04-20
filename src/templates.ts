@@ -1,27 +1,27 @@
 export type Article1Template = {
-    title: string;
-    imgUrl: string;
-    author: string;
-    description: string;
+    title?: string;
+    imgUrl?: string;
+    author?: string;
+    description?: string;
 }
 
 export type Article2Template = {
-    title: string,
-    tags: Array<
+    title?: string,
+    tags?: Array<
         {
-            name: string,
-            link: string,
-            target: "_blank" | "_self" | "_parent" | "_top"
+            name?: string,
+            link?: string,
+            target?: "_blank" | "_self" | "_parent" | "_top"
         }
     >,
-    description: string,
-    author: string,
-    date: string,
+    description?: string,
+    author?: string,
+    date?: string,
 }
 
 export type AvatarTemplate = {
-    images: Array<string>,
-    moreNum: number
+    images?: Array<string>,
+    moreNum?: number
 }
 
 export type BannerTemplate = {
@@ -131,14 +131,6 @@ export type HeaderTemplate = {
     links: Array<{title: string, link: string}>,
     imgUrl: string,
     title: string,
-    primary: string,
-    secondary: string,
-}
-
-export type HeroTemplate = {
-    title: string,
-    imgUrl: string,
-    description: string,
     primary: string,
     secondary: string,
 }
