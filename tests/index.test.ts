@@ -1,6 +1,6 @@
 import { IndentStyle } from 'typescript';
 import * as sui from '../src';
-import { Article1Template, AvatarTemplate, CarouselTemplate, FAQTemplate, FeatureTemplate, FooterTemplate, HeaderTemplate, HeroTemplate } from '../src/types/templates';
+import { Article1Template, AvatarTemplate, CarouselTemplate, FAQTemplate, FeatureTemplate, FooterTemplate, HeaderTemplate,HeroTemplate } from '../src/templates';
 
 describe('sui', () => {
     it('should be defined', () => {

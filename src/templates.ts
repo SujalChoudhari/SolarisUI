@@ -135,6 +135,14 @@ export type HeaderTemplate = {
     secondary: string,
 }
 
+export type HeroTemplate = {
+    imgUrl: string,
+    title: string,
+    description: string,
+    primary:string
+    secondary: string,
+}
+
 export type TableTemplate = {
     title: string;
     header: string[];
