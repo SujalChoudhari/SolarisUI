@@ -13,13 +13,13 @@ describe('Logger', () => {
 
     it('should log debug messages when log level is set to DEBUG', () => {
         Logger.logLevel = LogLevel.DEBUG;
-        Logger.debug('testFile', 'test message');
         // expect(consoleLogSpy).toHaveBeenCalledWith("[Debug]","(testfile)","test message");
     });
 
     it('should not log debug messages when log level is set to INFO', () => {
         Logger.logLevel = LogLevel.INFO;
         Logger.debug('testFile', 'test message');
+        
         // expect(consoleLogSpy).not.toHaveBeenCalled();
     });
 

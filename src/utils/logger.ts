@@ -16,6 +16,7 @@ export enum LogLevel {
  */
 export default class Logger {
     public static logLevel: LogLevel = LogLevel.INFO;
+    public static traceLevel: LogLevel = LogLevel.ERROR;
     private static mTime: number = 0;
 
     private static mLogColors: Record<string, string> = {
@@ -33,32 +34,34 @@ export default class Logger {
 
     public static debug(filename: string, ...message: string[]): void {
         if (Logger.logLevel <= 0)
-            Logger.write("[DEBUG]", filename, ...message);
+            Logger.write("[DEBUG]", Logger.traceLevel <= 0, filename, ...message);
     }
 
     public static info(filename: string, ...message: string[]): void {
         if (Logger.logLevel <= 1)
-            Logger.write("[INFO]", filename, ...message);
+            Logger.write("[INFO]", Logger.traceLevel <= 1, filename, ...message);
     }
 
     public static time(filename: string, ...message: string[]): void {
         if (Logger.logLevel <= 2)
-            Logger.write("[TIME]", filename, ...message, `${Logger.end()}ms`);
+            Logger.write("[TIME]", Logger.traceLevel <= 2, filename, ...message, `${Logger.end()}ms`);
     }
 
     public static warn(filename: string, ...message: string[]): void {
         if (Logger.logLevel <= 3)
-            Logger.write("[WARN]", filename, ...message);
+            Logger.write("[WARN]", Logger.traceLevel <= 3, filename, ...message);
     }
 
     public static error(filename: string, ...message: string[]): void {
         if (Logger.logLevel <= 4)
-            Logger.write("[ERROR]", filename, ...message);
+            Logger.write("[ERROR]", Logger.traceLevel <= 4, filename, ...message);
     }
 
 
 
-    private static write(type: string, filename: string, ...message: string[]): void {
+
+
+    private static write(type: string, trace: boolean, filename: string, ...message: string[]): void {
 
         const currentTime = new Date();
         const logFilePath = `./logs/${currentTime.getFullYear()}-${currentTime.getMonth()}-${currentTime.getDate()}-${currentTime.getHours()}-${currentTime.getMinutes()}.log`;
@@ -67,10 +70,15 @@ export default class Logger {
         // Write to console
         const logColor = Logger.mLogColors[type] || "";
 
-        console.log(
-            `${logColor}${Logger.mBoldText}${type}${Logger.mResetColor}`,
+        if (!trace) console.log(`${logColor}${Logger.mBoldText}${type}${Logger.mResetColor}`,
             `${Logger.mItalicText}(${filename})${Logger.mResetColor}\n\t`,
             `${logColor}${message.join(" ")}${Logger.mResetColor}`);
+        else console.trace(`${logColor}${Logger.mBoldText}${type}${Logger.mResetColor}`,
+            `${Logger.mItalicText}(${filename})${Logger.mResetColor}\n\t`,
+            `${logColor}${message.join(" ")}${Logger.mResetColor} \n \n \n ----------------------------------------------------------------------------------------------------------------------------`);
+
+
+        // console.trace(...message);
 
         // Write to file
         if (!fs.existsSync("./logs")) {
