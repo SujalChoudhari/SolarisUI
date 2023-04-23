@@ -9,9 +9,14 @@ test('Components', () => {
                     { name: "alt", value: "Placeholder Image" }
                 ]
             }
-            ),"Hello World!"]
+            ), "Hello World!"]
     });
 
+    const page = sui.SolarisUI.createPage("Test Page", "test.html", {
+        "description": "This is a test page.",
+        "author": "Sujal Choudhari"
+    });
+    page.children[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(container))
 
-    sui.SolarisUI.buildProject("test", [sui.Atomizer.buildComponentTreeFromAtom(container)]);
+    sui.SolarisUI.buildProject("test", [page]);
 });

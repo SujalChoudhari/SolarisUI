@@ -39,5 +39,3 @@ export {
     Logger,
     LogLevel
 } from "./utils";
-
-export * as templateTypes from "./templates";

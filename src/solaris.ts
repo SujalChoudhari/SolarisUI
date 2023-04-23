@@ -15,26 +15,39 @@ class SolarisUI {
 	// Load Components using Atom and Atomizer 	
 	// TODO: Reload and recompile the entire UI when the config changes.
 
-	
-	/**
-	 * Creates a component from a given template name and props.
-	 * @template T - The type of props to be passed.
-	 * @param {string} templateName - The name of the template to be used.
-	 * @param {T} props - The props to be passed to the component.
-	 * @returns {Component} - The component tree.
-	 * 
-	 * @example
-	 * ```ts
-	 * const component = SolarisUI.createComponent<ButtonTemplate>("button", { text: "Click me!" });
-	 */
-	public static createComponent<T extends { [key: string]: any }>(
-		templateName: string,
-		props: T
-	): Component {
-		let atom = new Atom(Atomizer.getTemplate(templateName), props);
-		let component = Atomizer.buildComponentTreeFromAtom(atom);
-		return component;
+
+	// Utility functions
+	public static createPage(
+		title: string,
+		url: string,
+		meta: { [key: string]: string }): Component {
+
+
+		const headAtom = new Atom(Atomizer.getTemplate("head"), {
+			children: [
+				`<title>${title}</title>`,
+				`<link rel="stylesheet" href="./userStyles.css">`,
+				...Object.keys(meta).map((key) => `<meta name="${key}" content="${meta[key]}">`)
+			]
+		});
+
+
+		const bodyComponent = new Atom(Atomizer.getTemplate("body"), {
+			children: [`
+			<script src="./userScripts.js"></script>
+		`]
+		});
+
+		const pageAtom = new Atom(Atomizer.getTemplate("page"), {
+			children: [headAtom, bodyComponent]
+		});
+		
+
+		const page = Atomizer.buildComponentTreeFromAtom(pageAtom);
+		page.setAttribute("id", url);
+		return page;
 	}
+
 
 	/**
 	  * Builds the pages in the project.
@@ -48,6 +61,7 @@ class SolarisUI {
 		Logger.start();
 		// Create FileManager object
 		const fm = new FileManager();
+
 
 		// Create build directory if it doesn't exist
 		if (!fs.existsSync(`builds/${name}`) || buildType === "full") {

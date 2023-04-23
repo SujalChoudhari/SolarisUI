@@ -1,0 +1,13 @@
+
+/* Secondary button */
+.secondary {
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+    text-decoration: none;
+    background-color: white;
+    color: black;
+    border: black solid;
+    padding: 10px;
+    margin-top: 10px;
+}

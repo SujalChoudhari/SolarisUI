@@ -1,0 +1,18 @@
+
+/* Ghost button */
+.ghost-button {
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+    padding: .5em .75em;
+    border: solid #ccc;
+    border-width: .125em .125em .25em;
+    border-radius: .25em;
+    text-decoration: none;
+    font: bold .8em/1.5 sans-serif;
+    text-align: center;
+    transition: .2s ease-out;
+}
