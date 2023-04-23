@@ -30,6 +30,7 @@ export default class Logger {
     private static mResetColor = "\x1b[0m";
     private static mBoldText = "\x1b[1m";
     private static mItalicText = "\x1b[3m";
+    private static underscore = "\x1b[4m";
 
 
     public static debug(filename: string, ...message: string[]): void {
@@ -75,7 +76,9 @@ export default class Logger {
             `${logColor}${message.join(" ")}${Logger.mResetColor}`);
         else console.trace(`${logColor}${Logger.mBoldText}${type}${Logger.mResetColor}`,
             `${Logger.mItalicText}(${filename})${Logger.mResetColor}\n\t`,
-            `${logColor}${message.join(" ")}${Logger.mResetColor} \n \n \n ----------------------------------------------------------------------------------------------------------------------------`);
+            `${logColor}${Logger.mItalicText}${Logger.underscore}${message.join(" ")}${Logger.mResetColor} 
+            
+            \n \n \n ----------------------------------------------------------------------------------------------------------------------------`);
 
 
         // console.trace(...message);
