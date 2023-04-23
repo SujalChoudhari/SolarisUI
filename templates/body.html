@@ -1,11 +1,6 @@
-<body>
+<body {{#attributes}} {{&name}}="{{&value}}" {{/attributes}}
+>
     {{#children}}
-        {{.}}
+    {{&.}}
     {{/children}}
-    {{#templateScripts}}
-    {{.}}
-    {{/templateScripts}}
-    {{#scripts}}
-        {{.}}
-    {{/scripts}}
 </body>
