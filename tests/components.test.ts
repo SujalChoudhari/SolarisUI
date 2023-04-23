@@ -1,6 +1,6 @@
 import * as sui from "../src/";
 
-test('Components', () => {
+test('Components', async () => {
     const container = new sui.Atom(sui.Atomizer.getTemplate("container"), {
         children: [
             new sui.Atom(sui.Atomizer.getTemplate("image"), {
@@ -18,5 +18,5 @@ test('Components', () => {
     });
     page.children[1].addChildren(sui.Atomizer.buildComponentTreeFromAtom(container))
 
-    sui.SolarisUI.buildProject("test", [page]);
+    await sui.SolarisUI.buildProject("test", [page]);
 });

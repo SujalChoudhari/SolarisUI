@@ -24,8 +24,10 @@
     "prepublish": "tsc"
   },
   "dependencies": {
+    "get-latest-version": "^5.0.1",
     "htmlparser2": "^8.0.2",
     "mustache": "^4.2.0",
+    "package-json": "^8.1.0",
     "typedoc-theme-yaf": "^0.0.4",
     "typescript": "^5.0.2"
   },

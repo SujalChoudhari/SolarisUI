@@ -3,7 +3,7 @@ import path from "path";
 import { Component, Script, Style } from "./components";
 import { Atom, Atomizer } from "./atom";
 import { StyleManager, ScriptManager, Logger, FileManager } from "./utils";
-
+import CheckForUpdate from "./utils/checkForUpdate";
 /**
  * @class Sloaris
  * A UI framework to create HTML pages with just JavaScript.
@@ -12,6 +12,8 @@ import { StyleManager, ScriptManager, Logger, FileManager } from "./utils";
  * @author Sujal Choudhari <sujalchoudari@gmail.com>
  */
 class SolarisUI {
+
+	private static packageVersion: string = "1.0.1-beta.0";
 	// Load Components using Atom and Atomizer 	
 	// TODO: Reload and recompile the entire UI when the config changes.
 
@@ -41,7 +43,7 @@ class SolarisUI {
 		const pageAtom = new Atom(Atomizer.getTemplate("page"), {
 			children: [headAtom, bodyComponent]
 		});
-		
+
 
 		const page = Atomizer.buildComponentTreeFromAtom(pageAtom);
 		page.setAttribute("id", url);
@@ -57,7 +59,7 @@ class SolarisUI {
 	* lazy - Only the html of the pages is redone
 	* full - The entire project is rebuilt.
 	*/
-	public static buildProject(name: string, pages: Component[], buildType: "lazy" | "full" = "full"): void {
+	public static async buildProject(name: string, pages: Component[], buildType: "lazy" | "full" = "full"): Promise<void> {
 		Logger.start();
 		// Create FileManager object
 		const fm = new FileManager();
@@ -72,6 +74,10 @@ class SolarisUI {
 			this.lazyBuild(fm, name, pages);
 		}
 		Logger.time(__filename, "Build completed in");
+		
+		Logger.info("Solaris", "Checking for updates to SolarisUI");
+
+		await CheckForUpdate(this.packageVersion)
 	}
 
 	private static lazyBuild(fm: FileManager, name: string, pages: Component[]) {
@@ -88,6 +94,8 @@ class SolarisUI {
 			);
 			fm.createFile(`builds/${name}/${page.getAttribute("id")}`, page.toString());
 		});
+
+
 	}
 
 	private static fullBuild(fm: FileManager, name: string, pages: Component[]) {
