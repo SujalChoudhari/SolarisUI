@@ -15,33 +15,7 @@ class SolarisUI {
 	// Load Components using Atom and Atomizer 	
 	// TODO: Reload and recompile the entire UI when the config changes.
 
-	// Utility functions
-	public static createPage(
-		title: string,
-		url: string,
-		meta?: { [key: string]: string },
-		defaultPageTemplateFolderIndex?: 0,
-		defaultBodyTemplateFolderIndex?: 0,
-		defaultHeadTemplateFolderIndex?: 0): Component {
-		const headComponent = new Atom(Atomizer.templates[defaultHeadTemplateFolderIndex || 0].head, {
-			title: title, templatestyles: `
-			<link rel="stylesheet" href="./userStyles.css">
-		`});
-		
-		headComponent.props.meta = Object.keys(meta || {}).map(key => {
-			return { name: key, content: meta && meta[key]}
-		});
-
-		const bodyComponent = new Atom(Atomizer.templates[defaultBodyTemplateFolderIndex || 0].body, {
-			templateScripts: `
-			<script src="./userScripts.js"></script>
-		`});
-		const pageAtom = new Atom(Atomizer.templates[defaultPageTemplateFolderIndex || 0].page, { head: headComponent, body: bodyComponent });
-		const page = Atomizer.buildComponentTree(pageAtom.toString());
-		page.setAttribute("id", url);
-		return page;
-	}
-
+	
 	/**
 	 * Creates a component from a given template name and props.
 	 * @template T - The type of props to be passed.

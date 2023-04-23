@@ -1,3 +1,5 @@
-<a href="{{url}}">
-    {{text}}
+<a {{#attributes}} {{&name}}="{{&value}}" {{/attributes}}>
+    {{#children}}
+    {{&.}}
+    {{/children}}
 </a>

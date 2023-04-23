@@ -1,0 +1,14 @@
+<div class="container" {{#attributes}} {{&name}}="{{&value}}" {{/attributes}}>
+    <div class="row">
+        <div class="col-md-6">
+            {{#part1}}
+            {{&.}}
+            {{/part1}}
+        </div>
+        <div class="col-md-6">
+            {{#part2}}
+            {{&.}}
+            {{/part2}}
+        </div>
+    </div>
+</div>
