@@ -33,52 +33,52 @@ export default class Logger {
     private static underscore = "\x1b[4m";
 
 
-    public static debug(filename: string, ...message: string[]): void {
+    public static debug(...message: string[]): void {
         if (Logger.logLevel <= 0)
-            Logger.write("[DEBUG]", Logger.traceLevel <= 0, filename, ...message);
+            Logger.write("[DEBUG]", Logger.traceLevel <= 0, ...message);
     }
 
-    public static info(filename: string, ...message: string[]): void {
+    public static info(...message: string[]): void {
         if (Logger.logLevel <= 1)
-            Logger.write("[INFO]", Logger.traceLevel <= 1, filename, ...message);
+            Logger.write("[INFO]", Logger.traceLevel <= 1, ...message);
     }
 
-    public static time(filename: string, ...message: string[]): void {
+    public static time(...message: string[]): void {
         if (Logger.logLevel <= 2)
-            Logger.write("[TIME]", Logger.traceLevel <= 2, filename, ...message, `${Logger.end()}ms`);
+            Logger.write("[TIME]", Logger.traceLevel <= 2, ...message, `${Logger.end()}ms`);
     }
 
-    public static warn(filename: string, ...message: string[]): void {
+    public static warn(...message: string[]): void {
         if (Logger.logLevel <= 3)
-            Logger.write("[WARN]", Logger.traceLevel <= 3, filename, ...message);
+            Logger.write("[WARN]", Logger.traceLevel <= 3, ...message);
     }
 
-    public static error(filename: string, ...message: string[]): void {
+    public static error(...message: string[]): void {
         if (Logger.logLevel <= 4)
-            Logger.write("[ERROR]", Logger.traceLevel <= 4, filename, ...message);
+            Logger.write("[ERROR]", Logger.traceLevel <= 4, ...message);
     }
 
 
 
 
 
-    private static write(type: string, trace: boolean, filename: string, ...message: string[]): void {
+    private static write(type: string, trace: boolean, ...message: string[]): void {
 
         const currentTime = new Date();
         const logFilePath = `./logs/${currentTime.getFullYear()}-${currentTime.getMonth()}-${currentTime.getDate()}-${currentTime.getHours()}-${currentTime.getMinutes()}.log`;
-        const logMessage = `${type}:\t(${filename})\t ${message.join(" ")}\n`;
+        const logMessage = `${type}:\t ${message.join(" ")}\n`;
 
         // Write to console
         const logColor = Logger.mLogColors[type] || "";
 
         if (!trace) console.log(`${logColor}${Logger.mBoldText}${type}${Logger.mResetColor}`,
-            `${Logger.mItalicText}(${filename})${Logger.mResetColor}\n\t`,
+            `${Logger.mItalicText}${Logger.mResetColor}\n\t`,
             `${logColor}${message.join(" ")}${Logger.mResetColor}`);
         else console.trace(`${logColor}${Logger.mBoldText}${type}${Logger.mResetColor}`,
-            `${Logger.mItalicText}(${filename})${Logger.mResetColor}\n\t`,
+            `${Logger.mItalicText}${Logger.mResetColor}\n\t`,
             `${logColor}${Logger.mItalicText}${Logger.underscore}${message.join(" ")}${Logger.mResetColor} 
             
-            \n \n \n ----------------------------------------------------------------------------------------------------------------------------`);
+            \n==============================================[ TRACEBACK ]======================================================`);
 
 
         // console.trace(...message);

@@ -18,48 +18,48 @@ describe('Logger', () => {
 
     it('should not log debug messages when log level is set to INFO', () => {
         Logger.logLevel = LogLevel.INFO;
-        Logger.debug('testFile', 'test message');
+        Logger.debug('(testFIle)', 'test message');
         
         // expect(consoleLogSpy).not.toHaveBeenCalled();
     });
 
     it('should log info messages when log level is set to INFO', () => {
         Logger.logLevel = LogLevel.INFO;
-        Logger.info('testFile', 'test message');
-        // expect(consoleLogSpy).toHaveBeenCalledWith('[INFO]: (testFile)\n\ttest message');
+        Logger.info('(testFIle)', 'test message');
+        // expect(consoleLogSpy).toHaveBeenCalledWith('[INFO]: ((testFIle))\n\ttest message');
     });
 
     it('should not log info messages when log level is set to WARNING', () => {
         Logger.logLevel = LogLevel.WARNING;
-        Logger.info('testFile', 'test message');
+        Logger.info('(testFIle)', 'test message');
         // expect(consoleLogSpy).not.toHaveBeenCalled();
     });
 
     it('should log warning messages when log level is set to WARNING', () => {
         Logger.logLevel = LogLevel.WARNING;
-        Logger.warn('testFile', 'test message');
-        // expect(consoleLogSpy).toHaveBeenCalledWith('[WARN]: (testFile)\n\ttest message');
+        Logger.warn('(testFIle)', 'test message');
+        // expect(consoleLogSpy).toHaveBeenCalledWith('[WARN]: ((testFIle))\n\ttest message');
     });
 
     it('should not log warning messages when log level is set to ERROR', () => {
         Logger.logLevel = LogLevel.ERROR;
-        Logger.warn('testFile', 'test message');
+        Logger.warn('(testFIle)', 'test message');
         // expect(consoleLogSpy).not.toHaveBeenCalled();
     });
 
     it('should log error messages when log level is set to ERROR', () => {
         Logger.logLevel = LogLevel.ERROR;
-        Logger.error('testFile', 'test message');
-        // expect(consoleLogSpy).toHaveBeenCalledWith('[ERROR]: (testFile)\n\ttest message');
+        Logger.error('(testFIle)', 'test message');
+        // expect(consoleLogSpy).toHaveBeenCalledWith('[ERROR]: ((testFIle))\n\ttest message');
     });
 
 });
 it('should give propper color to all the messages', () => {
     Logger.logLevel = LogLevel.DEBUG;
     Logger.start();
-    Logger.debug('testFile', 'test message');
-    Logger.info('testFile', 'test message');
-    Logger.warn('testFile', 'test message');
-    Logger.error('testFile', 'test message');
-    Logger.time('testFile',"Timing log functions");
+    Logger.debug('(testFIle)', 'test message');
+    Logger.info('(testFIle)', 'test message');
+    Logger.warn('(testFIle)', 'test message');
+    Logger.error('(testFIle)', 'test message');
+    Logger.time('(testFIle)',"Timing log functions");
 })
