@@ -69,7 +69,7 @@ A static method in the ScriptManager class that returns an array containing all 
 */
 
     public static getExternalScripts(): Array<Script> {
-        let scripts: Array<Script> = [];
+        const scripts: Array<Script> = [];
         this.scripts.forEach(script => {
             if (!script.type || script.type !== "external") return;
             if (!script.url) return;
