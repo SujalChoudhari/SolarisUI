@@ -14,4 +14,4 @@ export default class String extends Component {
     public override toString(): string {
         return this.content;
     }
-};
+}

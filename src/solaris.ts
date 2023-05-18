@@ -119,7 +119,7 @@ class SolarisUI {
 
 		Logger.info(__filename, "Copying template files");
 		Atomizer.filesToInclude.forEach((file) => {
-			let destPath = path.join(templateDirectory, path.basename(file));
+			const destPath = path.join(templateDirectory, path.basename(file));
 			fm.copyFile(file, destPath);
 			const ext = path.extname(file);
 			if (ext === ".css") {

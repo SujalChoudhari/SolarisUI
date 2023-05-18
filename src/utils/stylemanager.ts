@@ -62,7 +62,7 @@ export default class StyleManager {
      * @returns {Array<Style>} - An array of all external styles.
      */
     public static getExternalStyles(): Array<Style> {
-        let styles: Array<Style> = [];
+        const styles: Array<Style> = [];
         this.styles.forEach(style => {
             if (!style.type || style.type !== "external") return;
             if (!style.url) return;
