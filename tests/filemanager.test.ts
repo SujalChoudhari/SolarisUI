@@ -4,7 +4,7 @@ import FileManager from '../src/utils/filemanager';
 
 describe('FileManager', () => {
 
-    var fm: FileManager;
+    let fm: FileManager;
     beforeEach(() => {
         fm = new FileManager();
     });
@@ -64,7 +64,7 @@ describe('FileManager', () => {
 describe('FileManager', () => {
 
     const testDir = path.join('./test');
-    var fm: FileManager;
+    let fm: FileManager;
 
     beforeEach(() => {
         fm = new FileManager();

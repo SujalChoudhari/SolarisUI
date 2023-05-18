@@ -3,7 +3,7 @@ import * as sui from "../src/index";
 import { Article1Props, Article2Props, AvatarProps, BannerProps, BlogProps, ButtonProps, BreadcrumbProps, CallToActionProps, HeaderProps, FooterBigProps, FooterProps, GalleryProps, CardProps, CarouselProps, ErrorProps, FAQProps, FeatureProps } from "../src/types/templates";
 
 describe("Solaris", () => {
-    var page: Component;
+    let page: Component;
     sui.Logger.logLevel = sui.LogLevel.ERROR;
 
     beforeEach(() => {
