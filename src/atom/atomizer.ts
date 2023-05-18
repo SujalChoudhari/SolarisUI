@@ -61,7 +61,7 @@ export default class Atomizer {
             return null;
         }
 
-        let baseName = newName.split(".")[0];
+        const baseName = newName.split(".")[0];
         if (fs.existsSync(Atomizer.templateFolders[templateFolderIndex].baseDir
             + Atomizer.templateFolders[templateFolderIndex].cssDir
             + "/"
@@ -106,7 +106,7 @@ export default class Atomizer {
 
             files.forEach(file => {
                 if (!file.isDirectory()) {
-                    let newKey = file.name.split(".")[0];
+                    const newKey = file.name.split(".")[0];
                     const template = Atomizer.loadTemplate(path.join(templateFolder.baseDir, file.name), index);
                     if (template != null) {
                         templates[newKey] = template;
@@ -117,7 +117,7 @@ export default class Atomizer {
 
                         htmlFiles.forEach(htmlFile => {
                             if (!htmlFile.isDirectory()) {
-                                let newKey = htmlFile.name.split(".")[0];
+                                const newKey = htmlFile.name.split(".")[0];
                                 if (templateFolder.htmlDir != "") {
                                     const template = Atomizer.loadTemplate(path.join(templateFolder.baseDir, templateFolder.htmlDir, htmlFile.name), index);
 
@@ -225,7 +225,7 @@ export default class Atomizer {
      * @returns The root component of the component tree.
      */
     public static buildComponentTree(html: string): Component {
-        let rootComponent = new Component("root");
+        const rootComponent = new Component("root");
         let currentComponent: Component = rootComponent;
 
         const parser = new htmlparser2.Parser(
@@ -258,4 +258,4 @@ export default class Atomizer {
         Logger.info(__filename, `Component tree built`);
         return rootComponent.getChildren()[0];
     }
-};
+}
